@@ -25,8 +25,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white text-brand-ink shadow-sm ring-1 ring-brand-soft/60">
-      <div className="mx-auto flex h-[112px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo — colored mark on light bg */}
+      <div className="mx-auto flex h-[80px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Logo — colored mark on light bg, scaled for the slimmer header */}
         <Link
           href="/"
           aria-label="GuruJal — home"
@@ -35,10 +35,10 @@ export function SiteHeader() {
           <Image
             src="/brand/gurujal-logo.png"
             alt="GuruJal"
-            width={260}
-            height={80}
+            width={220}
+            height={68}
             priority
-            className="h-16 w-auto sm:h-[72px] lg:h-20"
+            className="h-12 w-auto sm:h-[52px] lg:h-14"
           />
         </Link>
 

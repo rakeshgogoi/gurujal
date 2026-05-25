@@ -104,11 +104,11 @@ export function Hero() {
       </div>
 
       {/*
-        Hero content container. Now that the header is in normal flow above
-        (no longer absolute), we just need normal vertical padding inside
-        the hero — no compensation for an overlapping header.
+        Hero content container. Header is in normal flow above so the hero
+        can use the full viewport for impact. min-h tuned so the headline
+        and CTA sit comfortably with breathing room above and below.
       */}
-      <div className="mx-auto flex min-h-[60vh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+      <div className="mx-auto flex min-h-[85vh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
         {/* Rotating headline — one <h1> swapped on idx change, with a key
             forcing remount so the fade-in animation replays cleanly without
             overlapping the previous slide. */}
