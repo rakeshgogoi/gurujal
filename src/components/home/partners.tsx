@@ -85,13 +85,17 @@ export function Partners() {
                 key={g.name}
                 className="flex h-56 items-center justify-center rounded-2xl bg-white px-8 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
               >
-                <Image
-                  src={g.src}
-                  alt={g.name}
-                  width={400}
-                  height={200}
-                  className="max-h-44 w-auto object-contain"
-                />
+                {/* Both max-h and max-w set so every logo fills the same
+                    visual "logo zone" regardless of source aspect ratio. */}
+                <div className="flex h-32 w-full items-center justify-center">
+                  <Image
+                    src={g.src}
+                    alt={g.name}
+                    width={400}
+                    height={200}
+                    className="max-h-32 max-w-[16rem] h-auto w-auto object-contain"
+                  />
+                </div>
               </li>
             ))}
           </ul>
@@ -118,13 +122,17 @@ export function Partners() {
                   key={i}
                   className="flex h-56 w-[22rem] shrink-0 items-center justify-center rounded-2xl bg-white px-10 ring-1 ring-brand-soft/70"
                 >
-                  <Image
-                    src={b.src}
-                    alt={b.name}
-                    width={360}
-                    height={180}
-                    className="max-h-40 w-auto object-contain"
-                  />
+                  {/* Uniform logo zone — each logo fits inside the same
+                      box so the visual size is even across the marquee. */}
+                  <div className="flex h-28 w-full items-center justify-center">
+                    <Image
+                      src={b.src}
+                      alt={b.name}
+                      width={360}
+                      height={180}
+                      className="max-h-28 max-w-[16rem] h-auto w-auto object-contain"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
