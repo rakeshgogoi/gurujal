@@ -52,16 +52,21 @@ export function Hero() {
     return () => clearInterval(t);
   }, [next]);
 
-  // YouTube embed params:
+  // YouTube embed params — tuned for reliable muted autoplay.
+  //  - Use youtube.com (some browsers' autoplay heuristics treat the
+  //    nocookie variant more conservatively)
   //  - autoplay=1 + mute=1 to satisfy browser autoplay policies
   //  - loop=1 + playlist=ID to make a single video loop
-  //  - controls=0, modestbranding=1, iv_load_policy=3 to hide chrome
-  //  - playsinline=1 for iOS
+  //  - playsinline=1 for iOS (critical — iOS Safari won't autoplay
+  //    fullscreen takeovers, only inline)
+  //  - controls=0 + showinfo=0 + modestbranding=1 + iv_load_policy=3 hide chrome
   //  - rel=0, disablekb=1, fs=0 for safety
+  //  - enablejsapi=1 lets us script the player if we ever need to
   const ytSrc =
-    `https://www.youtube-nocookie.com/embed/${YT_ID}` +
+    `https://www.youtube.com/embed/${YT_ID}` +
     `?autoplay=1&mute=1&controls=0&loop=1&playlist=${YT_ID}` +
-    `&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0`;
+    `&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3` +
+    `&disablekb=1&fs=0&showinfo=0&enablejsapi=1`;
 
   return (
     <section className="relative isolate overflow-hidden bg-brand-deep">

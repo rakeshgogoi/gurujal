@@ -79,18 +79,18 @@ export function Partners() {
           <h3 className="mb-6 text-center text-sm font-semibold uppercase tracking-[0.16em] text-brand-muted">
             Government
           </h3>
-          <ul className="mx-auto grid max-w-5xl grid-cols-2 gap-5 sm:grid-cols-3">
+          <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3">
             {govt.map((g) => (
               <li
                 key={g.name}
-                className="flex h-32 items-center justify-center rounded-2xl bg-white px-6 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
+                className="flex h-44 items-center justify-center rounded-2xl bg-white px-6 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
               >
                 <Image
                   src={g.src}
                   alt={g.name}
-                  width={240}
-                  height={120}
-                  className="max-h-20 w-auto object-contain"
+                  width={320}
+                  height={160}
+                  className="max-h-32 w-auto object-contain"
                 />
               </li>
             ))}
@@ -116,14 +116,14 @@ export function Partners() {
               {[...brands, ...brands].map((b, i) => (
                 <div
                   key={i}
-                  className="flex h-36 w-56 shrink-0 items-center justify-center rounded-2xl bg-white px-6 ring-1 ring-brand-soft/70"
+                  className="flex h-48 w-72 shrink-0 items-center justify-center rounded-2xl bg-white px-8 ring-1 ring-brand-soft/70"
                 >
                   <Image
                     src={b.src}
                     alt={b.name}
-                    width={200}
-                    height={100}
-                    className="max-h-24 w-auto object-contain"
+                    width={280}
+                    height={140}
+                    className="max-h-32 w-auto object-contain"
                   />
                 </div>
               ))}

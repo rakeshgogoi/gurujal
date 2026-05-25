@@ -1,22 +1,30 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 /**
- * "The time to Act is Now" section — matches the live site's two-column
- * layout: water-crisis copy on the left, an inline bar chart showing
- * India's water demand vs supply (2008 → 2030) on the right.
+ * "The time to Act is Now" — modernised as a data-storytelling moment.
  *
- * Data sourced from the live gurujal.org chart widget:
- *   2008  Demand 634  /  Supply 650
- *   2030  Demand 1498 /  Supply 744
- * (Units: billion cubic metres)
+ * Replaces the classic bar chart with a "Then vs Now" comparison:
+ *   - 2008  Demand 634   /  Supply 650   — balanced
+ *   - 2030  Demand 1,498 /  Supply 744   — 2× shortfall
+ *
+ * Each year is a card with animated horizontal bars whose widths reflect
+ * the underlying numbers. The bars draw in when scrolled into view.
+ *
+ * Source: live gurujal.org chart widget. Units: billion cubic metres.
  */
 
-type Bar = { year: string; demand: number; supply: number };
+const SCALE_MAX = 1600; // bcm — round-up beyond the max value (1498)
 
-const data: Bar[] = [
-  { year: "2008", demand: 634, supply: 650 },
-  { year: "2030", demand: 1498, supply: 744 },
-];
+type SnapshotProps = {
+  year: string;
+  demand: number;
+  supply: number;
+  tone: "ok" | "warn";
+  caption: string;
+};
 
 export function WaterCrisisIntro() {
   return (
@@ -33,7 +41,7 @@ export function WaterCrisisIntro() {
 
         <div className="grid items-start gap-12 lg:grid-cols-12">
           {/* Left: copy + CTA */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-5">
             <p className="text-lg leading-relaxed text-brand-ink/90 sm:text-xl">
               Water scarcity is no longer a distant threat — it&apos;s a reality
               affecting millions across India. Over half of the population
@@ -61,16 +69,48 @@ export function WaterCrisisIntro() {
             </div>
           </div>
 
-          {/* Right: chart */}
-          <div className="lg:col-span-6">
-            <DemandSupplyChart />
-            <p className="mt-5 text-base font-semibold text-brand-primary sm:text-lg">
-              Overall demand is expected to exceed supply two-fold by 2030.
-            </p>
-            <p className="mt-3 text-xs text-brand-muted">
-              Source: NITI Aayog Composite Water Management Index · India
-              Water Tool · Billion cubic metres
-            </p>
+          {/* Right: storytelling visualization */}
+          <div className="lg:col-span-7">
+            <div className="rounded-3xl bg-gradient-to-br from-brand-mist via-white to-brand-soft/60 p-6 ring-1 ring-brand-soft sm:p-8">
+              {/* Headline summary */}
+              <div className="mb-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                <div className="text-5xl font-extrabold leading-none tracking-tight text-brand-primary sm:text-6xl">
+                  2&times;
+                </div>
+                <p className="text-sm font-medium text-brand-ink/85 sm:text-base">
+                  Demand will exceed supply by 2030.
+                </p>
+              </div>
+
+              {/* Snapshot cards */}
+              <div className="space-y-5">
+                <Snapshot
+                  year="2008"
+                  demand={634}
+                  supply={650}
+                  tone="ok"
+                  caption="Demand and supply were nearly balanced — a 16 bcm surplus."
+                />
+                <Snapshot
+                  year="2030"
+                  demand={1498}
+                  supply={744}
+                  tone="warn"
+                  caption="Demand soars; supply barely grows — a 754 bcm shortfall."
+                />
+              </div>
+
+              {/* Legend + source */}
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-brand-soft pt-4">
+                <div className="flex items-center gap-5 text-xs">
+                  <Legend tone="demand" label="Demand" />
+                  <Legend tone="supply" label="Supply" />
+                </div>
+                <p className="text-[11px] text-brand-muted">
+                  bcm = billion cubic metres · NITI Aayog
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -78,178 +118,140 @@ export function WaterCrisisIntro() {
   );
 }
 
-/**
- * Inline SVG bar chart — demand vs supply, two years.
- *
- *   - Yellow/orange = Demand (alarming)
- *   - Brand teal     = Supply
- *   - Chart-area background in brand-mist to match live site's aesthetic
- */
-function DemandSupplyChart() {
-  // Chart sizing
-  const width = 520;
-  const height = 360;
-  const padding = { top: 40, right: 24, bottom: 60, left: 56 };
-  const innerW = width - padding.left - padding.right;
-  const innerH = height - padding.top - padding.bottom;
+/* ============================================================
+ * Snapshot card — one year, two animated horizontal bars.
+ * ============================================================ */
+function Snapshot({ year, demand, supply, tone, caption }: SnapshotProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [show, setShow] = useState(false);
 
-  // Y-axis — round max up to a clean tick
-  const yMax = 1600;
-  const yTicks = [0, 400, 800, 1200, 1600];
+  useEffect(() => {
+    if (!ref.current) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setShow(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
 
-  // Group geometry
-  const groupCount = data.length;
-  const groupW = innerW / groupCount;
-  const barW = 50;
-  const barGap = 14;
-
-  // Scale value → pixel height
-  const yScale = (v: number) => (v / yMax) * innerH;
+  const demandPct = (demand / SCALE_MAX) * 100;
+  const supplyPct = (supply / SCALE_MAX) * 100;
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-brand-mist p-6 ring-1 ring-brand-soft">
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full"
-        role="img"
-        aria-label="Demand vs supply of water in India (2008 vs 2030)"
-      >
-        {/* Gridlines + Y-axis labels */}
-        {yTicks.map((t) => {
-          const y = padding.top + innerH - yScale(t);
-          return (
-            <g key={t}>
-              <line
-                x1={padding.left}
-                x2={padding.left + innerW}
-                y1={y}
-                y2={y}
-                stroke="#cfe4ea"
-                strokeWidth={1}
-              />
-              <text
-                x={padding.left - 10}
-                y={y}
-                textAnchor="end"
-                dominantBaseline="central"
-                className="fill-brand-muted text-[11px]"
-              >
-                {t.toLocaleString("en-IN")}
-              </text>
-            </g>
-          );
-        })}
-
-        {/* X-axis baseline */}
-        <line
-          x1={padding.left}
-          x2={padding.left + innerW}
-          y1={padding.top + innerH}
-          y2={padding.top + innerH}
-          stroke="#9bbac3"
-          strokeWidth={1.5}
-        />
-
-        {/* Bars */}
-        {data.map((d, i) => {
-          const groupX = padding.left + groupW * i;
-          const centerX = groupX + groupW / 2;
-          const demandX = centerX - barW - barGap / 2;
-          const supplyX = centerX + barGap / 2;
-
-          const demandH = yScale(d.demand);
-          const supplyH = yScale(d.supply);
-          const baselineY = padding.top + innerH;
-
-          return (
-            <g key={d.year}>
-              {/* Demand bar */}
-              <rect
-                x={demandX}
-                y={baselineY - demandH}
-                width={barW}
-                height={demandH}
-                rx={4}
-                className="fill-brand-orange"
-              />
-              <text
-                x={demandX + barW / 2}
-                y={baselineY - demandH - 8}
-                textAnchor="middle"
-                className="fill-brand-ink text-[12px] font-bold"
-              >
-                {d.demand}
-              </text>
-
-              {/* Supply bar */}
-              <rect
-                x={supplyX}
-                y={baselineY - supplyH}
-                width={barW}
-                height={supplyH}
-                rx={4}
-                className="fill-brand-teal"
-              />
-              <text
-                x={supplyX + barW / 2}
-                y={baselineY - supplyH - 8}
-                textAnchor="middle"
-                className="fill-brand-ink text-[12px] font-bold"
-              >
-                {d.supply}
-              </text>
-
-              {/* Year label */}
-              <text
-                x={centerX}
-                y={baselineY + 24}
-                textAnchor="middle"
-                className="fill-brand-ink text-[14px] font-semibold"
-              >
-                {d.year}
-              </text>
-            </g>
-          );
-        })}
-
-        {/* Legend */}
-        <g transform={`translate(${padding.left}, 16)`}>
-          <rect width={12} height={12} rx={2} className="fill-brand-orange" />
-          <text
-            x={18}
-            y={6}
-            dominantBaseline="central"
-            className="fill-brand-ink text-[12px] font-medium"
+    <div
+      ref={ref}
+      className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-brand-soft/70"
+    >
+      <div className="mb-3 flex items-baseline justify-between">
+        <div className="flex items-baseline gap-3">
+          <div className="text-2xl font-bold tracking-tight text-brand-ink">
+            {year}
+          </div>
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${
+              tone === "ok"
+                ? "bg-brand-green/15 text-brand-green-dark"
+                : "bg-brand-orange/15 text-brand-orange-dark"
+            }`}
           >
-            Demand
-          </text>
-          <g transform="translate(96, 0)">
-            <rect width={12} height={12} rx={2} className="fill-brand-teal" />
-            <text
-              x={18}
-              y={6}
-              dominantBaseline="central"
-              className="fill-brand-ink text-[12px] font-medium"
-            >
-              Supply
-            </text>
-          </g>
-        </g>
+            <span
+              className={`inline-block h-1.5 w-1.5 rounded-full ${
+                tone === "ok" ? "bg-brand-green" : "bg-brand-orange"
+              }`}
+            />
+            {tone === "ok" ? "Balanced" : "2× Shortfall"}
+          </span>
+        </div>
+        <div className="text-xs text-brand-muted">
+          gap{" "}
+          <span
+            className={`font-semibold ${
+              demand > supply ? "text-brand-orange-dark" : "text-brand-green-dark"
+            }`}
+          >
+            {(demand - supply > 0 ? "+" : "") +
+              (demand - supply).toLocaleString("en-IN")}{" "}
+            bcm
+          </span>
+        </div>
+      </div>
 
-        {/* Y-axis title */}
-        <text
-          x={-padding.top - innerH / 2}
-          y={14}
-          transform="rotate(-90)"
-          textAnchor="middle"
-          className="fill-brand-muted text-[11px]"
-        >
-          Billion cubic metres
-        </text>
-      </svg>
-      <p className="mt-2 text-center text-xs font-medium text-brand-muted">
-        Demand and Supply of water in India
+      <Bar
+        label="Demand"
+        value={demand}
+        widthPct={show ? demandPct : 0}
+        color="demand"
+      />
+      <div className="h-2" />
+      <Bar
+        label="Supply"
+        value={supply}
+        widthPct={show ? supplyPct : 0}
+        color="supply"
+      />
+
+      <p className="mt-3 text-xs leading-relaxed text-brand-muted">
+        {caption}
       </p>
+    </div>
+  );
+}
+
+function Bar({
+  label,
+  value,
+  widthPct,
+  color,
+}: {
+  label: string;
+  value: number;
+  widthPct: number;
+  color: "demand" | "supply";
+}) {
+  // Gradient fills give the bars a more "alive" feel than flat color
+  const barClass =
+    color === "demand"
+      ? "from-brand-orange to-brand-orange-dark"
+      : "from-brand-teal to-brand-teal-dark";
+
+  return (
+    <div>
+      <div className="mb-1 flex items-center justify-between text-xs">
+        <span className="font-medium text-brand-muted">{label}</span>
+        <span className="font-bold tabular-nums text-brand-ink">
+          {value.toLocaleString("en-IN")}{" "}
+          <span className="text-[10px] font-normal text-brand-muted">bcm</span>
+        </span>
+      </div>
+      <div className="relative h-3 w-full overflow-hidden rounded-full bg-brand-mist">
+        <div
+          className={`h-full rounded-full bg-gradient-to-r ${barClass}`}
+          style={{
+            width: `${widthPct}%`,
+            transition: "width 1400ms cubic-bezier(.22, 1, .36, 1)",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Legend({ tone, label }: { tone: "demand" | "supply"; label: string }) {
+  return (
+    <div className="flex items-center gap-2 text-brand-ink/85">
+      <span
+        className={`inline-block h-2.5 w-2.5 rounded-sm ${
+          tone === "demand" ? "bg-brand-orange" : "bg-brand-teal"
+        }`}
+        aria-hidden
+      />
+      <span className="font-medium">{label}</span>
     </div>
   );
 }
