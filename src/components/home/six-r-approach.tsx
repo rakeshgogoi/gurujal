@@ -1,33 +1,40 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const sixR = [
   {
     key: "RESOURCE",
+    icon: "/uploads/2025/06/resource.png",
     blurb: "Equip young adults with the skills to become experts in the green economy.",
     href: "/we-for-water",
   },
   {
     key: "REDUCE",
+    icon: "/uploads/2025/06/reduce.png",
     blurb: "Assist institutions in integrating climate-positive designs.",
     href: "/water-proofing",
   },
   {
     key: "RESTORE",
+    icon: "/uploads/2025/06/restore.png",
     blurb: "Implement nature-based solutions to enhance groundwater tables.",
     href: "/support-a-pond",
   },
   {
     key: "REVIVE",
+    icon: "/uploads/2025/06/revive.png",
     blurb: "Foster the growth of natural forest covers to support local biodiversity.",
     href: "/eco-restoration",
   },
   {
     key: "RETHINK",
+    icon: "/uploads/2025/06/rethink.png",
     blurb: "Promote behavior change to cultivate a positive attitude towards conservation.",
     href: "/connect-the-drops",
   },
   {
     key: "REALIGN",
+    icon: "/uploads/2025/06/realign.png",
     blurb: "Guide companies in balancing profits, people, and the planet.",
     href: "/esg-advisory",
   },
@@ -38,8 +45,8 @@ export function SixRApproach() {
     <section className="bg-brand-mist">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="max-w-2xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-primary">
-            Our Framework
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-orange">
+            There is a Smart Solution for the Crisis
           </p>
           <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl lg:text-5xl">
             The 6R Approach
@@ -56,10 +63,21 @@ export function SixRApproach() {
               href={r.href}
               className="group relative flex flex-col rounded-2xl border border-brand-soft/80 bg-white p-7 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-accent hover:shadow-md"
             >
-              <div className="text-2xl font-bold tracking-tight text-brand-primary">
-                {r.key}
+              <div className="flex items-center gap-4">
+                <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-brand-mist ring-1 ring-brand-soft">
+                  <Image
+                    src={r.icon}
+                    alt=""
+                    width={36}
+                    height={36}
+                    className="h-9 w-9 object-contain"
+                  />
+                </span>
+                <div className="text-2xl font-bold tracking-tight text-brand-primary">
+                  {r.key}
+                </div>
               </div>
-              <p className="mt-4 flex-1 text-sm leading-relaxed text-brand-muted">
+              <p className="mt-5 flex-1 text-sm leading-relaxed text-brand-muted">
                 {r.blurb}
               </p>
               <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-orange">

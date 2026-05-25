@@ -8,6 +8,14 @@ export function WaterCrisisIntro() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+        <div className="mb-10 max-w-3xl">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-orange">
+            The Crisis
+          </p>
+          <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl lg:text-5xl">
+            The time to Act is Now
+          </h2>
+        </div>
         <div className="grid items-start gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <p className="text-lg leading-relaxed text-brand-ink/90 sm:text-xl">

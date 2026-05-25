@@ -13,6 +13,10 @@ const brands = [
   { name: "Max Healthcare", src: "/uploads/2024/08/Max-Healthcare.png" },
   { name: "Power Grid", src: "/uploads/2024/08/powergrid.png" },
   { name: "AIC IITD", src: "/uploads/2024/08/AIC-IITD.png" },
+  { name: "Whisky", src: "/uploads/2024/08/whisky.png" },
+  { name: "Xebia", src: "/uploads/2024/08/xebia.png" },
+  { name: "Jaquar", src: "/uploads/2026/03/jaquar-1.png" },
+  { name: "Central", src: "/uploads/2026/03/central.png" },
 ];
 
 const govt = [
@@ -23,17 +27,13 @@ export function Partners() {
   return (
     <section className="bg-brand-mist">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-primary">
-            Our network
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-orange">
+            Our partners
           </p>
           <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
-            Partners & Collaborators
+            Collaborating with public and private organizations to drive our mission
           </h2>
-          <p className="mt-4 text-base text-brand-muted">
-            We work hand-in-hand with the Government of India, brands, and
-            foundations across the country.
-          </p>
         </div>
 
         <div className="mt-14">

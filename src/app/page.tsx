@@ -4,6 +4,7 @@ import { SixRApproach } from "@/components/home/six-r-approach";
 import { ImpactStats } from "@/components/home/impact-stats";
 import { Testimonials } from "@/components/home/testimonials";
 import { Partners } from "@/components/home/partners";
+import { UpcomingEvents } from "@/components/home/upcoming-events";
 import Link from "next/link";
 
 /**
@@ -25,6 +26,7 @@ export default function Home() {
       <WaterCrisisIntro />
       <SixRApproach />
       <ImpactStats />
+      <UpcomingEvents />
       <Testimonials />
       <Partners />
 
