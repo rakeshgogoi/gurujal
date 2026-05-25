@@ -75,7 +75,7 @@ export function HeroAchievements() {
             return (
               <div
                 key={i}
-                className="relative overflow-hidden rounded-xl bg-brand-deep/90 px-5 py-4 ring-1 ring-white/10 shadow-xl shadow-black/30 backdrop-blur-sm"
+                className="relative overflow-hidden rounded-xl bg-brand-deep/45 px-5 py-4 ring-1 ring-white/20 shadow-xl shadow-black/30 backdrop-blur-md"
               >
                 {/* Left accent stripe */}
                 <span

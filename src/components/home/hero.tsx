@@ -121,7 +121,7 @@ export function Hero() {
             className="absolute inset-0 flex flex-col justify-center text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl gj-headline-enter"
           >
             <span>
-              <span className="inline-block rounded-md bg-brand-primary/80 px-3 py-1 text-white shadow-lg shadow-black/20">
+              <span className="inline-block rounded-md bg-brand-teal px-3 py-1 text-white shadow-lg shadow-black/20">
                 {headlines[idx].lead}
               </span>{" "}
               <span className="text-brand-teal-bright">{headlines[idx].action}</span>{" "}
