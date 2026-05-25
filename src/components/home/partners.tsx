@@ -1,12 +1,38 @@
 import Image from "next/image";
 
 /**
- * Partners & Collaborators — modernised as two horizontal marquees
- * scrolling in opposite directions. Logos render at full color. The
- * government partners get their own marquee row above.
+ * Partners & Collaborators.
  *
- * The animation pauses on hover (see globals.css).
+ *  - Government: 6 logos in a 2-row grid (matches the live site)
+ *  - Brands & Foundations: a SINGLE horizontal marquee row, larger logo
+ *    cards, continuous scroll. Pauses on hover.
+ *
+ * Logo file list verified against the live gurujal.org homepage.
  */
+
+const govt = [
+  { name: "NITI Aayog", src: "/uploads/2024/08/niti-aayog.png" },
+  {
+    name: "National Water Mission",
+    src: "/uploads/2024/08/national-water-mission.png",
+  },
+  {
+    name: "Gurugram Metropolitan Development Authority",
+    src: "/uploads/2024/08/gmda.png",
+  },
+  {
+    name: "Haryana Pollution Water & Wastewater Management Authority",
+    src: "/uploads/2024/08/hpwwma.png",
+  },
+  {
+    name: "Municipal Corporation of Faridabad",
+    src: "/uploads/2024/08/mcf.png",
+  },
+  {
+    name: "Irrigation Department",
+    src: "/uploads/2024/08/sinchai.png",
+  },
+];
 
 const brands = [
   { name: "HDFC Bank", src: "/uploads/2025/01/hdfc.png" },
@@ -31,20 +57,8 @@ const brands = [
   { name: "Xebia", src: "/uploads/2024/08/xebia.png" },
   { name: "Jaquar", src: "/uploads/2026/03/jaquar-1.png" },
   { name: "Central Park", src: "/uploads/2026/03/central.png" },
+  { name: "WH Smith", src: "/uploads/2026/03/wh.png" },
 ];
-
-const govt = [
-  { name: "NITI Aayog", src: "/uploads/2024/08/niti-aayog.png" },
-  {
-    name: "National Water Mission",
-    src: "/uploads/2024/08/national-water-mission.png",
-  },
-];
-
-// Split brands into two roughly-equal lists for the two rows
-const half = Math.ceil(brands.length / 2);
-const rowA = brands.slice(0, half);
-const rowB = brands.slice(half);
 
 export function Partners() {
   return (
@@ -60,86 +74,63 @@ export function Partners() {
           </h2>
         </div>
 
-        {/* Government — small row, also marquee-style for consistency */}
-        <div className="mt-12">
-          <h3 className="mb-5 text-center text-sm font-semibold uppercase tracking-[0.16em] text-brand-muted">
+        {/* GOVERNMENT — 2 rows × 3 columns */}
+        <div className="mt-14">
+          <h3 className="mb-6 text-center text-sm font-semibold uppercase tracking-[0.16em] text-brand-muted">
             Government
           </h3>
-          <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-6">
+          <ul className="mx-auto grid max-w-5xl grid-cols-2 gap-5 sm:grid-cols-3">
             {govt.map((g) => (
-              <div
+              <li
                 key={g.name}
-                className="flex h-24 w-44 items-center justify-center rounded-xl bg-white px-4 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
+                className="flex h-32 items-center justify-center rounded-2xl bg-white px-6 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
               >
                 <Image
                   src={g.src}
                   alt={g.name}
-                  width={180}
-                  height={80}
-                  className="max-h-16 w-auto object-contain"
+                  width={240}
+                  height={120}
+                  className="max-h-20 w-auto object-contain"
                 />
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
-        {/* Brands — two rows scrolling opposite directions */}
+        {/* BRANDS & FOUNDATIONS — single horizontal marquee row */}
         <div className="mt-14">
           <h3 className="mb-6 text-center text-sm font-semibold uppercase tracking-[0.16em] text-brand-muted">
             Brands &amp; Foundations
           </h3>
 
-          {/* Outer wrapper provides fade-mask on left + right edges so logos
-              appear to slide in/out of view at the edges. */}
           <div
-            className="gj-marquee-paused relative space-y-4 overflow-hidden"
+            className="gj-marquee-paused relative overflow-hidden"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+                "linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)",
               maskImage:
-                "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+                "linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)",
             }}
           >
-            <MarqueeRow logos={rowA} direction="left" />
-            <MarqueeRow logos={rowB} direction="right" />
+            <div className="gj-marquee-left flex w-max gap-6">
+              {[...brands, ...brands].map((b, i) => (
+                <div
+                  key={i}
+                  className="flex h-36 w-56 shrink-0 items-center justify-center rounded-2xl bg-white px-6 ring-1 ring-brand-soft/70"
+                >
+                  <Image
+                    src={b.src}
+                    alt={b.name}
+                    width={200}
+                    height={100}
+                    className="max-h-24 w-auto object-contain"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function MarqueeRow({
-  logos,
-  direction,
-}: {
-  logos: { name: string; src: string }[];
-  direction: "left" | "right";
-}) {
-  // Double the list for a seamless infinite scroll
-  const doubled = [...logos, ...logos];
-  return (
-    <div className="relative overflow-hidden">
-      <div
-        className={`flex w-max gap-4 ${
-          direction === "left" ? "gj-marquee-left" : "gj-marquee-right"
-        }`}
-      >
-        {doubled.map((b, i) => (
-          <div
-            key={i}
-            className="flex h-24 w-44 shrink-0 items-center justify-center rounded-xl bg-white px-4 ring-1 ring-brand-soft/70"
-          >
-            <Image
-              src={b.src}
-              alt={b.name}
-              width={160}
-              height={70}
-              className="max-h-14 w-auto object-contain"
-            />
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
