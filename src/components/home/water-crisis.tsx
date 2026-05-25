@@ -26,7 +26,7 @@ export function WaterCrisisIntro() {
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
             The Crisis
           </p>
-          <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl lg:text-5xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
             The time to Act is Now
           </h2>
         </div>

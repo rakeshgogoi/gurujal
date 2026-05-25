@@ -25,17 +25,22 @@ const events = [
   },
 ];
 
-export function UpcomingEvents() {
+/**
+ * "Recent Events" — three event cards (HydroMingle 2025, Roots & Recharge
+ * Symposium, Real Nature in Restored Landscapes). Items are past events;
+ * we keep them surfaced as recent highlights of GuruJal's calendar.
+ */
+export function RecentEvents() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="flex items-end justify-between gap-6">
           <div className="max-w-2xl">
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
-              What's happening
+              From the field
             </p>
             <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
-              Upcoming Events
+              Recent Events
             </h2>
           </div>
           <Link

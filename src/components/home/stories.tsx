@@ -52,7 +52,7 @@ export function Stories() {
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
               From the journey
             </p>
-            <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl lg:text-5xl">
+            <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
               Do not miss incredible stories from our journey
             </h2>
           </div>

@@ -5,6 +5,7 @@ import { ImpactStats } from "@/components/home/impact-stats";
 import { Testimonials } from "@/components/home/testimonials";
 import { Partners } from "@/components/home/partners";
 import { Stories } from "@/components/home/stories";
+import { RecentEvents } from "@/components/home/upcoming-events";
 import { NewsAndNotice } from "@/components/home/news-and-notice";
 import Link from "next/link";
 
@@ -28,6 +29,7 @@ export default function Home() {
       <SixRApproach />
       <ImpactStats />
       <NewsAndNotice />
+      <RecentEvents />
       <Testimonials />
       <Partners />
       <Stories />
