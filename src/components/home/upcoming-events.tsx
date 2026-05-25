@@ -1,27 +1,38 @@
 import Image from "next/image";
 import Link from "next/link";
 
+/**
+ * Real past events sourced verbatim from /content/pages/events.mdx
+ * (the migrated content of gurujal.org/events). Titles, dates, venues,
+ * partners, and one-line descriptions are taken from the live event pages.
+ */
 const events = [
   {
-    title: "HydroMingle 2025",
+    title: "Real Nature in Restored Landscapes",
     blurb:
-      "An annual gathering of water professionals, policymakers, and corporates to share progress and forge collaboration on India's water mission.",
-    image: "/uploads/2024/08/hydromingle2025.jpg",
+      "Site Visit & Experiential Learning Program hosted by GuruJal & Prana Earth under Delhi Climate Innovation Week 2026 — BSF Bhondsi, Khandewla Well, Triveni Pond, Bhokarka.",
+    image: "/uploads/2026/03/eco-hero.jpg",
+    href: "/experiential-learning",
+    date: "21 Feb 2026",
+    kind: "Site Visit",
+  },
+  {
+    title: "HydroMingle Delhi 2025",
+    blurb:
+      "Water innovation platform connecting startups, policymakers, CSR partners, and researchers driving the next wave of water solutions. Tamarind Hall, IHC.",
+    image: "/uploads/2026/03/events-hero.jpg",
     href: "/hydromingle-event",
+    date: "10 Dec 2025",
+    kind: "Innovation Convening",
   },
   {
     title: "Roots & Recharge Symposium",
     blurb:
-      "Bringing together experts in soil restoration, hydrology, and forest revival to chart the path for climate-resilient landscapes.",
-    image: "/uploads/2024/08/Roots-recharge-symposium-2025.jpg",
+      "GuruJal × Wipro Foundation symposium reviving traditional water wisdom — heritage dug-well inventorisation, policy dialogue, and community pilots. Juniper Hall, IHC.",
+    image: "/uploads/2026/03/Support-a-pond-hero.jpg",
     href: "/roots-and-recharge-symposium",
-  },
-  {
-    title: "Real Nature in Restored Landscapes",
-    blurb:
-      "A field event showcasing on-ground impact across our restored ponds, recharge zones, and reforested areas.",
-    image: "/uploads/2024/08/real-nature-event.jpeg",
-    href: "/events",
+    date: "9 Dec 2025",
+    kind: "Symposium",
   },
 ];
 
@@ -71,9 +82,15 @@ export function RecentEvents() {
                   sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/55 via-transparent" />
+                <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-brand-teal backdrop-blur">
+                  {e.kind}
+                </span>
               </div>
               <div className="flex flex-1 flex-col p-6">
-                <h3 className="text-xl font-semibold text-brand-ink group-hover:text-brand-primary">
+                <div className="text-xs font-medium uppercase tracking-[0.14em] text-brand-orange">
+                  {e.date}
+                </div>
+                <h3 className="mt-2 text-xl font-semibold text-brand-ink group-hover:text-brand-primary">
                   {e.title}
                 </h3>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-muted">

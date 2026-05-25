@@ -1,55 +1,68 @@
 import Link from "next/link";
 
 /**
- * Two-column "Recent News" + "Notice" section matching the live homepage.
+ * Two-column "Recent News" + "Notice" section.
  *
- * Items here are placeholders driven by the structure visible on the live
- * site's homepage (which uses a Ditty news ticker + announcement plugin).
- * Real news items should be migrated from WP once we surface those feeds.
+ * All items are sourced from real GuruJal pages in /content/pages:
+ *   - Events with dates from /events (Apr 2026 → Dec 2025)
+ *   - Job openings verbatim from /career
+ *   - Publications (titles + slugs) from /reports-and-publications
+ *
+ * Dates use the real event/publication dates documented on those pages.
  */
 const recentNews = [
   {
-    date: "21 Apr 2026",
-    title: "GuruJal launches Roots & Recharge Symposium 2025",
+    date: "Apr 2026",
+    title: "ALT EFF Film Club × GuruJal Gurugram — film screening & community dialogue",
+    href: "/events",
+  },
+  {
+    date: "21 Feb 2026",
+    title: "Real Nature in Restored Landscapes — site visit at BSF Bhondsi, Khandewla & Bhokarka",
+    href: "/experiential-learning",
+  },
+  {
+    date: "10 Dec 2025",
+    title: "HydroMingle Delhi 2025 convened innovators, policymakers & CSR partners at IHC",
+    href: "/hydromingle-event",
+  },
+  {
+    date: "9 Dec 2025",
+    title: "Roots & Recharge Symposium with Wipro Foundation revives heritage water wisdom",
     href: "/roots-and-recharge-symposium",
   },
   {
-    date: "12 Mar 2026",
-    title: "Suntory Global Spirits partners with GuruJal on Bhokarka pond rejuvenation",
-    href: "/support-a-pond",
-  },
-  {
-    date: "06 Feb 2026",
-    title: "The Green Wall of Aravalli — 5,000-acre roadmap published",
-    href: "/publication-green-wall-of-aravalli",
-  },
-  {
-    date: "18 Jan 2026",
-    title: "HydroMingle 2025 brings together 200+ water professionals",
-    href: "/hydromingle-event",
+    date: "3–5 Jun 2025",
+    title: "Urban Adda 2025 — 3-day national conference on cities for people, not cars",
+    href: "/urban-adda-25",
   },
 ];
 
 const notices = [
   {
-    date: "20 May 2026",
-    title: "GuruJal is hiring — multiple openings in engineering, GIS, and communications",
+    date: "Hiring",
+    title: "Sr. Civil & Structural Design Engineer — Technical · Full-time · Gurugram · 8–10 yrs",
     href: "/career",
   },
   {
-    date: "08 Apr 2026",
-    title: "Pond adoption program — applications open for FY 2026-27",
-    href: "/support-a-pond",
+    date: "Hiring",
+    title: "Jr. Civil & Structural Design Engineer — Technical · Full-time · Gurugram · 2–4 yrs",
+    href: "/career",
   },
   {
-    date: "22 Mar 2026",
-    title: "WeForWater Fellowship — applications close 15th May",
-    href: "/we-for-water",
+    date: "Hiring",
+    title: "GIS and Hydrology Associate — Technical · Full-time · Gurugram · 2–4 yrs",
+    href: "/career",
   },
   {
-    date: "10 Mar 2026",
-    title: "Annual Report 2024-25 now available for download",
-    href: "/reports-and-publications",
+    date: "Internship",
+    title: "Civil and Structural Design Engineer Intern — Diploma / B.Tech / M.Tech",
+    href: "/career",
+  },
+  {
+    date: "Internship",
+    title: "Architect Intern — B.Arch / M.Arch",
+    href: "/career",
   },
 ];
 
