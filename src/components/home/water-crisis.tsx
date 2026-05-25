@@ -30,18 +30,17 @@ export function WaterCrisisIntro() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-        <div className="mb-12 max-w-3xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
-            The Crisis
-          </p>
-          <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
-            The time to Act is Now
-          </h2>
-        </div>
-
         <div className="grid items-start gap-12 lg:grid-cols-12">
-          {/* Left: copy + CTA */}
+          {/* Left: heading + copy + CTA. The heading lives inside the left
+              column (rather than spanning the grid) so the top edges of
+              both columns are visually aligned. */}
           <div className="lg:col-span-5">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
+              The Crisis
+            </p>
+            <h2 className="mb-8 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
+              The time to Act is Now
+            </h2>
             <p className="text-lg leading-relaxed text-brand-ink/90 sm:text-xl">
               Water scarcity is no longer a distant threat — it&apos;s a reality
               affecting millions across India. Over half of the population
