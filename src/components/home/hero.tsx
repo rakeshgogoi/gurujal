@@ -1,33 +1,36 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 /**
- * Homepage hero — real image slider.
+ * Homepage hero — YouTube video background ("Gurujal Intro", id 3olgmTIt80U)
+ * matching the live site's Slider Revolution hero.
  *
- * Each slide pairs a headline with a different hero image pulled from
- * the WP media library. Slides auto-advance every 6s; users can also
- * navigate via prev/next arrows or the dot indicators.
+ *  - Static poster image is rendered behind the iframe so users always see
+ *    something while the YouTube embed loads (and on browsers / contexts
+ *    where autoplay is blocked, e.g. localhost / private mode, the poster
+ *    remains visible).
+ *  - The iframe sits on top with `pointer-events:none` so CTAs work.
+ *  - The headline rotates through three lines on a 6-second schedule.
  */
-const slides = [
+const YT_ID = "3olgmTIt80U";
+
+const headlines = [
   {
-    image: "/uploads/2026/03/Support-a-pond-hero.jpg",
     lead: "We",
     action: "REVITALIZE",
     suffix: "communities to make India",
     emphasis: "WATER-SECURE",
   },
   {
-    image: "/uploads/2026/03/eco-hero.jpg",
     lead: "We",
     action: "REVIVE",
     suffix: "water bodies to restore natural",
     emphasis: "ECOSYSTEMS",
   },
   {
-    image: "/uploads/2026/03/Water-proofing-hero.jpg",
     lead: "We",
     action: "DRIVE",
     suffix: "climate resilience through",
@@ -39,51 +42,63 @@ const AUTO_MS = 6000;
 
 export function Hero() {
   const [idx, setIdx] = useState(0);
-  const [paused, setPaused] = useState(false);
 
-  const next = useCallback(() => setIdx((i) => (i + 1) % slides.length), []);
-  const prev = useCallback(() => setIdx((i) => (i - 1 + slides.length) % slides.length), []);
+  const next = useCallback(() => setIdx((i) => (i + 1) % headlines.length), []);
+  const prev = useCallback(() => setIdx((i) => (i - 1 + headlines.length) % headlines.length), []);
 
   useEffect(() => {
-    if (paused) return;
     const t = setInterval(next, AUTO_MS);
     return () => clearInterval(t);
-  }, [next, paused]);
+  }, [next]);
+
+  // YouTube embed params:
+  //  - autoplay=1 + mute=1 to satisfy browser autoplay policies
+  //  - loop=1 + playlist=ID to make a single video loop
+  //  - controls=0, modestbranding=1, iv_load_policy=3 to hide chrome
+  //  - playsinline=1 for iOS
+  //  - rel=0, disablekb=1, fs=0 for safety
+  const ytSrc =
+    `https://www.youtube-nocookie.com/embed/${YT_ID}` +
+    `?autoplay=1&mute=1&controls=0&loop=1&playlist=${YT_ID}` +
+    `&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0`;
 
   return (
-    <section
-      className="relative isolate overflow-hidden"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      aria-roledescription="carousel"
-    >
-      {/* Stacked slides — only the current one is visible */}
+    <section className="relative isolate overflow-hidden bg-brand-deep">
+      {/* Video background.
+          Layer order (bottom→top):
+            1. poster image (always visible — fallback if video can't autoplay)
+            2. YouTube iframe (covers the poster once video starts)
+            3. dark gradient overlay for headline contrast */}
       <div className="absolute inset-0 -z-10">
-        {slides.map((s, i) => (
-          <div
-            key={s.image}
-            className={`absolute inset-0 transition-opacity duration-700 ease-out ${
-              i === idx ? "opacity-100" : "opacity-0"
-            }`}
-            aria-hidden={i !== idx}
-          >
-            <Image
-              src={s.image}
-              alt=""
-              fill
-              priority={i === 0}
-              className="object-cover"
-              sizes="100vw"
-            />
-          </div>
-        ))}
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/85 via-brand-deep/55 to-brand-deep/90" />
+        {/* Poster — always rendered, no fade. */}
+        <Image
+          src="/uploads/2026/03/Support-a-pond-hero.jpg"
+          alt=""
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+
+        <div className="absolute inset-0 overflow-hidden">
+          <iframe
+            title="GuruJal Intro"
+            src={ytSrc}
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen
+            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video min-w-[177.78vh] min-h-[56.25vw] w-[177.78vh] h-[56.25vw]"
+            style={{ border: 0 }}
+          />
+        </div>
+
+        {/* Dark overlay for readability — keep it light so the video shows through */}
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/55 via-brand-deep/35 to-brand-deep/70" />
       </div>
 
       <div className="mx-auto flex min-h-[72vh] max-w-7xl flex-col justify-center px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-        {/* Animated headline tied to current slide */}
+        {/* Rotating headline coupled to autoplay timer */}
         <div className="relative min-h-[180px] sm:min-h-[220px] lg:min-h-[260px]">
-          {slides.map((s, i) => (
+          {headlines.map((s, i) => (
             <h1
               key={i}
               className={`absolute inset-0 flex flex-col justify-center text-4xl font-semibold leading-tight tracking-tight text-white transition-all duration-700 sm:text-5xl lg:text-6xl ${
@@ -105,7 +120,6 @@ export function Hero() {
           ))}
         </div>
 
-        {/* CTA */}
         <div className="mt-12 flex items-center gap-4">
           <Link
             href="/about"
@@ -118,15 +132,15 @@ export function Hero() {
             </svg>
           </Link>
 
-          {/* Dot pagination */}
+          {/* Headline dot pagination */}
           <div className="ml-2 flex gap-2" role="tablist" aria-label="Hero slides">
-            {slides.map((_, i) => (
+            {headlines.map((_, i) => (
               <button
                 key={i}
                 type="button"
                 role="tab"
                 aria-selected={i === idx}
-                aria-label={`Show slide ${i + 1}`}
+                aria-label={`Show headline ${i + 1}`}
                 onClick={() => setIdx(i)}
                 className={`h-2 rounded-full transition-all ${
                   i === idx ? "w-8 bg-brand-orange" : "w-2 bg-white/40 hover:bg-white/70"
@@ -140,7 +154,7 @@ export function Hero() {
       {/* Prev / next arrows */}
       <button
         type="button"
-        aria-label="Previous slide"
+        aria-label="Previous headline"
         onClick={prev}
         className="absolute left-4 top-1/2 hidden -translate-y-1/2 rounded-full bg-white/15 p-3 text-white backdrop-blur transition hover:bg-white hover:text-brand-deep lg:block"
       >
@@ -150,7 +164,7 @@ export function Hero() {
       </button>
       <button
         type="button"
-        aria-label="Next slide"
+        aria-label="Next headline"
         onClick={next}
         className="absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full bg-white/15 p-3 text-white backdrop-blur transition hover:bg-white hover:text-brand-deep lg:block"
       >
