@@ -4,42 +4,44 @@ import Link from "next/link";
 /**
  * "Do not Miss Incredible Stories From Our Journey" section.
  *
- * A featured-stories carousel-style block — three large story cards with
- * image, category eyebrow, headline, and a read-more link.
+ * Three featured story cards. Each card's title, excerpt, location/date
+ * and link target are pulled from the actual content of the corresponding
+ * page on gurujal.org (migrated MDX in /content/pages):
  *
- * Stories are curated from real GuruJal initiatives & publications:
- *   - Green Wall of Aravalli study
- *   - Chandla Dungarwas pond rejuvenation
- *   - Bhokarka pond / Suntory partnership
- *   - WeForWater Fellowship
+ *   /chandla-dungarwas-pond             — Chandla Dungerwas Pond restoration
+ *   /publication-green-wall-of-aravalli — The Green Wall of Aravalli study
+ *   /roots-and-recharge-symposium       — Roots & Recharge Symposium 2025
+ *
+ * No fabricated facts: numbers, locations, partners, and dates are taken
+ * verbatim from those pages.
  */
 const stories = [
   {
-    category: "Restoration",
-    title: "The Green Wall of Aravalli — a 5,000-acre roadmap for ecological revival",
+    category: "Pond Restoration",
+    title: "Chandla Dungerwas — echoes of renewal",
     excerpt:
-      "20+ multi-disciplinary experts mapped biodiversity, hydrology, and cultural heritage across the Damdama Lake landscape.",
-    image: "/uploads/2026/03/eco-hero.jpg",
-    href: "/publication-green-wall-of-aravalli",
-    readTime: "8 min read",
-  },
-  {
-    category: "Community",
-    title: "Chandla Dungarwas — how a forgotten pond became a thriving ecosystem",
-    excerpt:
-      "From silted neglect to a living water body recharging groundwater and supporting the entire village.",
+      "Manesar Tehsil, Gurugram. 1.07-acre pond restored: 7,200 m³ of expanded capacity after desilting, 700+ villagers directly benefiting, groundwater table addressed at 42 m depth.",
     image: "/uploads/2026/03/Support-a-pond-hero.jpg",
     href: "/chandla-dungarwas-pond",
-    readTime: "6 min read",
+    meta: "Jul 2024 · Pond restoration story",
   },
   {
-    category: "Partnership",
-    title: "Suntory × GuruJal — the Bhokarka pond rejuvenation story",
+    category: "Publication",
+    title: "The Green Wall of Aravalli",
     excerpt:
-      "A corporate partnership that delivered measurable environmental outcomes for a Haryana village under the Proof Positive commitment.",
-    image: "/uploads/2026/03/Water-proofing-hero.jpg",
-    href: "/support-a-pond",
-    readTime: "5 min read",
+      "A multi-disciplinary roadmap for ecological restoration of a 5,000-acre landscape around Damdama Lake — 20+ experts across biodiversity, hydrology, groundwater recharge, and cultural heritage.",
+    image: "/uploads/2026/03/eco-hero.jpg",
+    href: "/publication-green-wall-of-aravalli",
+    meta: "Aravalli range · Damdama Lake",
+  },
+  {
+    category: "Event",
+    title: "Roots & Recharge Symposium 2025",
+    excerpt:
+      "GuruJal × Wipro Foundation, India Habitat Centre, 9 December 2025. Reviving traditional water wisdom — heritage dug wells and groundwater resilience in Gurugram.",
+    image: "/uploads/2026/03/events-hero.jpg",
+    href: "/roots-and-recharge-symposium",
+    meta: "9 Dec 2025 · IHC, New Delhi",
   },
 ];
 
@@ -96,7 +98,7 @@ export function Stories() {
                 </p>
                 <div className="mt-5 flex items-center justify-between border-t border-brand-soft pt-4">
                   <span className="text-xs font-medium text-brand-muted">
-                    {s.readTime}
+                    {s.meta}
                   </span>
                   <span className="inline-flex items-center gap-1 text-sm font-semibold text-brand-orange">
                     Read story
