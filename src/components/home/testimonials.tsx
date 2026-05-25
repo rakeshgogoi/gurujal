@@ -1,11 +1,16 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 /**
- * "Recognizing the Impact" — testimonials wall.
+ * "Recognizing the Impact" — compact 2-column layout.
  *
- * Editorial bento layout: one featured large quote spans 2 columns +
- * 2 rows, plus 4 smaller quote cards. All 5 quotes are visible at
- * once — no carousel, no auto-rotate.
+ *  - LEFT: one large featured testimonial that stays put
+ *  - RIGHT: two smaller cards that auto-rotate through the remaining
+ *    quotes (4 of them cycle through 2 visible slots, advancing every
+ *    5.5 seconds with a soft fade).
  *
- * Quote text is verbatim from gurujal.org testimonials section.
+ * All quote text is verbatim from gurujal.org's testimonials section.
  */
 
 type Testimonial = {
@@ -23,7 +28,7 @@ const featured: Testimonial = {
   org: "EY Foundation (India)",
 };
 
-const others: Testimonial[] = [
+const rotating: Testimonial[] = [
   {
     quote:
       "Suntory Global Spirits India extends its gratitude to GuruJal Management for the timely completion of the pond rejuvenation project in Bhokarka village of Haryana. The execution reflects your team's expertise, discipline, and dedication to sustainable environmental outcomes.",
@@ -54,10 +59,24 @@ const others: Testimonial[] = [
   },
 ];
 
+const ROTATE_MS = 5500;
+
 export function Testimonials() {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setIdx((i) => (i + 2) % rotating.length);
+    }, ROTATE_MS);
+    return () => clearInterval(t);
+  }, []);
+
+  const slotA = rotating[idx % rotating.length];
+  const slotB = rotating[(idx + 1) % rotating.length];
+
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
             Voices from the field
@@ -70,54 +89,78 @@ export function Testimonials() {
           </p>
         </div>
 
-        {/* Bento wall.
-            On lg: featured tile spans 2 cols × 2 rows, others fill around.
-            On md: 2 columns. On mobile: stacked. */}
-        <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[1fr]">
-          {/* Featured — large card with brand-deep background */}
-          <article className="relative flex flex-col justify-between overflow-hidden rounded-3xl bg-brand-deep p-8 text-white shadow-xl shadow-black/10 md:col-span-2 lg:row-span-2 lg:p-10">
-            <div className="absolute -right-8 -top-8 opacity-30">
-              <QuoteMark className="h-32 w-32 text-brand-teal-bright" />
-            </div>
-            <p className="relative text-lg leading-relaxed text-white/95 sm:text-xl">
+        {/* 2-column: featured (left) + rotator (right). Both columns are
+            the same height on lg via items-stretch + grid-rows-1. */}
+        <div className="mt-10 grid items-stretch gap-5 lg:grid-cols-2">
+          {/* Featured */}
+          <article className="relative flex flex-col justify-between overflow-hidden rounded-3xl bg-brand-deep p-7 text-white shadow-xl shadow-black/10 sm:p-9">
+            <QuoteMark className="absolute -right-6 -top-6 h-28 w-28 text-brand-teal-bright/30" />
+            <p className="relative text-base leading-relaxed text-white/95 sm:text-lg">
               {featured.quote}
             </p>
-            <footer className="relative mt-8 border-t border-white/15 pt-5">
+            <footer className="relative mt-6 border-t border-white/15 pt-4">
               <div className="text-base font-semibold text-white">
                 {featured.name}
               </div>
               <div className="mt-1 text-sm text-white/75">
-                {featured.role} · <span className="text-brand-teal-bright">{featured.org}</span>
+                {featured.role} ·{" "}
+                <span className="text-brand-teal-bright">{featured.org}</span>
               </div>
             </footer>
           </article>
 
-          {/* Smaller cards */}
-          {others.map((t, i) => (
-            <article
-              key={t.name}
-              className={`relative flex flex-col justify-between overflow-hidden rounded-3xl bg-brand-mist p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
-                // Slight tonal variation across the 4 small cards
-                i === 0 ? "lg:bg-gradient-to-br lg:from-brand-soft lg:to-brand-mist" : ""
-              }`}
-            >
-              <QuoteMark className="mb-3 h-8 w-8 text-brand-teal" />
-              <p className="flex-1 text-sm leading-relaxed text-brand-ink/85 sm:text-[15px]">
-                {t.quote}
-              </p>
-              <footer className="mt-5 border-t border-brand-soft pt-4">
-                <div className="text-sm font-semibold text-brand-ink">
-                  {t.name}
-                </div>
-                <div className="mt-0.5 text-xs leading-snug text-brand-muted">
-                  {t.role} · <span className="text-brand-primary">{t.org}</span>
-                </div>
-              </footer>
-            </article>
-          ))}
+          {/* Rotator — 2 slots */}
+          <div className="flex flex-col gap-5">
+            <RotatingCard t={slotA} keyId={`a-${idx}`} />
+            <RotatingCard t={slotB} keyId={`b-${idx}`} />
+
+            {/* Pagination dots */}
+            <div className="mt-1 flex items-center justify-center gap-1.5">
+              {rotating.map((_, i) => {
+                const active =
+                  i === idx % rotating.length ||
+                  i === (idx + 1) % rotating.length;
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    aria-label={`Show testimonial pair starting ${i + 1}`}
+                    onClick={() => setIdx(i)}
+                    className={`h-1.5 rounded-full transition-all ${
+                      active ? "w-6 bg-brand-orange" : "w-1.5 bg-brand-soft"
+                    }`}
+                  />
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Card in the rotator. `keyId` is used as React key on the wrapper so
+ * the element remounts each rotation and the fade-in animation replays.
+ */
+function RotatingCard({ t, keyId }: { t: Testimonial; keyId: string }) {
+  return (
+    <article
+      key={keyId}
+      className="gj-headline-enter relative flex flex-1 flex-col justify-between overflow-hidden rounded-2xl bg-brand-mist p-6 ring-1 ring-brand-soft/60"
+    >
+      <QuoteMark className="mb-2 h-6 w-6 text-brand-teal" />
+      <p className="line-clamp-4 text-sm leading-relaxed text-brand-ink/85 sm:text-[15px]">
+        {t.quote}
+      </p>
+      <footer className="mt-4 border-t border-brand-soft pt-3">
+        <div className="text-sm font-semibold text-brand-ink">{t.name}</div>
+        <div className="mt-0.5 text-xs leading-snug text-brand-muted">
+          {t.role} · <span className="text-brand-primary">{t.org}</span>
+        </div>
+      </footer>
+    </article>
   );
 }
 
