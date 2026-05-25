@@ -1,36 +1,38 @@
 @import "tailwindcss";
 
 /* ============================================================
- * GuruJal brand tokens
- * Palette extracted from gurujal.org (water-themed teal/cyan)
+ * GuruJal brand tokens — calibrated against live gurujal.org
+ * Body font: DM Sans (matches live site)
+ * Accent orange #F5A043 is used for active nav state
  * ============================================================ */
 @theme {
   /* Primary palette — teal / cyan / water */
-  --color-brand-primary: #1a5468;       /* dark teal — links, primary buttons */
+  --color-brand-primary: #1a5468;       /* dark teal — primary CTA, links */
   --color-brand-primary-dark: #143f4f;
-  --color-brand-deep: #1a3a4a;          /* near-navy teal — footer bg, dark sections */
-  --color-brand-accent: #33bfe2;        /* cyan — accents, highlights, hover */
+  --color-brand-deep: #1a3a4a;          /* announcement bar, footer, dark sections */
+  --color-brand-accent: #33bfe2;        /* cyan — highlights, hover */
   --color-brand-accent-dark: #1ea9cd;
-  --color-brand-soft: #d0f0f7;          /* pale cyan — section backgrounds */
-  --color-brand-mist: #eaf7fb;          /* even softer cyan — page wash */
-  --color-brand-ink: #0f2530;           /* darkest text on light bg */
+  --color-brand-orange: #f5a043;        /* active nav accent ("Home" highlight) */
+  --color-brand-orange-dark: #e08a2c;
+  --color-brand-soft: #d0f0f7;          /* pale cyan section backgrounds */
+  --color-brand-mist: #eaf7fb;          /* page wash */
+  --color-brand-ink: #1a3a4a;           /* primary body text on light bg */
   --color-brand-muted: #4a6878;         /* secondary text */
 
-  /* Font stacks (wired up in layout.tsx via next/font) */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Font stack — DM Sans is the live site's body font */
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
   --background: #ffffff;
-  --foreground: #0f2530;
+  --foreground: #1a3a4a;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  font-feature-settings: "cv11", "ss01";
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -42,5 +44,34 @@ html { scroll-behavior: smooth; }
 
 ::selection {
   background-color: #33bfe2;
-  color: #0f2530;
+  color: #1a3a4a;
+}
+
+/* ----- Hero rotating headline marquee -----
+ * Track contains 3 originals + a repeat of slide 1 (4 children total),
+ * each child = 25% of the track. We translateY in steps of 25% to slide one at a time.
+ */
+@keyframes gj-rotate-3 {
+  0%, 25%   { transform: translateY(0); }
+  33%, 58%  { transform: translateY(-25%); }
+  66%, 91%  { transform: translateY(-50%); }
+  100%      { transform: translateY(-75%); }
+}
+.gj-rotate-track {
+  animation: gj-rotate-3 9s cubic-bezier(.65,.05,.36,1) infinite;
+  height: 400%;
+  display: flex;
+  flex-direction: column;
+}
+.gj-rotate-track > div {
+  height: 25%;
+}
+
+/* ----- Subtle marquee for partner logos ----- */
+@keyframes gj-marquee-x {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.gj-marquee {
+  animation: gj-marquee-x 40s linear infinite;
 }

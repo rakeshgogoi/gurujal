@@ -46,3 +46,6 @@ next-env.d.ts
 /migration/.wp-cookies
 .env.local
 
+
+# claude tooling
+/.claude/
