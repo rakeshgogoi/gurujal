@@ -75,3 +75,12 @@ html { scroll-behavior: smooth; }
 .gj-marquee {
   animation: gj-marquee-x 40s linear infinite;
 }
+
+/* ----- Hero headline fade-in (replays on each idx change) ----- */
+@keyframes gj-headline-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.gj-headline-enter {
+  animation: gj-headline-enter 600ms cubic-bezier(.4, 0, .2, 1) both;
+}

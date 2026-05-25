@@ -81,12 +81,20 @@ export function Hero() {
         />
 
         <div className="absolute inset-0 overflow-hidden">
+          {/*
+            Video-cover sizing for a 16:9 YouTube embed:
+              width  = max(100vw, 100vh * 16/9)   // i.e. max(100vw, 177.78vh)
+              height = width * 9/16                // maintained via aspect-video
+            This guarantees the iframe is at least viewport-wide AND
+            viewport-tall, with 16:9 preserved, so the video always covers
+            the hero area regardless of viewport aspect ratio.
+          */}
           <iframe
             title="GuruJal Intro"
             src={ytSrc}
             allow="autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
-            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video min-w-[177.78vh] min-h-[56.25vw] w-[177.78vh] h-[56.25vw]"
+            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[max(100vw,177.78vh)]"
             style={{ border: 0 }}
           />
         </div>
@@ -96,28 +104,23 @@ export function Hero() {
       </div>
 
       <div className="mx-auto flex min-h-[72vh] max-w-7xl flex-col justify-center px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-        {/* Rotating headline coupled to autoplay timer */}
+        {/* Rotating headline — one <h1> swapped on idx change, with a key
+            forcing remount so the fade-in animation replays cleanly without
+            overlapping the previous slide. */}
         <div className="relative min-h-[180px] sm:min-h-[220px] lg:min-h-[260px]">
-          {headlines.map((s, i) => (
-            <h1
-              key={i}
-              className={`absolute inset-0 flex flex-col justify-center text-4xl font-semibold leading-tight tracking-tight text-white transition-all duration-700 sm:text-5xl lg:text-6xl ${
-                i === idx
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4 pointer-events-none"
-              }`}
-              aria-hidden={i !== idx}
-            >
-              <span>
-                <span className="inline-block rounded-md bg-brand-primary/80 px-3 py-1 text-white shadow-lg shadow-black/20">
-                  {s.lead}
-                </span>{" "}
-                <span className="text-brand-orange">{s.action}</span>{" "}
-                <span className="text-white/95">{s.suffix}</span>{" "}
-                <span className="text-brand-orange">{s.emphasis}</span>
-              </span>
-            </h1>
-          ))}
+          <h1
+            key={idx}
+            className="absolute inset-0 flex flex-col justify-center text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl gj-headline-enter"
+          >
+            <span>
+              <span className="inline-block rounded-md bg-brand-primary/80 px-3 py-1 text-white shadow-lg shadow-black/20">
+                {headlines[idx].lead}
+              </span>{" "}
+              <span className="text-brand-orange">{headlines[idx].action}</span>{" "}
+              <span className="text-white/95">{headlines[idx].suffix}</span>{" "}
+              <span className="text-brand-orange">{headlines[idx].emphasis}</span>
+            </span>
+          </h1>
         </div>
 
         <div className="mt-12 flex items-center gap-4">

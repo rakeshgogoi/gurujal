@@ -22,8 +22,19 @@ export function SiteHeader() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
 
+  // On the homepage the header sits transparently over the video hero.
+  // Everywhere else it has a solid teal background since there's no
+  // dark hero underneath.
+  const isHome = pathname === "/";
+
   return (
-    <header className="w-full bg-brand-deep text-white">
+    <header
+      className={`absolute inset-x-0 top-[50px] z-30 w-full text-white transition-colors ${
+        isHome
+          ? "bg-transparent"
+          : "bg-brand-deep"
+      } ${mobileOpen ? "bg-brand-deep" : ""}`}
+    >
       <div className="mx-auto flex h-[92px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link
