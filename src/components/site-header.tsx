@@ -35,8 +35,8 @@ export function SiteHeader() {
           : "bg-brand-deep"
       } ${mobileOpen ? "bg-brand-deep" : ""}`}
     >
-      <div className="mx-auto flex h-[92px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
+      <div className="mx-auto flex h-[112px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Logo — sized to match the live site's prominent header logo */}
         <Link
           href="/"
           aria-label="GuruJal — home"
@@ -45,10 +45,10 @@ export function SiteHeader() {
           <Image
             src="/brand/gurujal-logo-white.png"
             alt="GuruJal"
-            width={170}
-            height={52}
+            width={260}
+            height={80}
             priority
-            className="h-12 w-auto"
+            className="h-16 w-auto sm:h-[72px] lg:h-20"
           />
         </Link>
 

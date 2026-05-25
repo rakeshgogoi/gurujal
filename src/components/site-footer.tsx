@@ -20,9 +20,9 @@ export function SiteFooter() {
               <Image
                 src="/brand/gurujal-logo-white.png"
                 alt="GuruJal"
-                width={200}
-                height={62}
-                className="h-12 w-auto"
+                width={280}
+                height={86}
+                className="h-20 w-auto sm:h-24"
               />
             </Link>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-white/75">
