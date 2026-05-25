@@ -111,7 +111,7 @@ export function Hero() {
       */}
       {/* On lg+ the right side is reserved for the achievements ticker, so
           the headline gets right-padding to avoid running into it. */}
-      <div className="mx-auto flex min-h-[85vh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28 lg:pr-[340px]">
+      <div className="mx-auto flex min-h-[85vh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28 lg:pr-[400px]">
         {/* Rotating headline — one <h1> swapped on idx change, with a key
             forcing remount so the fade-in animation replays cleanly without
             overlapping the previous slide. */}
