@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* ============================================================
+ * GuruJal brand tokens
+ * Palette extracted from gurujal.org (water-themed teal/cyan)
+ * ============================================================ */
+@theme {
+  /* Primary palette — teal / cyan / water */
+  --color-brand-primary: #1a5468;       /* dark teal — links, primary buttons */
+  --color-brand-primary-dark: #143f4f;
+  --color-brand-deep: #1a3a4a;          /* near-navy teal — footer bg, dark sections */
+  --color-brand-accent: #33bfe2;        /* cyan — accents, highlights, hover */
+  --color-brand-accent-dark: #1ea9cd;
+  --color-brand-soft: #d0f0f7;          /* pale cyan — section backgrounds */
+  --color-brand-mist: #eaf7fb;          /* even softer cyan — page wash */
+  --color-brand-ink: #0f2530;           /* darkest text on light bg */
+  --color-brand-muted: #4a6878;         /* secondary text */
+
+  /* Font stacks (wired up in layout.tsx via next/font) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f2530;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+html { scroll-behavior: smooth; }
+
+::selection {
+  background-color: #33bfe2;
+  color: #0f2530;
+}
