@@ -79,18 +79,18 @@ export function Partners() {
           <h3 className="mb-6 text-center text-sm font-semibold uppercase tracking-[0.16em] text-brand-muted">
             Government
           </h3>
-          <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3">
+          <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-6 sm:grid-cols-3">
             {govt.map((g) => (
               <li
                 key={g.name}
-                className="flex h-44 items-center justify-center rounded-2xl bg-white px-6 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
+                className="flex h-56 items-center justify-center rounded-2xl bg-white px-8 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
               >
                 <Image
                   src={g.src}
                   alt={g.name}
-                  width={320}
-                  height={160}
-                  className="max-h-32 w-auto object-contain"
+                  width={400}
+                  height={200}
+                  className="max-h-44 w-auto object-contain"
                 />
               </li>
             ))}
@@ -116,14 +116,14 @@ export function Partners() {
               {[...brands, ...brands].map((b, i) => (
                 <div
                   key={i}
-                  className="flex h-48 w-72 shrink-0 items-center justify-center rounded-2xl bg-white px-8 ring-1 ring-brand-soft/70"
+                  className="flex h-56 w-[22rem] shrink-0 items-center justify-center rounded-2xl bg-white px-10 ring-1 ring-brand-soft/70"
                 >
                   <Image
                     src={b.src}
                     alt={b.name}
-                    width={280}
-                    height={140}
-                    className="max-h-32 w-auto object-contain"
+                    width={360}
+                    height={180}
+                    className="max-h-40 w-auto object-contain"
                   />
                 </div>
               ))}
