@@ -7,6 +7,7 @@ import { Partners } from "@/components/home/partners";
 import { Stories } from "@/components/home/stories";
 import { RecentEvents } from "@/components/home/upcoming-events";
 import { NewsAndNotice } from "@/components/home/news-and-notice";
+import { Reveal } from "@/components/reveal";
 import Link from "next/link";
 
 /**
@@ -25,17 +26,17 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <WaterCrisisIntro />
-      <SixRApproach />
-      <ImpactStats />
-      <NewsAndNotice />
-      <RecentEvents />
-      <Testimonials />
-      <Partners />
-      <Stories />
+      <Reveal><WaterCrisisIntro /></Reveal>
+      <Reveal><SixRApproach /></Reveal>
+      <Reveal><ImpactStats /></Reveal>
+      <Reveal><NewsAndNotice /></Reveal>
+      <Reveal><RecentEvents /></Reveal>
+      <Reveal><Testimonials /></Reveal>
+      <Reveal><Partners /></Reveal>
+      <Reveal><Stories /></Reveal>
 
       {/* Closing CTA */}
-      <section className="bg-white">
+      <Reveal as="section" className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
           <div className="relative overflow-hidden rounded-3xl bg-brand-deep px-8 py-14 sm:px-12 lg:px-16">
             <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-accent/15 blur-3xl" />
@@ -76,7 +77,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </Reveal>
     </>
   );
 }

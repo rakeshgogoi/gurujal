@@ -90,6 +90,33 @@ html { scroll-behavior: smooth; }
   animation: gj-headline-enter 600ms cubic-bezier(.4, 0, .2, 1) both;
 }
 
+/* ----- Horizontal partner marquees -----
+ * Two rows scroll in opposite directions. Lists are duplicated so the
+ * translate(-50%) lands at the start of the second copy, making the
+ * loop seamless.
+ */
+@keyframes gj-marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes gj-marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.gj-marquee-left {
+  animation: gj-marquee-left 60s linear infinite;
+}
+.gj-marquee-right {
+  animation: gj-marquee-right 60s linear infinite;
+}
+.gj-marquee-paused:hover .gj-marquee-left,
+.gj-marquee-paused:hover .gj-marquee-right {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gj-marquee-left, .gj-marquee-right { animation: none; }
+}
+
 /* ----- Vertical achievements ticker on the hero -----
  * Track contains 2× the achievement cards. translateY(-50%) lands us back
  * at the start of the second copy, so the loop is seamless.

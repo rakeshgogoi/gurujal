@@ -1,11 +1,11 @@
 import Image from "next/image";
 
 /**
- * Partners & Collaborators section.
+ * Partners & Collaborators — modernised as two horizontal marquees
+ * scrolling in opposite directions. Logos render at full color. The
+ * government partners get their own marquee row above.
  *
- * Logos render at full color (no grayscale filter), matching the live
- * site's "Collaborating with public and private organizations" block.
- * All file paths verified against /public/uploads on disk.
+ * The animation pauses on hover (see globals.css).
  */
 
 const brands = [
@@ -41,6 +41,11 @@ const govt = [
   },
 ];
 
+// Split brands into two roughly-equal lists for the two rows
+const half = Math.ceil(brands.length / 2);
+const rowA = brands.slice(0, half);
+const rowB = brands.slice(half);
+
 export function Partners() {
   return (
     <section className="bg-brand-mist">
@@ -55,52 +60,86 @@ export function Partners() {
           </h2>
         </div>
 
-        {/* Government */}
-        <div className="mt-14">
-          <h3 className="text-center text-sm font-semibold uppercase tracking-[0.16em] text-brand-muted">
+        {/* Government — small row, also marquee-style for consistency */}
+        <div className="mt-12">
+          <h3 className="mb-5 text-center text-sm font-semibold uppercase tracking-[0.16em] text-brand-muted">
             Government
           </h3>
-          <ul className="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-8 justify-center">
+          <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-6">
             {govt.map((g) => (
-              <li
+              <div
                 key={g.name}
-                className="flex h-28 items-center justify-center rounded-xl bg-white p-5 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
+                className="flex h-24 w-44 items-center justify-center rounded-xl bg-white px-4 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
               >
                 <Image
                   src={g.src}
                   alt={g.name}
-                  width={200}
-                  height={100}
-                  className="max-h-20 w-auto object-contain"
+                  width={180}
+                  height={80}
+                  className="max-h-16 w-auto object-contain"
                 />
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
 
-        {/* Brands & Foundations */}
+        {/* Brands — two rows scrolling opposite directions */}
         <div className="mt-14">
-          <h3 className="text-center text-sm font-semibold uppercase tracking-[0.16em] text-brand-muted">
+          <h3 className="mb-6 text-center text-sm font-semibold uppercase tracking-[0.16em] text-brand-muted">
             Brands &amp; Foundations
           </h3>
-          <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 lg:gap-6">
-            {brands.map((b) => (
-              <li
-                key={b.name}
-                className="flex h-24 items-center justify-center rounded-xl bg-white p-4 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
-              >
-                <Image
-                  src={b.src}
-                  alt={b.name}
-                  width={160}
-                  height={80}
-                  className="max-h-14 w-auto object-contain"
-                />
-              </li>
-            ))}
-          </ul>
+
+          {/* Outer wrapper provides fade-mask on left + right edges so logos
+              appear to slide in/out of view at the edges. */}
+          <div
+            className="gj-marquee-paused relative space-y-4 overflow-hidden"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+              maskImage:
+                "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+            }}
+          >
+            <MarqueeRow logos={rowA} direction="left" />
+            <MarqueeRow logos={rowB} direction="right" />
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function MarqueeRow({
+  logos,
+  direction,
+}: {
+  logos: { name: string; src: string }[];
+  direction: "left" | "right";
+}) {
+  // Double the list for a seamless infinite scroll
+  const doubled = [...logos, ...logos];
+  return (
+    <div className="relative overflow-hidden">
+      <div
+        className={`flex w-max gap-4 ${
+          direction === "left" ? "gj-marquee-left" : "gj-marquee-right"
+        }`}
+      >
+        {doubled.map((b, i) => (
+          <div
+            key={i}
+            className="flex h-24 w-44 shrink-0 items-center justify-center rounded-xl bg-white px-4 ring-1 ring-brand-soft/70"
+          >
+            <Image
+              src={b.src}
+              alt={b.name}
+              width={160}
+              height={70}
+              className="max-h-14 w-auto object-contain"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
