@@ -104,14 +104,11 @@ export function Hero() {
       </div>
 
       {/*
-        Hero content container.
-        `pt-[200px]` clears the announcement bar (50px) + header (112px) +
-        ~38px breathing room so the headline isn't crowded by the menu bar.
-        We also drop `justify-center` (which previously centered against the
-        section as a whole and pulled the headline up under the header) in
-        favor of explicit top padding + a smaller bottom padding.
+        Hero content container. Now that the header is in normal flow above
+        (no longer absolute), we just need normal vertical padding inside
+        the hero — no compensation for an overlapping header.
       */}
-      <div className="mx-auto flex min-h-[72vh] max-w-7xl flex-col px-4 pt-[200px] pb-24 sm:px-6 sm:pt-[220px] lg:px-8 lg:pt-[240px]">
+      <div className="mx-auto flex min-h-[60vh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
         {/* Rotating headline — one <h1> swapped on idx change, with a key
             forcing remount so the fade-in animation replays cleanly without
             overlapping the previous slide. */}

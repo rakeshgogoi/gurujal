@@ -7,13 +7,14 @@ import { useState } from "react";
 import { primaryNav, ctaNav, type NavItem } from "@/lib/nav";
 
 /**
- * Site header — recreates gurujal.org's main header.
+ * Site header — light theme.
  *
- *  - Background: brand deep teal (#1A3A4A)
- *  - Logo: white wordmark
- *  - Nav: white links with orange (#F5A043) active state and chevron dropdowns
- *  - Right side: "Support Us" pill CTA
- *  - Mobile: hamburger toggle with full nav drawer
+ *  - Background: white, sits in normal document flow (no longer overlapping
+ *    the hero). Sticky so it stays visible while scrolling.
+ *  - Logo: colored GuruJal mark (gurujal-logo.png).
+ *  - Nav text: brand-ink (dark teal). Active link in brand-orange.
+ *  - Right side: "Support Us" pill CTA.
+ *  - Mobile: hamburger toggle with light drawer.
  */
 export function SiteHeader() {
   const pathname = usePathname();
@@ -22,28 +23,17 @@ export function SiteHeader() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
 
-  // On the homepage the header sits transparently over the video hero.
-  // Everywhere else it has a solid teal background since there's no
-  // dark hero underneath.
-  const isHome = pathname === "/";
-
   return (
-    <header
-      className={`absolute inset-x-0 top-[50px] z-30 w-full text-white transition-colors ${
-        isHome
-          ? "bg-transparent"
-          : "bg-brand-deep"
-      } ${mobileOpen ? "bg-brand-deep" : ""}`}
-    >
+    <header className="sticky top-0 z-40 w-full bg-white text-brand-ink shadow-sm ring-1 ring-brand-soft/60">
       <div className="mx-auto flex h-[112px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo — sized to match the live site's prominent header logo */}
+        {/* Logo — colored mark on light bg */}
         <Link
           href="/"
           aria-label="GuruJal — home"
           className="flex items-center gap-3 shrink-0"
         >
           <Image
-            src="/brand/gurujal-logo-white.png"
+            src="/brand/gurujal-logo.png"
             alt="GuruJal"
             width={260}
             height={80}
@@ -81,7 +71,7 @@ export function SiteHeader() {
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
-            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md text-white hover:bg-white/10"
+            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md text-brand-ink hover:bg-brand-mist"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               {mobileOpen ? (
@@ -103,7 +93,7 @@ export function SiteHeader() {
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-brand-deep">
+        <div className="lg:hidden border-t border-brand-soft bg-white">
           <nav className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
             <ul className="flex flex-col gap-1">
               {primaryNav.map((item) => (
@@ -111,20 +101,20 @@ export function SiteHeader() {
                   <Link
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className={`block rounded-md px-3 py-2 text-base font-medium hover:bg-white/10 ${
-                      isActive(item.href) ? "text-brand-orange" : "text-white"
+                    className={`block rounded-md px-3 py-2 text-base font-medium hover:bg-brand-mist ${
+                      isActive(item.href) ? "text-brand-orange" : "text-brand-ink"
                     }`}
                   >
                     {item.label}
                   </Link>
                   {item.children && (
-                    <ul className="ml-3 mt-1 mb-2 border-l border-white/15 pl-3">
+                    <ul className="ml-3 mt-1 mb-2 border-l border-brand-soft pl-3">
                       {item.children.map((c) => (
                         <li key={c.href + c.label}>
                           <Link
                             href={c.href}
                             onClick={() => setMobileOpen(false)}
-                            className="block rounded-md px-3 py-1.5 text-sm text-white/80 hover:bg-white/10 hover:text-white"
+                            className="block rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
                           >
                             {c.label}
                           </Link>
@@ -158,7 +148,7 @@ function DesktopNavItem({ item, active }: { item: NavItem; active: boolean }) {
       <Link
         href={item.href}
         className={`inline-flex items-center gap-1 px-3 py-2 text-[15px] font-medium transition ${
-          active ? "text-brand-orange" : "text-white hover:text-brand-orange"
+          active ? "text-brand-orange" : "text-brand-ink hover:text-brand-orange"
         }`}
       >
         {item.label}
@@ -170,12 +160,12 @@ function DesktopNavItem({ item, active }: { item: NavItem; active: boolean }) {
       </Link>
       {hasChildren && (
         <div className="invisible absolute left-0 top-full z-50 pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100">
-          <div className="min-w-[240px] rounded-xl border border-white/10 bg-brand-deep p-2 shadow-xl ring-1 ring-black/20">
+          <div className="min-w-[240px] rounded-xl border border-brand-soft bg-white p-2 shadow-xl ring-1 ring-black/5">
             {item.children!.map((c) => (
               <Link
                 key={c.href + c.label}
                 href={c.href}
-                className="block rounded-md px-3 py-2 text-sm text-white/85 hover:bg-white/10 hover:text-brand-orange transition"
+                className="block rounded-md px-3 py-2 text-sm text-brand-ink hover:bg-brand-mist hover:text-brand-orange transition"
               >
                 {c.label}
               </Link>

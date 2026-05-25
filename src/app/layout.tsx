@@ -41,13 +41,11 @@ export default function RootLayout({
       lang="en"
       className={`${dmSans.variable} h-full antialiased`}
     >
-      {/* `relative` on body anchors the absolute SiteHeader's positioning */}
-      <body className="relative min-h-full flex flex-col bg-white text-brand-ink">
+      <body className="min-h-full flex flex-col bg-white text-brand-ink">
+        {/* Stack: announcement bar (dark teal, normal flow) → sticky white
+            header → page content. Header takes flow space so the hero (and
+            every inner page) starts below it naturally. */}
         <AnnouncementBar />
-        {/* SiteHeader is position:absolute, floating over the hero on the
-            homepage. main needs no top padding because Hero handles its own
-            internal spacing; other pages add their own padding via the
-            site-content-offset utility (see globals.css). */}
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />
