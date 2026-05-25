@@ -103,14 +103,22 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/55 via-brand-deep/35 to-brand-deep/70" />
       </div>
 
-      <div className="mx-auto flex min-h-[72vh] max-w-7xl flex-col justify-center px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+      {/*
+        Hero content container.
+        `pt-[200px]` clears the announcement bar (50px) + header (112px) +
+        ~38px breathing room so the headline isn't crowded by the menu bar.
+        We also drop `justify-center` (which previously centered against the
+        section as a whole and pulled the headline up under the header) in
+        favor of explicit top padding + a smaller bottom padding.
+      */}
+      <div className="mx-auto flex min-h-[72vh] max-w-7xl flex-col px-4 pt-[200px] pb-24 sm:px-6 sm:pt-[220px] lg:px-8 lg:pt-[240px]">
         {/* Rotating headline — one <h1> swapped on idx change, with a key
             forcing remount so the fade-in animation replays cleanly without
             overlapping the previous slide. */}
-        <div className="relative min-h-[180px] sm:min-h-[220px] lg:min-h-[260px]">
+        <div className="relative min-h-[120px] sm:min-h-[140px] lg:min-h-[170px]">
           <h1
             key={idx}
-            className="absolute inset-0 flex flex-col justify-center text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl gj-headline-enter"
+            className="absolute inset-0 flex flex-col justify-center text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl gj-headline-enter"
           >
             <span>
               <span className="inline-block rounded-md bg-brand-primary/80 px-3 py-1 text-white shadow-lg shadow-black/20">
