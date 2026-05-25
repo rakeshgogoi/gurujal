@@ -116,7 +116,7 @@ export function Hero() {
               <span className="inline-block rounded-md bg-brand-primary/80 px-3 py-1 text-white shadow-lg shadow-black/20">
                 {headlines[idx].lead}
               </span>{" "}
-              <span className="text-brand-teal">{headlines[idx].action}</span>{" "}
+              <span className="text-brand-teal-bright">{headlines[idx].action}</span>{" "}
               <span className="text-white/95">{headlines[idx].suffix}</span>{" "}
               <span className="text-brand-green">{headlines[idx].emphasis}</span>
             </span>

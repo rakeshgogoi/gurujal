@@ -14,8 +14,9 @@
   --color-brand-accent-dark: #1ea9cd;
   --color-brand-orange: #f5a043;        /* active nav accent ("Home" highlight) */
   --color-brand-orange-dark: #e08a2c;
-  --color-brand-teal: #4fa0ae;          /* logo teal — heading text highlight */
+  --color-brand-teal: #4fa0ae;          /* logo teal — heading text highlight on light bgs */
   --color-brand-teal-dark: #3d8794;
+  --color-brand-teal-bright: #6cc4d4;   /* brighter teal — heading text on dark bgs (hero) */
   --color-brand-green: #8dc63f;         /* eco-green — secondary heading highlight */
   --color-brand-green-dark: #76a832;
   --color-brand-soft: #d0f0f7;          /* pale cyan section backgrounds */
