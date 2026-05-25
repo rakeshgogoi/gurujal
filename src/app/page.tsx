@@ -40,7 +40,7 @@ export default function Home() {
             <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-brand-orange/10 blur-3xl" />
             <div className="relative grid items-center gap-8 lg:grid-cols-2">
               <div>
-                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-orange">
+                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
                   Follow GuruJal · 1,411 followers
                 </p>
                 <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">

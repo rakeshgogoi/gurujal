@@ -93,7 +93,7 @@ function Column({
     <div className="rounded-2xl border border-brand-soft bg-white p-7 shadow-sm">
       <div className="mb-6 flex items-end justify-between gap-4 border-b border-brand-soft pb-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-orange">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-teal">
             {eyebrow}
           </p>
           <h2 className="mt-1 text-2xl font-semibold tracking-tight text-brand-ink">

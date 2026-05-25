@@ -49,7 +49,7 @@ export function Testimonials() {
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-orange">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
             Voices from the field
           </p>
           <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
