@@ -35,10 +35,10 @@ export function SiteHeader() {
           <Image
             src="/brand/gurujal-logo.png"
             alt="GuruJal"
-            width={220}
-            height={68}
+            width={260}
+            height={80}
             priority
-            className="h-12 w-auto sm:h-[52px] lg:h-14"
+            className="h-14 w-auto sm:h-16 lg:h-[68px]"
           />
         </Link>
 
