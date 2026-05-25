@@ -89,3 +89,18 @@ html { scroll-behavior: smooth; }
 .gj-headline-enter {
   animation: gj-headline-enter 600ms cubic-bezier(.4, 0, .2, 1) both;
 }
+
+/* ----- Vertical achievements ticker on the hero -----
+ * Track contains 2× the achievement cards. translateY(-50%) lands us back
+ * at the start of the second copy, so the loop is seamless.
+ */
+@keyframes gj-ticker-vertical {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+.gj-ticker-vertical {
+  animation: gj-ticker-vertical 45s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gj-ticker-vertical { animation: none; }
+}
