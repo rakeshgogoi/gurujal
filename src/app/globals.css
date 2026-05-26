@@ -148,6 +148,12 @@ html { scroll-behavior: smooth; }
 .gj-sixr-paused:hover .gj-sixr-marquee {
   animation-play-state: paused;
 }
+/* On touch viewports (below lg) the user scrolls the track themselves;
+ * the wrapper switches to overflow-x-auto + snap-x. Killing the
+ * auto-marquee here so transform doesn't fight the scroll position. */
+@media (max-width: 1023px) {
+  .gj-sixr-marquee { animation: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   .gj-sixr-marquee { animation: none; }
 }
