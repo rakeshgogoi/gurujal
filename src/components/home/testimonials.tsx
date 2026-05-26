@@ -221,7 +221,7 @@ export function Testimonials() {
 
               <div className="relative">
                 <QuoteMark className="absolute -top-2 left-0 h-8 w-8 text-white/15 sm:-top-4 sm:h-12 sm:w-12" />
-                <p className="relative line-clamp-5 pt-4 text-sm leading-relaxed text-white/95 sm:line-clamp-none sm:pt-6 sm:text-lg lg:text-xl">
+                <p className="relative line-clamp-5 pt-12 text-sm leading-relaxed text-white/95 sm:line-clamp-none sm:pt-6 sm:text-lg lg:text-xl">
                   {t.quote}
                 </p>
                 <div className="mt-4 flex items-center gap-3 sm:mt-6">
