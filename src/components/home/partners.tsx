@@ -85,17 +85,17 @@ export function Partners() {
                 key={g.name}
                 className="flex h-56 items-center justify-center rounded-2xl bg-white px-8 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
               >
-                {/* Both max-h and max-w set so every logo fills the same
-                    visual "logo zone" regardless of source aspect ratio. */}
-                <div className="flex h-32 w-full items-center justify-center">
-                  <Image
-                    src={g.src}
-                    alt={g.name}
-                    width={400}
-                    height={200}
-                    className="max-h-32 max-w-[16rem] h-auto w-auto object-contain"
-                  />
-                </div>
+                {/* All logos forced to the SAME height; width adjusts via
+                    aspect ratio. This is the only reliable way to get a
+                    visually-even logo row when the source logos have
+                    different aspect ratios. */}
+                <Image
+                  src={g.src}
+                  alt={g.name}
+                  width={400}
+                  height={200}
+                  className="h-28 w-auto max-w-full object-contain"
+                />
               </li>
             ))}
           </ul>
@@ -122,17 +122,16 @@ export function Partners() {
                   key={i}
                   className="flex h-56 w-[22rem] shrink-0 items-center justify-center rounded-2xl bg-white px-10 ring-1 ring-brand-soft/70"
                 >
-                  {/* Uniform logo zone — each logo fits inside the same
-                      box so the visual size is even across the marquee. */}
-                  <div className="flex h-28 w-full items-center justify-center">
-                    <Image
-                      src={b.src}
-                      alt={b.name}
-                      width={360}
-                      height={180}
-                      className="max-h-28 max-w-[16rem] h-auto w-auto object-contain"
-                    />
-                  </div>
+                  {/* Forced fixed height — every brand logo renders at
+                      exactly the same pixel height so the marquee reads
+                      as a uniform row. */}
+                  <Image
+                    src={b.src}
+                    alt={b.name}
+                    width={400}
+                    height={200}
+                    className="h-20 w-auto max-w-full object-contain"
+                  />
                 </div>
               ))}
             </div>
