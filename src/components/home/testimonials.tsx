@@ -165,27 +165,27 @@ export function Testimonials() {
         className="pointer-events-none absolute -right-32 bottom-12 h-80 w-80 rounded-full bg-brand-orange/15 blur-3xl"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+      <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal-bright">
+          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal-bright sm:mb-3">
             Voices from the field
           </p>
           <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             Recognizing the Impact
           </h2>
-          <p className="mt-3 text-base text-white/70">
+          <p className="mt-2 text-sm text-white/70 sm:mt-3 sm:text-base">
             Testimonials from key leaders and partners.
           </p>
         </div>
 
         {/* Card */}
-        <div className="relative mx-auto mt-12 max-w-5xl">
+        <div className="relative mx-auto mt-6 max-w-5xl sm:mt-10 lg:mt-12">
           <div
             key={idx}
             className="gj-headline-enter relative overflow-hidden rounded-3xl bg-white/[0.04] ring-1 ring-white/10 backdrop-blur"
           >
             {/* Counter */}
-            <div className="pointer-events-none absolute right-6 top-5 z-10 text-xs font-semibold tracking-[0.18em] text-white/55">
+            <div className="pointer-events-none absolute right-4 top-3 z-10 text-[11px] font-semibold tracking-[0.18em] text-white/55 sm:right-6 sm:top-5 sm:text-xs">
               <span className="text-white">
                 {String(idx + 1).padStart(2, "0")}
               </span>
@@ -193,22 +193,22 @@ export function Testimonials() {
               <span>{String(count).padStart(2, "0")}</span>
             </div>
 
-            {/* Inset content */}
-            <div className="grid items-center gap-8 p-8 sm:p-10 lg:grid-cols-[auto_1fr] lg:gap-12 lg:p-12">
+            {/* Inset content — compact stack on mobile, two-up at lg */}
+            <div className="grid items-center gap-4 p-5 sm:gap-8 sm:p-10 lg:grid-cols-[auto_1fr] lg:gap-12 lg:p-12">
               <Portrait t={t} />
 
               <div className="relative">
-                <QuoteMark className="absolute -top-4 left-0 h-12 w-12 text-white/15" />
-                <p className="relative pt-6 text-lg leading-relaxed text-white/95 sm:text-xl">
+                <QuoteMark className="absolute -top-2 left-0 h-8 w-8 text-white/15 sm:-top-4 sm:h-12 sm:w-12" />
+                <p className="relative line-clamp-5 pt-4 text-sm leading-relaxed text-white/95 sm:line-clamp-none sm:pt-6 sm:text-lg lg:text-xl">
                   {t.quote}
                 </p>
-                <div className="mt-6 flex items-center gap-3">
-                  <span aria-hidden className={`h-px w-10 ${toneSolid[t.tone]}`} />
+                <div className="mt-4 flex items-center gap-3 sm:mt-6">
+                  <span aria-hidden className={`h-px w-8 sm:w-10 ${toneSolid[t.tone]}`} />
                   <div>
-                    <div className="text-base font-semibold text-white">
+                    <div className="text-sm font-semibold text-white sm:text-base">
                       {t.name}
                     </div>
-                    <div className="mt-0.5 text-sm text-white/65">
+                    <div className="mt-0.5 text-xs text-white/65 sm:text-sm">
                       {t.role} ·{" "}
                       <span className={`font-medium ${toneOrg[t.tone]}`}>
                         {t.org}
@@ -282,19 +282,19 @@ export function Testimonials() {
 function Portrait({ t }: { t: Testimonial }) {
   if (t.photo) {
     return (
-      <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-full ring-4 ring-white/15 shadow-2xl sm:h-48 sm:w-48">
+      <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full ring-4 ring-white/15 shadow-2xl sm:h-40 sm:w-40 lg:h-48 lg:w-48">
         <Image src={t.photo} alt={t.name} fill sizes="192px" className="object-cover" />
       </div>
     );
   }
   return (
     <div
-      className={`relative flex h-40 w-40 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${toneGradient[t.tone]} ring-4 ring-white/15 shadow-2xl sm:h-48 sm:w-48`}
+      className={`relative flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${toneGradient[t.tone]} ring-4 ring-white/15 shadow-2xl sm:h-40 sm:w-40 lg:h-48 lg:w-48`}
       aria-hidden
     >
-      <div className="absolute inset-3 rounded-full border border-white/25" />
-      <div className="absolute inset-6 rounded-full border border-white/10" />
-      <span className="relative text-4xl font-bold tracking-tight text-white sm:text-5xl">
+      <div className="absolute inset-2 rounded-full border border-white/25 sm:inset-3" />
+      <div className="absolute inset-4 rounded-full border border-white/10 sm:inset-6" />
+      <span className="relative text-2xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
         {initials(t.name)}
       </span>
     </div>
