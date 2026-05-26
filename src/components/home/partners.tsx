@@ -107,8 +107,12 @@ export function Partners() {
             Brands &amp; Foundations
           </h3>
 
+          {/* Below lg: native touch-scroll so users can finger-swipe
+              through the logos. lg+: continuous auto-marquee. The CSS
+              animation is disabled below lg via @media so the track's
+              transform doesn't fight the user's scroll. */}
           <div
-            className="gj-marquee-paused relative overflow-hidden"
+            className="gj-marquee-paused relative overflow-x-auto overscroll-x-contain lg:overflow-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             style={{
               WebkitMaskImage:
                 "linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)",
@@ -116,11 +120,11 @@ export function Partners() {
                 "linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)",
             }}
           >
-            <div className="gj-marquee-left flex w-max gap-6">
+            <div className="gj-marquee-left flex w-max gap-6 snap-x snap-mandatory lg:snap-none">
               {[...brands, ...brands].map((b, i) => (
                 <div
                   key={i}
-                  className="flex h-40 w-40 shrink-0 items-center justify-center rounded-2xl bg-white p-2 ring-1 ring-brand-soft/70"
+                  className="flex h-40 w-40 shrink-0 snap-start items-center justify-center rounded-2xl bg-white p-2 ring-1 ring-brand-soft/70 lg:snap-none"
                 >
                   {/* Logo zone capped on BOTH axes so wide logos
                       (Hyundai, Pearl Global) and square ones (AIC) all

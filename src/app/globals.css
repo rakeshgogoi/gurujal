@@ -114,6 +114,12 @@ html { scroll-behavior: smooth; }
 .gj-marquee-paused:hover .gj-marquee-right {
   animation-play-state: paused;
 }
+/* On touch viewports (below lg) the user scrolls the partner logos
+ * themselves; the wrapper switches to overflow-x-auto. Killing the
+ * auto-marquee so transform doesn't fight the scroll position. */
+@media (max-width: 1023px) {
+  .gj-marquee-left, .gj-marquee-right { animation: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   .gj-marquee-left, .gj-marquee-right { animation: none; }
 }
