@@ -148,6 +148,26 @@ export function Testimonials() {
   const prev = () => jump((idx - 1 + count) % count);
   const next = () => jump((idx + 1) % count);
 
+  /* Touch-swipe support — left-swipe advances, right-swipe retreats.
+   * Threshold at 40 px so a slight finger wobble doesn't trip it. Auto-
+   * advance pauses while the finger is down. */
+  const touchStartX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.changedTouches[0].clientX;
+    setPaused(true);
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const startX = touchStartX.current;
+    touchStartX.current = null;
+    setPaused(false);
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) {
+      if (dx < 0) next();
+      else prev();
+    }
+  };
+
   const t = testimonials[idx];
 
   return (
@@ -182,7 +202,9 @@ export function Testimonials() {
         <div className="relative mx-auto mt-6 max-w-5xl sm:mt-10 lg:mt-12">
           <div
             key={idx}
-            className="gj-headline-enter relative overflow-hidden rounded-3xl bg-white/[0.04] ring-1 ring-white/10 backdrop-blur"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            className="gj-headline-enter relative overflow-hidden rounded-3xl bg-white/[0.04] ring-1 ring-white/10 backdrop-blur touch-pan-y select-none"
           >
             {/* Counter */}
             <div className="pointer-events-none absolute right-4 top-3 z-10 text-[11px] font-semibold tracking-[0.18em] text-white/55 sm:right-6 sm:top-5 sm:text-xs">
