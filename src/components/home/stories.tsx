@@ -75,8 +75,10 @@ export function Stories() {
             className="group relative flex flex-col overflow-hidden rounded-3xl bg-brand-mist lg:col-span-7"
           >
             {/* Image container — explicit aspect ratio on every viewport
-                so Next/Image fill always has positive parent height. */}
-            <div className="relative aspect-[16/11] w-full overflow-hidden lg:aspect-[5/4]">
+                so Next/Image fill always has positive parent height.
+                Mobile gets a taller 3:4 portrait so the overlay text has
+                room to sit; desktop stays landscape. */}
+            <div className="relative aspect-[3/4] w-full overflow-hidden sm:aspect-[16/11] lg:aspect-[5/4]">
               <Image
                 src={feature.image}
                 alt=""
@@ -89,14 +91,14 @@ export function Stories() {
                   letting the upper two-thirds of the photo show clearly. */}
               <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/85 via-brand-deep/15 to-transparent" />
             </div>
-            <div className="absolute inset-x-0 bottom-0 p-7 sm:p-10">
+            <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 lg:p-10">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-orange/95 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
                 Featured · {feature.category}
               </span>
               <h3 className="mt-4 max-w-2xl text-2xl font-semibold leading-tight text-white sm:text-3xl">
                 {feature.title}
               </h3>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base">
+              <p className="mt-3 line-clamp-3 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base lg:line-clamp-none">
                 {feature.excerpt}
               </p>
               <div className="mt-5 flex items-center justify-between gap-4 border-t border-white/15 pt-4">
