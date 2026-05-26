@@ -54,11 +54,11 @@ export function SiteFooter() {
           <FooterColumn title="Organisation" links={footerLinks.organisation} className="lg:col-span-2" />
         </div>
 
-        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-center sm:flex-row sm:items-center sm:text-left">
           <p className="text-xs text-white/60">
             © {year} GuruJal. All rights reserved.
           </p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/60">
+          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-white/60 sm:justify-start">
             {footerLinks.legal.map((l) => (
               <li key={l.href}>
                 <a href={liveUrl(l.href)} className="hover:text-white">

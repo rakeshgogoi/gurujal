@@ -120,7 +120,7 @@ export function Partners() {
                 "linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)",
             }}
           >
-            <div className="gj-marquee-left flex w-max gap-6 snap-x snap-mandatory lg:snap-none">
+            <div className="gj-marquee-left flex w-max gap-6 snap-x snap-mandatory px-2 sm:px-0 lg:snap-none">
               {[...brands, ...brands].map((b, i) => (
                 <div
                   key={i}

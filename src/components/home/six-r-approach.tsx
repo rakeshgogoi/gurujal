@@ -124,7 +124,7 @@ export function SixRApproach() {
             finger on mobile because the wrapper is overflow-x-auto and
             the marquee animation is disabled at that breakpoint. */}
         <div className="gj-sixr-paused relative mt-14 -mx-4 overflow-x-auto overscroll-x-contain sm:-mx-6 lg:-mx-8 lg:overflow-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <ul className="gj-sixr-marquee flex w-max items-stretch gap-6 snap-x snap-mandatory px-4 pb-2 sm:px-6 lg:snap-none lg:px-8">
+          <ul className="gj-sixr-marquee flex w-max items-stretch gap-6 snap-x snap-mandatory px-6 pb-2 sm:px-8 lg:snap-none lg:px-8">
             {[...sixR, ...sixR].map((r, i) => {
               const stepIndex = i % sixR.length; // 0..5
               return (
