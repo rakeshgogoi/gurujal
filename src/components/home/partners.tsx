@@ -83,18 +83,18 @@ export function Partners() {
             {govt.map((g) => (
               <li
                 key={g.name}
-                className="flex h-56 items-center justify-center rounded-2xl bg-white px-8 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
+                className="flex h-44 items-center justify-center rounded-2xl bg-white px-5 py-3 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md hover:ring-brand-accent"
               >
-                {/* All logos forced to the SAME height; width adjusts via
-                    aspect ratio. This is the only reliable way to get a
-                    visually-even logo row when the source logos have
-                    different aspect ratios. */}
+                {/* All logos forced to the SAME height for a visually-even
+                    row; width adjusts via aspect ratio. Tile is sized so
+                    the logo occupies most of it without large empty
+                    margins. */}
                 <Image
                   src={g.src}
                   alt={g.name}
                   width={400}
                   height={200}
-                  className="h-28 w-auto max-w-full object-contain"
+                  className="h-32 w-auto max-w-full object-contain"
                 />
               </li>
             ))}
@@ -120,17 +120,18 @@ export function Partners() {
               {[...brands, ...brands].map((b, i) => (
                 <div
                   key={i}
-                  className="flex h-56 w-[22rem] shrink-0 items-center justify-center rounded-2xl bg-white px-10 ring-1 ring-brand-soft/70"
+                  className="flex h-36 w-[18rem] shrink-0 items-center justify-center rounded-2xl bg-white px-5 py-3 ring-1 ring-brand-soft/70"
                 >
                   {/* Forced fixed height — every brand logo renders at
                       exactly the same pixel height so the marquee reads
-                      as a uniform row. */}
+                      as a uniform row. Tile sized so the logo fills it
+                      without large empty borders. */}
                   <Image
                     src={b.src}
                     alt={b.name}
                     width={400}
                     height={200}
-                    className="h-20 w-auto max-w-full object-contain"
+                    className="h-24 w-auto max-w-full object-contain"
                   />
                 </div>
               ))}
