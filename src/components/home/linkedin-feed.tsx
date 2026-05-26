@@ -80,14 +80,16 @@ export function LinkedInFeed() {
           </a>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Below sm: single touch-scroll row with snap. sm+: regular grid. */}
+        <div className="mt-12 -mx-4 overflow-x-auto overscroll-x-contain px-4 sm:mx-0 sm:overflow-visible sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex w-max gap-6 snap-x snap-mandatory sm:grid sm:w-auto sm:grid-cols-2 sm:gap-6 sm:snap-none lg:grid-cols-4">
           {POSTS.map((p, i) => (
             <a
               key={i}
               href={p.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col rounded-2xl bg-white ring-1 ring-brand-soft transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-brand-accent"
+              className="group flex w-[280px] shrink-0 snap-start flex-col rounded-2xl bg-white ring-1 ring-brand-soft transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-brand-accent sm:w-auto sm:shrink sm:snap-none"
             >
               {/* "Author" strip — mimics a LinkedIn post header */}
               <div className="flex items-center gap-3 border-b border-brand-soft/70 p-4">
@@ -146,6 +148,7 @@ export function LinkedInFeed() {
               </div>
             </a>
           ))}
+          </div>
         </div>
       </div>
     </section>
