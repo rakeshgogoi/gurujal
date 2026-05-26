@@ -120,18 +120,18 @@ export function Partners() {
               {[...brands, ...brands].map((b, i) => (
                 <div
                   key={i}
-                  className="flex h-36 w-[18rem] shrink-0 items-center justify-center rounded-2xl bg-white px-5 py-3 ring-1 ring-brand-soft/70"
+                  className="flex h-40 w-40 shrink-0 items-center justify-center rounded-2xl bg-white p-2 ring-1 ring-brand-soft/70"
                 >
-                  {/* Forced fixed height — every brand logo renders at
-                      exactly the same pixel height so the marquee reads
-                      as a uniform row. Tile sized so the logo fills it
-                      without large empty borders. */}
+                  {/* Logo zone capped on BOTH axes so wide logos
+                      (Hyundai, Pearl Global) and square ones (AIC) all
+                      occupy the same bounded area — object-contain
+                      preserves aspect ratio inside the zone. */}
                   <Image
                     src={b.src}
                     alt={b.name}
                     width={400}
                     height={200}
-                    className="h-24 w-auto max-w-full object-contain"
+                    className="max-h-32 max-w-32 h-auto w-auto object-contain"
                   />
                 </div>
               ))}

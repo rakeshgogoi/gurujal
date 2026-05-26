@@ -1,37 +1,26 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { primaryNav, ctaNav, type NavItem } from "@/lib/nav";
+import { liveUrl } from "@/lib/live-url";
 
 /**
  * Site header — light theme.
  *
- *  - Background: white, sits in normal document flow (no longer overlapping
- *    the hero). Sticky so it stays visible while scrolling.
- *  - Logo: colored GuruJal mark (gurujal-logo.png).
- *  - Nav text: brand-ink (dark teal). Active link in brand-orange.
- *  - Right side: "Support Us" pill CTA.
- *  - Mobile: hamburger toggle with light drawer.
+ *  - All nav links resolve to the live gurujal.org site via liveUrl().
+ *    The home link stays internal so the new homepage is reachable.
+ *  - Logo on the left, primary nav in the middle, Support Us pill on the
+ *    right. Mobile drawer collapses everything into a column.
  */
 export function SiteHeader() {
-  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white text-brand-ink shadow-sm ring-1 ring-brand-soft/60">
       <div className="mx-auto flex h-[80px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo — colored mark on light bg, scaled for the slimmer header */}
-        <Link
-          href="/"
-          aria-label="GuruJal — home"
-          className="flex items-center gap-3 shrink-0"
-        >
+        {/* Logo — internal home link (this homepage). */}
+        <a href="/" aria-label="GuruJal — home" className="flex items-center gap-3 shrink-0">
           <Image
             src="/brand/gurujal-logo.png"
             alt="GuruJal"
@@ -40,7 +29,7 @@ export function SiteHeader() {
             priority
             className="h-14 w-auto sm:h-16 lg:h-[68px]"
           />
-        </Link>
+        </a>
 
         {/* Desktop nav */}
         <nav
@@ -51,19 +40,19 @@ export function SiteHeader() {
             <DesktopNavItem
               key={item.href + item.label}
               item={item}
-              active={isActive(item.href)}
+              isHome={item.href === "/"}
             />
           ))}
         </nav>
 
         {/* Right side: CTA + menu */}
         <div className="flex items-center gap-3">
-          <Link
-            href={ctaNav.href}
+          <a
+            href={liveUrl(ctaNav.href)}
             className="hidden lg:inline-flex items-center rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-orange-dark"
           >
             {ctaNav.label}
-          </Link>
+          </a>
 
           {/* Mobile toggle */}
           <button
@@ -96,42 +85,45 @@ export function SiteHeader() {
         <div className="lg:hidden border-t border-brand-soft bg-white">
           <nav className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
             <ul className="flex flex-col gap-1">
-              {primaryNav.map((item) => (
-                <li key={item.href + item.label}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={`block rounded-md px-3 py-2 text-base font-medium hover:bg-brand-mist ${
-                      isActive(item.href) ? "text-brand-orange" : "text-brand-ink"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                  {item.children && (
-                    <ul className="ml-3 mt-1 mb-2 border-l border-brand-soft pl-3">
-                      {item.children.map((c) => (
-                        <li key={c.href + c.label}>
-                          <Link
-                            href={c.href}
-                            onClick={() => setMobileOpen(false)}
-                            className="block rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
-                          >
-                            {c.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
+              {primaryNav.map((item) => {
+                const itemHref = item.href === "/" ? "/" : liveUrl(item.href);
+                return (
+                  <li key={item.href + item.label}>
+                    <a
+                      href={itemHref}
+                      onClick={() => setMobileOpen(false)}
+                      className={`block rounded-md px-3 py-2 text-base font-semibold hover:bg-brand-mist ${
+                        item.href === "/" ? "text-brand-orange" : "text-brand-ink"
+                      }`}
+                    >
+                      {item.label}
+                    </a>
+                    {item.children && (
+                      <ul className="ml-3 mt-1 mb-2 border-l border-brand-soft pl-3">
+                        {item.children.map((c) => (
+                          <li key={c.href + c.label}>
+                            <a
+                              href={liveUrl(c.href)}
+                              onClick={() => setMobileOpen(false)}
+                              className="block rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
+                            >
+                              {c.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
               <li className="mt-4">
-                <Link
-                  href={ctaNav.href}
+                <a
+                  href={liveUrl(ctaNav.href)}
                   onClick={() => setMobileOpen(false)}
                   className="block rounded-full bg-brand-orange px-5 py-2.5 text-center text-sm font-semibold text-white"
                 >
                   {ctaNav.label}
-                </Link>
+                </a>
               </li>
             </ul>
           </nav>
@@ -141,14 +133,15 @@ export function SiteHeader() {
   );
 }
 
-function DesktopNavItem({ item, active }: { item: NavItem; active: boolean }) {
+function DesktopNavItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
   const hasChildren = item.children && item.children.length > 0;
+  const itemHref = isHome ? "/" : liveUrl(item.href);
   return (
     <div className="group relative">
-      <Link
-        href={item.href}
-        className={`inline-flex items-center gap-1 px-3 py-2 text-[15px] font-medium transition ${
-          active ? "text-brand-orange" : "text-brand-ink hover:text-brand-orange"
+      <a
+        href={itemHref}
+        className={`inline-flex items-center gap-1 px-3 py-2 text-[17px] font-semibold transition ${
+          isHome ? "text-brand-orange" : "text-brand-ink hover:text-brand-orange"
         }`}
       >
         {item.label}
@@ -157,18 +150,18 @@ function DesktopNavItem({ item, active }: { item: NavItem; active: boolean }) {
             <polyline points="6 9 12 15 18 9" />
           </svg>
         )}
-      </Link>
+      </a>
       {hasChildren && (
         <div className="invisible absolute left-0 top-full z-50 pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100">
           <div className="min-w-[240px] rounded-xl border border-brand-soft bg-white p-2 shadow-xl ring-1 ring-black/5">
             {item.children!.map((c) => (
-              <Link
+              <a
                 key={c.href + c.label}
-                href={c.href}
+                href={liveUrl(c.href)}
                 className="block rounded-md px-3 py-2 text-sm text-brand-ink hover:bg-brand-mist hover:text-brand-orange transition"
               >
                 {c.label}
-              </Link>
+              </a>
             ))}
           </div>
         </div>

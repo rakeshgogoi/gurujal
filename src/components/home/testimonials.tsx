@@ -1,40 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 /**
- * "Recognizing the Impact" — compact 2-column layout.
+ * "Recognizing the Impact" — single-testimonial slider with all
+ * navigation tucked INSIDE the card itself.
  *
- *  - LEFT: one large featured testimonial that stays put
- *  - RIGHT: two smaller cards that auto-rotate through the remaining
- *    quotes (4 of them cycle through 2 visible slots, advancing every
- *    5.5 seconds with a soft fade).
+ *   - No separate row of pagination dots / avatars below the card.
+ *   - Arrows sit at the vertical centre of the card's left and right
+ *     edges (visible on every viewport).
+ *   - Top-right of the card carries a discreet "01 / 05" counter.
+ *   - Bottom edge carries a segmented progress bar: one slim segment per
+ *     speaker. The active segment fills like a timer during auto-advance,
+ *     filled segments stay solid in the speaker's tone colour, and any
+ *     segment is clickable to jump.
  *
- * All quote text is verbatim from gurujal.org's testimonials section.
+ *   - When `photo` is set on a testimonial, the real headshot renders.
+ *     Otherwise a tone-tinted gradient with initials stands in.
+ *
+ * Quote text is verbatim from gurujal.org's testimonials section.
  */
+
+type Tone = "teal" | "green" | "orange" | "primary" | "accent";
 
 type Testimonial = {
   quote: string;
   name: string;
   role: string;
   org: string;
+  tone: Tone;
+  photo?: string;
 };
 
-const featured: Testimonial = {
-  quote:
-    "Working with GuruJal has reaffirmed our belief in the power of community-driven change. Their ability to integrate scientific research with local realities is truly commendable. During the study of 'The Green Wall of Aravalli: A Roadmap for Ecological Restoration', we witnessed how GuruJal led a multi-disciplinary effort — bringing together over 20 experts to assess the 5,000-acre Aravalli landscape around Damdama Lake across themes like biodiversity, hydrology, groundwater recharge, social challenges and cultural heritage.",
-  name: "Ashish Srivastava",
-  role: "Associate Director",
-  org: "EY Foundation (India)",
-};
-
-const rotating: Testimonial[] = [
+const testimonials: Testimonial[] = [
   {
     quote:
-      "Suntory Global Spirits India extends its gratitude to GuruJal Management for the timely completion of the pond rejuvenation project in Bhokarka village of Haryana. The execution reflects your team's expertise, discipline, and dedication to sustainable environmental outcomes.",
-    name: "Sumit Dhiman",
-    role: "Corporate Communications Specialist – India",
-    org: "Suntory Global Spirits",
+      "Working with GuruJal has reaffirmed our belief in the power of community-driven change. Their ability to integrate scientific research with local realities is truly commendable. During the study of 'The Green Wall of Aravalli: A Roadmap for Ecological Restoration', we witnessed how GuruJal led a multi-disciplinary effort — bringing together over 20 experts to assess the 5,000-acre Aravalli landscape around Damdama Lake.",
+    name: "Ashish Srivastava",
+    role: "Associate Director",
+    org: "EY Foundation (India)",
+    tone: "teal",
+    photo: "/uploads/2026/03/Ashish-Srivastava.jpeg",
   },
   {
     quote:
@@ -42,6 +49,16 @@ const rotating: Testimonial[] = [
     name: "Jaspreet Kaur, IAS",
     role: "Additional Municipal Commissioner",
     org: "MCG",
+    tone: "orange",
+    photo: "/uploads/2025/01/jaspreet-kaur.png",
+  },
+  {
+    quote:
+      "Suntory Global Spirits India extends its gratitude to GuruJal Management for the timely completion of the pond rejuvenation project in Bhokarka village of Haryana. The execution reflects your team's expertise, discipline, and dedication to sustainable environmental outcomes.",
+    name: "Sumit Dhiman",
+    role: "Corporate Communications Specialist – India",
+    org: "Suntory Global Spirits",
+    tone: "green",
   },
   {
     quote:
@@ -49,6 +66,8 @@ const rotating: Testimonial[] = [
     name: "Sri. Prashant Panwar, IAS",
     role: "Additional Deputy Commissioner",
     org: "Gurugram",
+    tone: "primary",
+    photo: "/uploads/2024/08/prashant-panwar.png",
   },
   {
     quote:
@@ -56,82 +75,198 @@ const rotating: Testimonial[] = [
     name: "Shalu Johar Sahni",
     role: "President",
     org: "Pure Hearts (A Children's Initiative)",
+    tone: "accent",
+    photo: "/uploads/2025/01/shalu-johar-sahni.png",
   },
 ];
 
-const ROTATE_MS = 5500;
+const ROTATE_MS = 9000;
+
+const toneGradient: Record<Tone, string> = {
+  teal: "from-brand-teal to-brand-teal-dark",
+  green: "from-brand-green to-brand-green-dark",
+  orange: "from-brand-orange to-brand-orange-dark",
+  primary: "from-brand-teal-bright to-brand-primary",
+  accent: "from-brand-accent to-brand-accent-dark",
+};
+const toneSolid: Record<Tone, string> = {
+  teal: "bg-brand-teal",
+  green: "bg-brand-green",
+  orange: "bg-brand-orange",
+  primary: "bg-brand-teal-bright",
+  accent: "bg-brand-accent",
+};
+const toneOrg: Record<Tone, string> = {
+  teal: "text-brand-teal-bright",
+  green: "text-brand-green",
+  orange: "text-brand-orange",
+  primary: "text-brand-teal-bright",
+  accent: "text-brand-accent",
+};
+
+function initials(name: string) {
+  return name
+    .replace(/,.*$/, "")
+    .replace(/^(Sri\.|Smt\.|Dr\.|Mr\.|Ms\.|Mrs\.)\s+/i, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((s) => s[0]?.toUpperCase())
+    .join("");
+}
 
 export function Testimonials() {
   const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [tick, setTick] = useState(0); // 0..1 progress within current slide
+  const count = testimonials.length;
+  const startRef = useRef<number>(performance.now());
 
+  // Auto-advance + smooth progress fill driven by a single rAF loop. Resets
+  // when idx changes or paused toggles.
   useEffect(() => {
-    const t = setInterval(() => {
-      setIdx((i) => (i + 2) % rotating.length);
-    }, ROTATE_MS);
-    return () => clearInterval(t);
-  }, []);
+    if (paused) return;
+    startRef.current = performance.now();
+    let raf = 0;
+    const loop = (now: number) => {
+      const p = Math.min(1, (now - startRef.current) / ROTATE_MS);
+      setTick(p);
+      if (p >= 1) {
+        setIdx((i) => (i + 1) % count);
+      } else {
+        raf = requestAnimationFrame(loop);
+      }
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [paused, idx, count]);
 
-  const slotA = rotating[idx % rotating.length];
-  const slotB = rotating[(idx + 1) % rotating.length];
+  const jump = (i: number) => {
+    setIdx(i);
+    setTick(0);
+  };
+  const prev = () => jump((idx - 1 + count) % count);
+  const next = () => jump((idx + 1) % count);
+
+  const t = testimonials[idx];
 
   return (
-    <section className="bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+    <section
+      className="relative overflow-hidden bg-brand-deep text-white"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-32 top-12 h-80 w-80 rounded-full bg-brand-teal/20 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-32 bottom-12 h-80 w-80 rounded-full bg-brand-orange/15 blur-3xl"
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal-bright">
             Voices from the field
           </p>
-          <h2 className="text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
             Recognizing the Impact
           </h2>
-          <p className="mt-3 text-base text-brand-muted">
+          <p className="mt-3 text-base text-white/70">
             Testimonials from key leaders and partners.
           </p>
         </div>
 
-        {/* 2-column: featured (left) + rotator (right). Both columns are
-            the same height on lg via items-stretch + grid-rows-1. */}
-        <div className="mt-10 grid items-stretch gap-5 lg:grid-cols-2">
-          {/* Featured */}
-          <article className="relative flex flex-col justify-between overflow-hidden rounded-3xl bg-brand-deep p-7 text-white shadow-xl shadow-black/10 sm:p-9">
-            <QuoteMark className="absolute -right-6 -top-6 h-28 w-28 text-brand-teal-bright/30" />
-            <p className="relative text-base leading-relaxed text-white/95 sm:text-lg">
-              {featured.quote}
-            </p>
-            <footer className="relative mt-6 border-t border-white/15 pt-4">
-              <div className="text-base font-semibold text-white">
-                {featured.name}
-              </div>
-              <div className="mt-1 text-sm text-white/75">
-                {featured.role} ·{" "}
-                <span className="text-brand-teal-bright">{featured.org}</span>
-              </div>
-            </footer>
-          </article>
+        {/* Card */}
+        <div className="relative mx-auto mt-12 max-w-5xl">
+          <div
+            key={idx}
+            className="gj-headline-enter relative overflow-hidden rounded-3xl bg-white/[0.04] ring-1 ring-white/10 backdrop-blur"
+          >
+            {/* Counter */}
+            <div className="pointer-events-none absolute right-6 top-5 z-10 text-xs font-semibold tracking-[0.18em] text-white/55">
+              <span className="text-white">
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+              <span className="mx-1">/</span>
+              <span>{String(count).padStart(2, "0")}</span>
+            </div>
 
-          {/* Rotator — 2 slots */}
-          <div className="flex flex-col gap-5">
-            <RotatingCard t={slotA} keyId={`a-${idx}`} />
-            <RotatingCard t={slotB} keyId={`b-${idx}`} />
+            {/* Inset content */}
+            <div className="grid items-center gap-8 p-8 sm:p-10 lg:grid-cols-[auto_1fr] lg:gap-12 lg:p-12">
+              <Portrait t={t} />
 
-            {/* Pagination dots */}
-            <div className="mt-1 flex items-center justify-center gap-1.5">
-              {rotating.map((_, i) => {
-                const active =
-                  i === idx % rotating.length ||
-                  i === (idx + 1) % rotating.length;
-                return (
-                  <button
-                    key={i}
-                    type="button"
-                    aria-label={`Show testimonial pair starting ${i + 1}`}
-                    onClick={() => setIdx(i)}
-                    className={`h-1.5 rounded-full transition-all ${
-                      active ? "w-6 bg-brand-orange" : "w-1.5 bg-brand-soft"
-                    }`}
+              <div className="relative">
+                <QuoteMark className="absolute -top-4 left-0 h-12 w-12 text-white/15" />
+                <p className="relative pt-6 text-lg leading-relaxed text-white/95 sm:text-xl">
+                  {t.quote}
+                </p>
+                <div className="mt-6 flex items-center gap-3">
+                  <span aria-hidden className={`h-px w-10 ${toneSolid[t.tone]}`} />
+                  <div>
+                    <div className="text-base font-semibold text-white">
+                      {t.name}
+                    </div>
+                    <div className="mt-0.5 text-sm text-white/65">
+                      {t.role} ·{" "}
+                      <span className={`font-medium ${toneOrg[t.tone]}`}>
+                        {t.org}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* In-card side arrows — sit on the card's left/right edges
+                on sm+. On phones the segmented progress bar at the bottom
+                of the card serves as touch navigation (arrows would
+                overlap the portrait at <375 px). */}
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Previous testimonial"
+              className="absolute left-4 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white hover:text-brand-deep sm:inline-flex"
+            >
+              <Arrow direction="left" />
+            </button>
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Next testimonial"
+              className="absolute right-4 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white hover:text-brand-deep sm:inline-flex"
+            >
+              <Arrow direction="right" />
+            </button>
+
+            {/* Segmented progress bar — one slim segment per testimonial,
+                hugs the card's bottom edge. Clickable. */}
+            <div className="absolute inset-x-0 bottom-0 flex gap-1 px-2 pb-2">
+              {testimonials.map((p, i) => (
+                <button
+                  key={p.name}
+                  type="button"
+                  onClick={() => jump(i)}
+                  title={p.name}
+                  aria-label={`Show testimonial from ${p.name}`}
+                  className="group h-1 flex-1 overflow-hidden rounded-full bg-white/15 transition hover:bg-white/25"
+                >
+                  <span
+                    aria-hidden
+                    className={`block h-full rounded-full ${toneSolid[p.tone]}`}
+                    style={{
+                      width:
+                        i < idx
+                          ? "100%"
+                          : i === idx
+                            ? `${Math.round(tick * 100)}%`
+                            : "0%",
+                      transition: i === idx ? "none" : "width 300ms ease",
+                    }}
                   />
-                );
-              })}
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -141,26 +276,40 @@ export function Testimonials() {
 }
 
 /**
- * Card in the rotator. `keyId` is used as React key on the wrapper so
- * the element remounts each rotation and the fade-in animation replays.
+ * Portrait — real photo if provided, otherwise a designed initials
+ * placeholder with concentric tone gradient rings.
  */
-function RotatingCard({ t, keyId }: { t: Testimonial; keyId: string }) {
+function Portrait({ t }: { t: Testimonial }) {
+  if (t.photo) {
+    return (
+      <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-full ring-4 ring-white/15 shadow-2xl sm:h-48 sm:w-48">
+        <Image src={t.photo} alt={t.name} fill sizes="192px" className="object-cover" />
+      </div>
+    );
+  }
   return (
-    <article
-      key={keyId}
-      className="gj-headline-enter relative flex flex-1 flex-col justify-between overflow-hidden rounded-2xl bg-brand-mist p-6 ring-1 ring-brand-soft/60"
+    <div
+      className={`relative flex h-40 w-40 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${toneGradient[t.tone]} ring-4 ring-white/15 shadow-2xl sm:h-48 sm:w-48`}
+      aria-hidden
     >
-      <QuoteMark className="mb-2 h-6 w-6 text-brand-teal" />
-      <p className="line-clamp-4 text-sm leading-relaxed text-brand-ink/85 sm:text-[15px]">
-        {t.quote}
-      </p>
-      <footer className="mt-4 border-t border-brand-soft pt-3">
-        <div className="text-sm font-semibold text-brand-ink">{t.name}</div>
-        <div className="mt-0.5 text-xs leading-snug text-brand-muted">
-          {t.role} · <span className="text-brand-primary">{t.org}</span>
-        </div>
-      </footer>
-    </article>
+      <div className="absolute inset-3 rounded-full border border-white/25" />
+      <div className="absolute inset-6 rounded-full border border-white/10" />
+      <span className="relative text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        {initials(t.name)}
+      </span>
+    </div>
+  );
+}
+
+function Arrow({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      {direction === "left" ? (
+        <polyline points="15 18 9 12 15 6" />
+      ) : (
+        <polyline points="9 18 15 12 9 6" />
+      )}
+    </svg>
   );
 }
 

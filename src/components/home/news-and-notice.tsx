@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { liveUrl } from "@/lib/live-url";
 
 /**
  * Two-column "Recent News" + "Notice" section.
@@ -114,7 +115,7 @@ function Column({
           </h2>
         </div>
         <Link
-          href={seeAllHref}
+          href={liveUrl(seeAllHref)}
           className="shrink-0 text-sm font-semibold text-brand-primary hover:text-brand-orange"
         >
           See all →
@@ -124,7 +125,7 @@ function Column({
         {items.map((n) => (
           <li key={n.title}>
             <Link
-              href={n.href}
+              href={liveUrl(n.href)}
               className="group flex items-start gap-4 py-3.5 transition hover:bg-brand-mist/60 -mx-2 px-2 rounded-md"
             >
               <span className="mt-0.5 shrink-0 rounded-md bg-brand-soft px-2.5 py-1 text-xs font-semibold text-brand-primary">

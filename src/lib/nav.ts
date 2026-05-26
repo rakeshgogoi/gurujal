@@ -28,7 +28,7 @@ export const primaryNav: NavItem[] = [
     href: "/support-a-pond",
     children: [
       { label: "Support A Pond", href: "/support-a-pond" },
-      { label: "Connect The Drop", href: "/connect-the-drops" },
+      { label: "Connect The Drop", href: "/connect-the-drop" },
       { label: "Water Proofing", href: "/water-proofing" },
       { label: "Eco Restoration", href: "/eco-restoration" },
       { label: "WeForWater Fellowship", href: "/we-for-water" },
@@ -56,7 +56,7 @@ export const ctaNav = { label: "Support Us", href: "/support-a-pond" };
 export const footerLinks = {
   solutions: [
     { label: "Support A Pond", href: "/support-a-pond" },
-    { label: "Connect The Drop", href: "/connect-the-drops" },
+    { label: "Connect The Drop", href: "/connect-the-drop" },
     { label: "Water Proofing", href: "/water-proofing" },
     { label: "Eco Restoration", href: "/eco-restoration" },
     { label: "WeForWater Fellowship", href: "/we-for-water" },

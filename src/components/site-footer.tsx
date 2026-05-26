@@ -1,6 +1,6 @@
-import Link from "next/link";
 import Image from "next/image";
 import { footerLinks, contactInfo } from "@/lib/nav";
+import { liveUrl } from "@/lib/live-url";
 
 /**
  * Site footer — matches gurujal.org's footer layout.
@@ -11,12 +11,12 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 bg-brand-deep text-white">
+    <footer className="bg-brand-deep text-white">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
           {/* Brand + contact */}
           <div className="lg:col-span-4">
-            <Link href="/" aria-label="GuruJal — home" className="inline-block">
+            <a href="/" aria-label="GuruJal — home" className="inline-block">
               <Image
                 src="/brand/gurujal-logo-white.png"
                 alt="GuruJal"
@@ -24,7 +24,7 @@ export function SiteFooter() {
                 height={86}
                 className="h-20 w-auto sm:h-24"
               />
-            </Link>
+            </a>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-white/75">
               GuruJal is a water conservation initiative working on pond
               rejuvenation, eco-restoration, and water stewardship — a
@@ -61,9 +61,9 @@ export function SiteFooter() {
           <ul className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/60">
             {footerLinks.legal.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="hover:text-white">
+                <a href={liveUrl(l.href)} className="hover:text-white">
                   {l.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -90,12 +90,12 @@ function FooterColumn({
       <ul className="mt-4 space-y-2.5">
         {links.map((l) => (
           <li key={l.href + l.label}>
-            <Link
-              href={l.href}
+            <a
+              href={liveUrl(l.href)}
               className="text-sm text-white/80 transition hover:text-white"
             >
               {l.label}
-            </Link>
+            </a>
           </li>
         ))}
       </ul>

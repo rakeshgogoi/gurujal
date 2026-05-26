@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { liveUrl } from "@/lib/live-url";
 
 /**
  * Real past events sourced verbatim from /content/pages/events.mdx
@@ -11,7 +12,7 @@ const events = [
     title: "Real Nature in Restored Landscapes",
     blurb:
       "Site Visit & Experiential Learning Program hosted by GuruJal & Prana Earth under Delhi Climate Innovation Week 2026 — BSF Bhondsi, Khandewla Well, Triveni Pond, Bhokarka.",
-    image: "/uploads/2026/03/eco-hero.jpg",
+    image: "/uploads/2024/08/real-nature-event.jpeg",
     href: "/experiential-learning",
     date: "21 Feb 2026",
     kind: "Site Visit",
@@ -20,7 +21,7 @@ const events = [
     title: "HydroMingle Delhi 2025",
     blurb:
       "Water innovation platform connecting startups, policymakers, CSR partners, and researchers driving the next wave of water solutions. Tamarind Hall, IHC.",
-    image: "/uploads/2026/03/events-hero.jpg",
+    image: "/uploads/2024/08/hydromingle2025.jpg",
     href: "/hydromingle-event",
     date: "10 Dec 2025",
     kind: "Innovation Convening",
@@ -29,7 +30,7 @@ const events = [
     title: "Roots & Recharge Symposium",
     blurb:
       "GuruJal × Wipro Foundation symposium reviving traditional water wisdom — heritage dug-well inventorisation, policy dialogue, and community pilots. Juniper Hall, IHC.",
-    image: "/uploads/2026/03/Support-a-pond-hero.jpg",
+    image: "/uploads/2024/08/Roots-recharge-symposium-2025.jpg",
     href: "/roots-and-recharge-symposium",
     date: "9 Dec 2025",
     kind: "Symposium",
@@ -55,7 +56,7 @@ export function RecentEvents() {
             </h2>
           </div>
           <Link
-            href="/events"
+            href={liveUrl("/events")}
             className="hidden shrink-0 items-center gap-1.5 text-sm font-semibold text-brand-primary hover:text-brand-orange sm:inline-flex"
           >
             See all events
@@ -70,7 +71,7 @@ export function RecentEvents() {
           {events.map((e) => (
             <Link
               key={e.href + e.title}
-              href={e.href}
+              href={liveUrl(e.href)}
               className="group relative flex flex-col overflow-hidden rounded-2xl bg-brand-mist shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className="relative aspect-[16/10] w-full overflow-hidden">

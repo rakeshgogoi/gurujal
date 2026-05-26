@@ -24,9 +24,9 @@
   --color-brand-ink: #1a3a4a;           /* primary body text on light bg */
   --color-brand-muted: #4a6878;         /* secondary text */
 
-  /* Font stack — DM Sans is the live site's body font */
+  /* Font stack — DM Sans for body, Manrope for headings */
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -40,9 +40,10 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Headings inherit display font; weight is set per-heading via Tailwind class. */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 html { scroll-behavior: smooth; }
@@ -130,4 +131,45 @@ html { scroll-behavior: smooth; }
 }
 @media (prefers-reduced-motion: reduce) {
   .gj-ticker-vertical { animation: none; }
+}
+
+/* ----- 6R Approach auto-marquee -----
+ * Track holds two consecutive copies of the cards + flow-arrow set.
+ * translateX(-50%) lands us at the start of the second copy so the loop
+ * is seamless. Pauses on hover and for users who prefer reduced motion.
+ */
+@keyframes gj-sixr-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.gj-sixr-marquee {
+  animation: gj-sixr-marquee 60s linear infinite;
+}
+.gj-sixr-paused:hover .gj-sixr-marquee {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gj-sixr-marquee { animation: none; }
+}
+
+/* ----- Floating tools (FAB + language picker) -----
+ * Soft pulse halo on the AI assistant trigger, fade-in for the popovers.
+ */
+@keyframes gj-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: gj-fade-up 220ms cubic-bezier(.22,1,.36,1);
+}
+@keyframes gj-ping-slow {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  80%  { transform: scale(1.5); opacity: 0;    }
+  100% { transform: scale(1.5); opacity: 0;    }
+}
+.animate-ping-slow {
+  animation: gj-ping-slow 2.6s cubic-bezier(0, 0, .2, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up, .animate-ping-slow { animation: none; }
 }

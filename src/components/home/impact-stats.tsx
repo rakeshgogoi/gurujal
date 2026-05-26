@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { liveUrl } from "@/lib/live-url";
 
 /**
  * Impact at a Glance — bento grid layout.
@@ -49,7 +50,7 @@ export function ImpactStats() {
             </h2>
           </div>
           <Link
-            href="/about"
+            href={liveUrl("/about")}
             className="hidden shrink-0 items-center gap-1.5 rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white hover:text-brand-deep sm:inline-flex"
           >
             How we measure impact
@@ -65,7 +66,7 @@ export function ImpactStats() {
           {/* Feature tile: hero image + flagship stat overlay */}
           <div className="relative overflow-hidden rounded-3xl md:col-span-4 md:row-span-2">
             <Image
-              src="/uploads/2026/03/Support-a-pond-hero.jpg"
+              src="/uploads/2026/03/eco-hero.jpg"
               alt=""
               fill
               className="object-cover"

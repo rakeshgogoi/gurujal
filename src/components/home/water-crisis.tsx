@@ -2,38 +2,58 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { liveUrl } from "@/lib/live-url";
 
 /**
- * "The time to Act is Now" — modernised as a data-storytelling moment.
+ * "The time to Act is Now" — editorial stat-card visualisation.
  *
- * Replaces the classic bar chart with a "Then vs Now" comparison:
- *   - 2008  Demand 634   /  Supply 650   — balanced
- *   - 2030  Demand 1,498 /  Supply 744   — 2× shortfall
+ *   - Hero number: -754 bcm (2030 supply shortfall).
+ *   - "From → To" pill above the hero number showing the swing from a
+ *     +16 surplus in 2008 to a -754 deficit in 2030.
+ *   - Three supporting stat tiles below: demand/supply numbers and the
+ *     "2× demand exceeds supply" framing.
+ *   - All numbers animate up from zero on scroll-into-view; the
+ *     percentage fill bars under the demand/supply tiles draw in to
+ *     reflect each value against a 0-1600 bcm scale.
  *
- * Each year is a card with animated horizontal bars whose widths reflect
- * the underlying numbers. The bars draw in when scrolled into view.
- *
- * Source: live gurujal.org chart widget. Units: billion cubic metres.
+ *   Source: NITI Aayog (verbatim from gurujal.org's crisis widget).
  */
 
-const SCALE_MAX = 1600; // bcm — round-up beyond the max value (1498)
-
-type SnapshotProps = {
-  year: string;
-  demand: number;
-  supply: number;
-  tone: "ok" | "warn";
-  caption: string;
-};
+const SCALE_MAX = 1600;
 
 export function WaterCrisisIntro() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    // Fire immediately if the element is already on screen at mount time
+    // (covers deep-link / refresh-mid-page cases where the IO may not get
+    // an initial entry).
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) {
+      setShow(true);
+      return;
+    }
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setShow(true);
+          obs.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-        <div className="grid items-start gap-12 lg:grid-cols-12">
-          {/* Left: heading + copy + CTA. The heading lives inside the left
-              column (rather than spanning the grid) so the top edges of
-              both columns are visually aligned. */}
+        <div className="grid items-center gap-12 lg:grid-cols-12">
+          {/* Left: heading + copy */}
           <div className="lg:col-span-5">
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
               The Crisis
@@ -56,7 +76,7 @@ export function WaterCrisisIntro() {
             </p>
             <div className="mt-10">
               <Link
-                href="/support-a-pond"
+                href={liveUrl("/support-a-pond")}
                 className="inline-flex items-center gap-2 rounded-full bg-brand-primary px-7 py-3.5 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-brand-primary-dark"
               >
                 Discover Our Solutions
@@ -68,47 +88,73 @@ export function WaterCrisisIntro() {
             </div>
           </div>
 
-          {/* Right: storytelling visualization */}
-          <div className="lg:col-span-7">
-            <div className="rounded-3xl bg-gradient-to-br from-brand-mist via-white to-brand-soft/60 p-6 ring-1 ring-brand-soft sm:p-8">
-              {/* Headline summary */}
-              <div className="mb-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                <div className="text-5xl font-extrabold leading-none tracking-tight text-brand-primary sm:text-6xl">
-                  2&times;
+          {/* Right: editorial stat layout */}
+          <div ref={ref} className="lg:col-span-7">
+            <div className="relative overflow-hidden rounded-3xl border border-brand-soft/80 bg-gradient-to-br from-brand-mist via-white to-white p-8 sm:p-10">
+              {/* Subtle decorative orange glow on the warning side */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand-orange/15 blur-3xl"
+              />
+
+              {/* Swing pill — from balanced surplus to a yawning deficit */}
+              <div className="relative inline-flex items-center gap-3 rounded-full bg-white px-3.5 py-1.5 ring-1 ring-brand-soft shadow-sm">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-green-dark">
+                  <Dot className="bg-brand-green" />
+                  2008 · +16 bcm
+                </span>
+                <Arrow />
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-orange-dark">
+                  <Dot className="bg-brand-orange" />
+                  2030 · −754 bcm
+                </span>
+              </div>
+
+              {/* Hero number — the 2030 supply shortfall */}
+              <div className="relative mt-8">
+                <div className="flex items-baseline gap-3 text-brand-ink">
+                  <span className="text-sm font-medium uppercase tracking-[0.18em] text-brand-orange-dark">
+                    Projected shortfall by 2030
+                  </span>
                 </div>
-                <p className="text-sm font-medium text-brand-ink/85 sm:text-base">
-                  Demand will exceed supply by 2030.
+                <div className="mt-3 flex items-baseline gap-3">
+                  <span className="text-7xl font-bold tracking-tight text-brand-orange-dark sm:text-8xl">
+                    <CountUp to={754} show={show} prefix="−" />
+                  </span>
+                  <span className="text-2xl font-semibold tracking-tight text-brand-ink/80 sm:text-3xl">
+                    bcm
+                  </span>
+                </div>
+                <p className="mt-3 max-w-md text-sm leading-relaxed text-brand-muted">
+                  Up from a balanced 16 bcm surplus in 2008 — a swing wide
+                  enough to refill nearly half of India&apos;s reservoirs.
                 </p>
               </div>
 
-              {/* Snapshot cards */}
-              <div className="space-y-5">
-                <Snapshot
-                  year="2008"
-                  demand={634}
-                  supply={650}
-                  tone="ok"
-                  caption="Demand and supply were nearly balanced — a 16 bcm surplus."
+              {/* Three supporting tiles */}
+              <div className="relative mt-10 grid gap-4 sm:grid-cols-3">
+                <StatTile
+                  label="Demand"
+                  year="2008 → 2030"
+                  from={634}
+                  to={1498}
+                  show={show}
+                  tone="orange"
                 />
-                <Snapshot
-                  year="2030"
-                  demand={1498}
-                  supply={744}
-                  tone="warn"
-                  caption="Demand soars; supply barely grows — a 754 bcm shortfall."
+                <StatTile
+                  label="Supply"
+                  year="2008 → 2030"
+                  from={650}
+                  to={744}
+                  show={show}
+                  tone="teal"
                 />
+                <RatioTile show={show} />
               </div>
 
-              {/* Legend + source */}
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-brand-soft pt-4">
-                <div className="flex items-center gap-5 text-xs">
-                  <Legend tone="demand" label="Demand" />
-                  <Legend tone="supply" label="Supply" />
-                </div>
-                <p className="text-[11px] text-brand-muted">
-                  bcm = billion cubic metres · NITI Aayog
-                </p>
-              </div>
+              <p className="relative mt-6 text-[11px] text-brand-muted">
+                bcm = billion cubic metres · Source: NITI Aayog
+              </p>
             </div>
           </div>
         </div>
@@ -118,122 +164,90 @@ export function WaterCrisisIntro() {
 }
 
 /* ============================================================
- * Snapshot card — one year, two animated horizontal bars.
+ * Small components
  * ============================================================ */
-function Snapshot({ year, demand, supply, tone, caption }: SnapshotProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [show, setShow] = useState(false);
+
+function CountUp({
+  to,
+  show,
+  duration = 1600,
+  prefix = "",
+  suffix = "",
+}: {
+  to: number;
+  show: boolean;
+  duration?: number;
+  prefix?: string;
+  suffix?: string;
+}) {
+  const [val, setVal] = useState(0);
 
   useEffect(() => {
-    if (!ref.current) return;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setShow(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-    obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
-  const demandPct = (demand / SCALE_MAX) * 100;
-  const supplyPct = (supply / SCALE_MAX) * 100;
+    if (!show) return;
+    const start = Date.now();
+    const interval = setInterval(() => {
+      const t = Math.min(1, (Date.now() - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3); // Ease-out cubic
+      setVal(Math.round(to * eased));
+      if (t >= 1) clearInterval(interval);
+    }, 32); // ~30 fps — plenty for counter motion, robust to tab focus
+    return () => clearInterval(interval);
+  }, [show, to, duration]);
 
   return (
-    <div
-      ref={ref}
-      className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-brand-soft/70"
-    >
-      <div className="mb-3 flex items-baseline justify-between">
-        <div className="flex items-baseline gap-3">
-          <div className="text-2xl font-bold tracking-tight text-brand-ink">
-            {year}
-          </div>
-          <span
-            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${
-              tone === "ok"
-                ? "bg-brand-green/15 text-brand-green-dark"
-                : "bg-brand-orange/15 text-brand-orange-dark"
-            }`}
-          >
-            <span
-              className={`inline-block h-1.5 w-1.5 rounded-full ${
-                tone === "ok" ? "bg-brand-green" : "bg-brand-orange"
-              }`}
-            />
-            {tone === "ok" ? "Balanced" : "2× Shortfall"}
-          </span>
-        </div>
-        <div className="text-xs text-brand-muted">
-          gap{" "}
-          <span
-            className={`font-semibold ${
-              demand > supply ? "text-brand-orange-dark" : "text-brand-green-dark"
-            }`}
-          >
-            {(demand - supply > 0 ? "+" : "") +
-              (demand - supply).toLocaleString("en-IN")}{" "}
-            bcm
-          </span>
-        </div>
-      </div>
-
-      <Bar
-        label="Demand"
-        value={demand}
-        widthPct={show ? demandPct : 0}
-        color="demand"
-      />
-      <div className="h-2" />
-      <Bar
-        label="Supply"
-        value={supply}
-        widthPct={show ? supplyPct : 0}
-        color="supply"
-      />
-
-      <p className="mt-3 text-xs leading-relaxed text-brand-muted">
-        {caption}
-      </p>
-    </div>
+    <span className="tabular-nums">
+      {prefix}
+      {val.toLocaleString("en-IN")}
+      {suffix}
+    </span>
   );
 }
 
-function Bar({
+function StatTile({
   label,
-  value,
-  widthPct,
-  color,
+  year,
+  from,
+  to,
+  show,
+  tone,
 }: {
   label: string;
-  value: number;
-  widthPct: number;
-  color: "demand" | "supply";
+  year: string;
+  from: number;
+  to: number;
+  show: boolean;
+  tone: "orange" | "teal";
 }) {
-  // Gradient fills give the bars a more "alive" feel than flat color
-  const barClass =
-    color === "demand"
-      ? "from-brand-orange to-brand-orange-dark"
-      : "from-brand-teal to-brand-teal-dark";
+  const fillClass = tone === "orange" ? "bg-brand-orange" : "bg-brand-teal";
+  const valueClass =
+    tone === "orange" ? "text-brand-orange-dark" : "text-brand-teal-dark";
+  const fillPct = (to / SCALE_MAX) * 100;
 
   return (
-    <div>
-      <div className="mb-1 flex items-center justify-between text-xs">
-        <span className="font-medium text-brand-muted">{label}</span>
-        <span className="font-bold tabular-nums text-brand-ink">
-          {value.toLocaleString("en-IN")}{" "}
-          <span className="text-[10px] font-normal text-brand-muted">bcm</span>
+    <div className="relative rounded-2xl bg-white p-5 ring-1 ring-brand-soft/70 shadow-sm">
+      <div className="flex items-baseline justify-between">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-muted">
+          {label}
+        </span>
+        <span className="text-[10px] font-medium text-brand-muted">{year}</span>
+      </div>
+      <div className={`mt-3 text-3xl font-bold tracking-tight ${valueClass}`}>
+        <CountUp to={to} show={show} />
+        <span className="ml-1 text-base font-semibold text-brand-ink/60">
+          bcm
         </span>
       </div>
-      <div className="relative h-3 w-full overflow-hidden rounded-full bg-brand-mist">
+      <div className="mt-1 text-[11px] text-brand-muted">
+        from {from.toLocaleString("en-IN")} bcm
+      </div>
+
+      {/* Track */}
+      <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-brand-mist">
         <div
-          className={`h-full rounded-full bg-gradient-to-r ${barClass}`}
+          className={`h-full rounded-full ${fillClass}`}
           style={{
-            width: `${widthPct}%`,
-            transition: "width 1400ms cubic-bezier(.22, 1, .36, 1)",
+            width: show ? `${fillPct}%` : "0%",
+            transition: "width 1400ms cubic-bezier(.22,1,.36,1)",
           }}
         />
       </div>
@@ -241,16 +255,54 @@ function Bar({
   );
 }
 
-function Legend({ tone, label }: { tone: "demand" | "supply"; label: string }) {
+function RatioTile({ show }: { show: boolean }) {
   return (
-    <div className="flex items-center gap-2 text-brand-ink/85">
-      <span
-        className={`inline-block h-2.5 w-2.5 rounded-sm ${
-          tone === "demand" ? "bg-brand-orange" : "bg-brand-teal"
-        }`}
+    <div className="relative overflow-hidden rounded-2xl bg-brand-deep p-5 text-white shadow-sm">
+      <div
         aria-hidden
+        className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-brand-orange/30 blur-2xl"
       />
-      <span className="font-medium">{label}</span>
+      <span className="text-[11px] font-semibold uppercase tracking-wider text-white/70">
+        2030 ratio
+      </span>
+      <div className="mt-3 flex items-baseline gap-2">
+        <span className="text-5xl font-bold tracking-tight text-white">
+          <CountUp to={2} show={show} />
+          <span className="text-brand-orange">×</span>
+        </span>
+      </div>
+      <p className="mt-2 text-[11px] leading-snug text-white/80">
+        Demand will outpace supply — twice over.
+      </p>
     </div>
+  );
+}
+
+function Dot({ className }: { className?: string }) {
+  return (
+    <span
+      aria-hidden
+      className={`inline-block h-1.5 w-1.5 rounded-full ${className}`}
+    />
+  );
+}
+
+function Arrow() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      className="text-brand-muted"
+    >
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
+    </svg>
   );
 }
