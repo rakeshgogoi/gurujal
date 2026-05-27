@@ -8,24 +8,43 @@
 export type NavItem = {
   label: string;
   href: string;
+  /**
+   * When true, the header / footer should link to this route on the new
+   * Next.js site (i.e. use the bare href). When unset/false, the link is
+   * resolved through liveUrl() to the existing gurujal.org page. Set
+   * `local: true` for every route we have implemented as its own page
+   * under src/app.
+   */
+  local?: boolean;
   children?: NavItem[];
 };
 
+/**
+ * Paths that have been implemented locally on this Next.js site. The
+ * header / footer use this to decide whether a link should resolve in
+ * the SPA or jump to the live WordPress page.
+ */
+export const localRoutes = new Set<string>([
+  "/",
+  "/about",
+  "/team",
+  "/solutions",
+]);
+
+/** True when the given href is a path served by this Next.js app. */
+export function isLocalRoute(href: string): boolean {
+  if (!href.startsWith("/")) return false;
+  // Strip any hash before matching so /about#vision still resolves locally.
+  const path = href.split("#")[0];
+  return localRoutes.has(path);
+}
+
 export const primaryNav: NavItem[] = [
   { label: "Home", href: "/" },
-  {
-    label: "About",
-    href: "/about",
-    children: [
-      { label: "Our Story", href: "/about" },
-      { label: "Vision & Mission", href: "/about#vision" },
-      { label: "Our Team", href: "/team" },
-      { label: "Awards & Recognition", href: "/about#awards" },
-    ],
-  },
+  { label: "About", href: "/about" },
   {
     label: "Solutions",
-    href: "/support-a-pond",
+    href: "/solutions",
     children: [
       { label: "Support A Pond", href: "/support-a-pond" },
       { label: "Connect The Drop", href: "/connect-the-drop" },

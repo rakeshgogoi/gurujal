@@ -11,6 +11,8 @@ type RevealProps = {
   /** Override the underlying element tag. */
   as?: keyof React.JSX.IntrinsicElements;
   className?: string;
+  /** Anchor id forwarded to the underlying element. */
+  id?: string;
 };
 
 const fromTransforms: Record<NonNullable<RevealProps["from"]>, string> = {
@@ -22,10 +24,19 @@ const fromTransforms: Record<NonNullable<RevealProps["from"]>, string> = {
 };
 
 /**
- * Reveal — wrap any block; it fades + slides into view the first time it
- * enters the viewport. Pure IntersectionObserver, no animation library.
+ * Reveal — wraps content; below-the-fold sections fade + slide into view
+ * when they enter the viewport. Pure IntersectionObserver, no library.
  *
- * Respects prefers-reduced-motion (content is shown immediately).
+ * SSR-safe: content renders **visible** by default. Only after hydration
+ * do we check the element's position; if it's already in the viewport we
+ * leave it visible (no animation, no flash). If it's below the fold we
+ * hide it and observe for the scroll-into-view fade.
+ *
+ * This avoids the failure mode where a dev refresh leaves whole sections
+ * stuck at opacity:0 while JS finishes hydrating — visible content stays
+ * visible regardless of how long hydration takes.
+ *
+ * Respects prefers-reduced-motion (always visible, no animation).
  */
 export function Reveal({
   children,
@@ -33,25 +44,31 @@ export function Reveal({
   delay = 0,
   as: Tag = "div",
   className,
+  id,
 }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
-  const [shown, setShown] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    if (prefersReducedMotion) {
-      setShown(true);
-      return;
-    }
+    if (prefersReducedMotion) return; // stay visible, no animation
+
     const el = ref.current;
     if (!el) return;
+
+    // Only animate sections that start below the viewport. Anything above
+    // the fold renders visible immediately — no flash, no animation.
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight) return;
+
+    setHidden(true);
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setShown(true);
+          setHidden(false);
           obs.disconnect();
         }
       },
@@ -62,16 +79,16 @@ export function Reveal({
   }, []);
 
   const style: React.CSSProperties = {
-    opacity: shown ? 1 : 0,
-    transform: shown ? "none" : fromTransforms[from],
+    opacity: hidden ? 0 : 1,
+    transform: hidden ? fromTransforms[from] : "none",
     transition: `opacity 700ms cubic-bezier(.4, 0, .2, 1) ${delay}ms, transform 700ms cubic-bezier(.4, 0, .2, 1) ${delay}ms`,
-    willChange: "opacity, transform",
+    willChange: hidden ? "opacity, transform" : undefined,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Component = Tag as any;
   return (
-    <Component ref={ref} style={style} className={className}>
+    <Component ref={ref} id={id} style={style} className={className}>
       {children}
     </Component>
   );

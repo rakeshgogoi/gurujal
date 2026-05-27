@@ -27,6 +27,10 @@ export async function generateStaticParams() {
     .filter((s) => s !== "blog")
     // /about has its own composed route — skip the raw MDX fallback.
     .filter((s) => s !== "about")
+    // /team has its own composed route — skip the raw MDX fallback.
+    .filter((s) => s !== "team")
+    // /solutions has its own composed route — skip the raw MDX fallback.
+    .filter((s) => s !== "solutions")
     .map((slug) => ({ slug }));
 }
 

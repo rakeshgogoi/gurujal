@@ -61,69 +61,141 @@ export function Hero() {
     return () => clearInterval(t);
   }, [next]);
 
-  // YouTube iframe lifecycle:
-  //   1. Subscribe to player events by posting {event:"listening"} to the
-  //      iframe at a short interval until it answers (it ignores us until
-  //      its own bootstrap completes).
-  //   2. Listen for `onStateChange` info=1 (PLAYING) to flip videoReady.
-  //   3. Belt-and-braces: a 1800ms fallback flips videoReady regardless,
-  //      so the iframe still appears on slow networks or in browsers
-  //      where postMessage is throttled. The fade-in is short so users
-  //      effectively see only the poster → video, no controls flash.
+  // YouTube iframe lifecycle, via the official IFrame Player API.
+  //
+  //   1. Lazy-load https://www.youtube.com/iframe_api once per page.
+  //   2. When the API is ready, attach a `YT.Player` to our iframe.
+  //   3. Subscribe to onStateChange. Flip videoReady only when state ===
+  //      PLAYING (1), and then wait a short grace period so the actual
+  //      first video frame has rendered before we fade the iframe in.
+  //      Without the grace period YouTube's branded loading overlay can
+  //      briefly flash during the crossfade on slow networks.
+  //   4. A 5-second safety fallback flips videoReady as a last resort —
+  //      it should essentially never fire because the API is reliable.
+  //
+  // The earlier postMessage handshake worked but its 1.8s fallback was
+  // too eager: on slow connections it fired before YouTube had actually
+  // started playing, so the iframe faded in while the play overlay was
+  // still on screen. The official API gives us a hard PLAYING signal.
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const send = () => {
-      const w = iframeRef.current?.contentWindow;
-      if (!w) return;
-      w.postMessage(JSON.stringify({ event: "listening" }), "*");
-    };
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    let player: any = null;
+    let graceTimer: number | undefined;
+    let safety: number | undefined;
 
-    const ping = setInterval(send, 500);
-    // Send one immediately too — usually the iframe is up by the time
-    // this effect runs.
-    send();
+    const attach = () => {
+      const w = window as any;
+      if (!w.YT || !w.YT.Player) return;
+      const iframe = iframeRef.current;
+      if (!iframe) return;
 
-    const onMessage = (e: MessageEvent) => {
-      // YouTube posts from www.youtube.com (the embed origin).
-      if (!e.origin.endsWith("youtube.com")) return;
-      try {
-        const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
-        // PLAYING == 1 in the YouTube IFrame API.
-        if (data?.event === "onStateChange" && data?.info === 1) {
-          setVideoReady(true);
+      const requestHighestQuality = (p: any) => {
+        // Try every quality hint available on the player object — some
+        // are present, some have been removed across YouTube revisions.
+        try {
+          if (typeof p.setPlaybackQualityRange === "function") {
+            p.setPlaybackQualityRange("hd1080", "hd1080");
+          }
+        } catch {
+          /* method may be removed on newer builds */
         }
-      } catch {
-        /* non-JSON message — ignore */
-      }
-    };
-    window.addEventListener("message", onMessage);
+        try {
+          if (typeof p.setPlaybackQuality === "function") {
+            p.setPlaybackQuality("hd1080");
+          }
+        } catch {
+          /* method may be removed on newer builds */
+        }
+      };
 
-    // Fallback in case the message handshake never completes.
-    const fallback = setTimeout(() => setVideoReady(true), 1800);
+      player = new w.YT.Player(iframe, {
+        events: {
+          onReady: (e: any) => {
+            // Ask for the highest quality as soon as the player is ready.
+            requestHighestQuality(e?.target);
+          },
+          onStateChange: (e: any) => {
+            // YT.PlayerState.PLAYING === 1
+            if (e?.data === 1) {
+              // Re-issue the quality request now that playback has
+              // begun — YouTube often ignores pre-playback requests
+              // but honours one issued during playback.
+              requestHighestQuality(e?.target);
+              // Small grace period so the first frame is on screen
+              // before we crossfade away from the poster.
+              graceTimer = window.setTimeout(() => setVideoReady(true), 250);
+            }
+          },
+        },
+      });
+    };
+
+    const w = window as any;
+    if (w.YT && w.YT.Player) {
+      attach();
+    } else {
+      // Add the API script once. Chain onYouTubeIframeAPIReady so we
+      // don't trample any other listener that might be present.
+      const existing = document.querySelector(
+        'script[src="https://www.youtube.com/iframe_api"]'
+      );
+      if (!existing) {
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        tag.async = true;
+        document.body.appendChild(tag);
+      }
+      const previous = w.onYouTubeIframeAPIReady;
+      w.onYouTubeIframeAPIReady = () => {
+        if (typeof previous === "function") previous();
+        attach();
+      };
+    }
+
+    // Last-resort safety fallback (5s) — only fires if the API never
+    // initialises (unusual). 5s is long enough that a normal load will
+    // beat it; if it fires the iframe just appears, no harm done.
+    safety = window.setTimeout(() => setVideoReady(true), 5000);
 
     return () => {
-      clearInterval(ping);
-      clearTimeout(fallback);
-      window.removeEventListener("message", onMessage);
+      if (graceTimer) clearTimeout(graceTimer);
+      if (safety) clearTimeout(safety);
+      if (player && typeof player.destroy === "function") {
+        try {
+          player.destroy();
+        } catch {
+          /* iframe may already be detached */
+        }
+      }
     };
+    /* eslint-enable @typescript-eslint/no-explicit-any */
   }, []);
 
-  // YouTube embed params — tuned for reliable muted autoplay.
-  //  - Use youtube.com (some browsers' autoplay heuristics treat the
-  //    nocookie variant more conservatively)
+  // YouTube embed params — tuned for reliable muted autoplay AND the
+  // highest available quality.
+  //
   //  - autoplay=1 + mute=1 to satisfy browser autoplay policies
   //  - loop=1 + playlist=ID to make a single video loop
   //  - playsinline=1 for iOS (critical — iOS Safari won't autoplay
   //    fullscreen takeovers, only inline)
-  //  - controls=0 + showinfo=0 + modestbranding=1 + iv_load_policy=3 hide chrome
+  //  - controls=0 + showinfo=0 + modestbranding=1 + iv_load_policy=3
+  //    hide YouTube chrome
   //  - rel=0, disablekb=1, fs=0 for safety
-  //  - enablejsapi=1 lets us script the player if we ever need to
+  //  - enablejsapi=1 enables the IFrame Player API
+  //  - vq=hd1080 hints the highest playback quality. YouTube has
+  //    formally deprecated this param but many embed paths still honour
+  //    it as an opening quality hint. We also reinforce the request
+  //    once playback starts via setPlaybackQualityRange (see below).
+  //  - hd=1 is an additional historical quality hint, still respected
+  //    by some clients.
   const ytSrc =
     `https://www.youtube.com/embed/${YT_ID}` +
     `?autoplay=1&mute=1&controls=0&loop=1&playlist=${YT_ID}` +
     `&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3` +
-    `&disablekb=1&fs=0&showinfo=0&enablejsapi=1`;
+    `&disablekb=1&fs=0&showinfo=0&enablejsapi=1` +
+    `&vq=hd1080&hd=1`;
 
   return (
     <section className="relative isolate overflow-hidden bg-brand-deep">

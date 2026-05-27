@@ -2,8 +2,13 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { primaryNav, ctaNav, type NavItem } from "@/lib/nav";
+import { primaryNav, ctaNav, isLocalRoute, type NavItem } from "@/lib/nav";
 import { liveUrl } from "@/lib/live-url";
+
+/** Resolve a NavItem href to either an internal path or the live site. */
+function resolveHref(href: string): string {
+  return isLocalRoute(href) ? href : liveUrl(href);
+}
 
 /**
  * Site header — light theme.
@@ -99,7 +104,7 @@ export function SiteHeader() {
               {primaryNav.map((item) => {
                 const hasChildren = !!item.children?.length;
                 const isOpen = !!expanded[item.label];
-                const itemHref = item.href === "/" ? "/" : liveUrl(item.href);
+                const itemHref = resolveHref(item.href);
 
                 return (
                   <li key={item.href + item.label}>
@@ -149,7 +154,7 @@ export function SiteHeader() {
                             users can still reach e.g. About → Our Story. */}
                         <li>
                           <a
-                            href={liveUrl(item.href)}
+                            href={resolveHref(item.href)}
                             onClick={closeMobile}
                             className="block rounded-md px-3 py-1.5 text-sm font-medium text-brand-ink hover:bg-brand-mist"
                           >
@@ -159,7 +164,7 @@ export function SiteHeader() {
                         {item.children!.map((c) => (
                           <li key={c.href + c.label}>
                             <a
-                              href={liveUrl(c.href)}
+                              href={resolveHref(c.href)}
                               onClick={closeMobile}
                               className="block rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
                             >
@@ -191,7 +196,7 @@ export function SiteHeader() {
 
 function DesktopNavItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
   const hasChildren = item.children && item.children.length > 0;
-  const itemHref = isHome ? "/" : liveUrl(item.href);
+  const itemHref = resolveHref(item.href);
   return (
     <div className="group relative">
       <a
@@ -213,7 +218,7 @@ function DesktopNavItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
             {item.children!.map((c) => (
               <a
                 key={c.href + c.label}
-                href={liveUrl(c.href)}
+                href={resolveHref(c.href)}
                 className="block rounded-md px-3 py-2 text-sm text-brand-ink hover:bg-brand-mist hover:text-brand-orange transition"
               >
                 {c.label}

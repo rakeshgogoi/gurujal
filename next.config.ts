@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "gurujal.org" },
       { protocol: "https", hostname: "secure.gravatar.com" },
     ],
+    // In dev, skip on-the-fly sharp optimisation — content-heavy pages
+    // (e.g. /team with ~46 portraits) saturate the optimiser otherwise
+    // and the user sees empty circles while scrolling. Production builds
+    // still get full optimisation since this flag is gated on NODE_ENV.
+    unoptimized: process.env.NODE_ENV !== "production",
   },
 };
 
