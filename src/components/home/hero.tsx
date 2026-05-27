@@ -65,25 +65,23 @@ export function Hero() {
   //
   //   1. Lazy-load https://www.youtube.com/iframe_api once per page.
   //   2. When the API is ready, attach a `YT.Player` to our iframe.
-  //   3. Subscribe to onStateChange. Flip videoReady only when state ===
-  //      PLAYING (1), and then wait a short grace period so the actual
-  //      first video frame has rendered before we fade the iframe in.
-  //      Without the grace period YouTube's branded loading overlay can
-  //      briefly flash during the crossfade on slow networks.
-  //   4. A 5-second safety fallback flips videoReady as a last resort —
-  //      it should essentially never fire because the API is reliable.
+  //   3. Subscribe to onStateChange + poll getCurrentTime. Only flip
+  //      videoReady once playback time has advanced past 0.5s —
+  //      proving the video is genuinely playing (not just buffering
+  //      with the play overlay still showing).
   //
-  // The earlier postMessage handshake worked but its 1.8s fallback was
-  // too eager: on slow connections it fired before YouTube had actually
-  // started playing, so the iframe faded in while the play overlay was
-  // still on screen. The official API gives us a hard PLAYING signal.
+  // CRITICAL: if autoplay is blocked by the browser, we deliberately
+  // DO NOT show the iframe ever. The poster image stays as the hero
+  // backdrop. Showing the iframe in that state would expose YouTube's
+  // big "click to play" button overlay — which is the exact bug we
+  // were chasing on first load.
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     /* eslint-disable @typescript-eslint/no-explicit-any */
     let player: any = null;
+    let pollId: number | undefined;
     let graceTimer: number | undefined;
-    let safety: number | undefined;
 
     const attach = () => {
       const w = window as any;
@@ -91,41 +89,56 @@ export function Hero() {
       const iframe = iframeRef.current;
       if (!iframe) return;
 
-      const requestHighestQuality = (p: any) => {
-        // Try every quality hint available on the player object — some
-        // are present, some have been removed across YouTube revisions.
-        try {
-          if (typeof p.setPlaybackQualityRange === "function") {
-            p.setPlaybackQualityRange("hd1080", "hd1080");
+      // Wait until the video has been playing CONTINUOUSLY for 3 seconds.
+      //
+      // YouTube's center HUD (previous / play-pause / next buttons)
+      // flashes briefly at state transitions even with controls=0.
+      // After ~3s of uninterrupted playback the HUD has reliably faded
+      // and the iframe is safe to reveal.
+      //
+      // We also reset the wait if YouTube enters BUFFERING (3) at any
+      // point — buffering causes the HUD to reappear, so we want to
+      // start the clock again once playback resumes.
+      //
+      // If real playback never starts (autoplay blocked, network hung)
+      // we never reveal the iframe. The poster stays as the backdrop.
+      let waitStartTime = 0;
+      const waitForRealPlayback = (p: any) => {
+        if (pollId) clearTimeout(pollId);
+        waitStartTime = performance.now();
+        const poll = () => {
+          try {
+            const t =
+              typeof p.getCurrentTime === "function" ? p.getCurrentTime() : 0;
+            const elapsed = performance.now() - waitStartTime;
+            // Need both: real time advancement past 1s AND at least
+            // 3000ms of wall-clock since playback started.
+            if (t > 1.0 && elapsed > 3000) {
+              graceTimer = window.setTimeout(() => setVideoReady(true), 300);
+              return;
+            }
+          } catch {
+            /* ignore — player may be tearing down */
           }
-        } catch {
-          /* method may be removed on newer builds */
-        }
-        try {
-          if (typeof p.setPlaybackQuality === "function") {
-            p.setPlaybackQuality("hd1080");
-          }
-        } catch {
-          /* method may be removed on newer builds */
-        }
+          pollId = window.setTimeout(poll, 150);
+        };
+        poll();
       };
 
       player = new w.YT.Player(iframe, {
         events: {
-          onReady: (e: any) => {
-            // Ask for the highest quality as soon as the player is ready.
-            requestHighestQuality(e?.target);
-          },
           onStateChange: (e: any) => {
             // YT.PlayerState.PLAYING === 1
+            // YT.PlayerState.BUFFERING === 3
             if (e?.data === 1) {
-              // Re-issue the quality request now that playback has
-              // begun — YouTube often ignores pre-playback requests
-              // but honours one issued during playback.
-              requestHighestQuality(e?.target);
-              // Small grace period so the first frame is on screen
-              // before we crossfade away from the poster.
-              graceTimer = window.setTimeout(() => setVideoReady(true), 250);
+              // (Re)start the wait. waitForRealPlayback clears any
+              // existing poll and zeros the wall-clock counter.
+              waitForRealPlayback(e?.target);
+            } else if (e?.data === 3) {
+              // Buffering — the HUD may reappear. Abort current wait;
+              // next PLAYING will restart it.
+              if (pollId) clearTimeout(pollId);
+              if (graceTimer) clearTimeout(graceTimer);
             }
           },
         },
@@ -154,14 +167,9 @@ export function Hero() {
       };
     }
 
-    // Last-resort safety fallback (5s) — only fires if the API never
-    // initialises (unusual). 5s is long enough that a normal load will
-    // beat it; if it fires the iframe just appears, no harm done.
-    safety = window.setTimeout(() => setVideoReady(true), 5000);
-
     return () => {
+      if (pollId) clearTimeout(pollId);
       if (graceTimer) clearTimeout(graceTimer);
-      if (safety) clearTimeout(safety);
       if (player && typeof player.destroy === "function") {
         try {
           player.destroy();
@@ -224,16 +232,27 @@ export function Hero() {
             viewport-tall, with 16:9 preserved, so the video always covers
             the hero area regardless of viewport aspect ratio.
           */}
+          {/*
+            Visibility is driven by inline style — not a CSS class — so
+            the iframe is guaranteed invisible from the very first paint
+            regardless of when Tailwind's CSS chunk lands. While hidden
+            we also set visibility:hidden so the iframe is excluded from
+            the rendering tree entirely.
+          */}
           <iframe
             ref={iframeRef}
             title="GuruJal Intro"
             src={ytSrc}
             allow="autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
-            className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[max(100vw,177.78vh)] transition-opacity duration-700 ${
-              videoReady ? "opacity-100" : "opacity-0"
-            }`}
-            style={{ border: 0 }}
+            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[max(100vw,177.78vh)]"
+            style={{
+              border: 0,
+              opacity: videoReady ? 1 : 0,
+              visibility: videoReady ? "visible" : "hidden",
+              pointerEvents: "none",
+              transition: "opacity 700ms cubic-bezier(.4, 0, .2, 1)",
+            }}
           />
         </div>
 
