@@ -52,6 +52,14 @@ export async function generateStaticParams() {
     .filter((s) => s !== "eco-restoration")
     .filter((s) => s !== "we-for-water")
     .filter((s) => s !== "esg-advisory")
+    // 3 annual reports + 4 publications now have composed routes.
+    .filter((s) => s !== "annual-report-2022-23")
+    .filter((s) => s !== "annual-report-2023-24")
+    .filter((s) => s !== "annual-report-2024-25")
+    .filter((s) => s !== "publication-pond-rejuvenation-sop")
+    .filter((s) => s !== "publication-green-wall-of-aravalli")
+    .filter((s) => s !== "publication-sop-of-wells")
+    .filter((s) => s !== "publication-wells-of-gurugram")
     .map((slug) => ({ slug }));
 }
 

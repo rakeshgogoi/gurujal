@@ -16,6 +16,13 @@ export type NavItem = {
    * under src/app.
    */
   local?: boolean;
+  /**
+   * When true, this child renders as a non-clickable section heading
+   * inside its parent's dropdown — used to visually group items (e.g.
+   * "Reports" and "Publications" under Resources). Header href is
+   * ignored. Only relevant on dropdown children.
+   */
+  section?: boolean;
   children?: NavItem[];
 };
 
@@ -43,6 +50,13 @@ export const localRoutes = new Set<string>([
   "/eco-restoration",
   "/we-for-water",
   "/esg-advisory",
+  "/annual-report-2022-23",
+  "/annual-report-2023-24",
+  "/annual-report-2024-25",
+  "/publication-pond-rejuvenation-sop",
+  "/publication-green-wall-of-aravalli",
+  "/publication-sop-of-wells",
+  "/publication-wells-of-gurugram",
 ]);
 
 /** True when the given href is a path served by this Next.js app. */
@@ -72,7 +86,14 @@ export const primaryNav: NavItem[] = [
     label: "Resources",
     href: "/reports-and-publications",
     children: [
-      { label: "Reports & Publications", href: "/reports-and-publications" },
+      // ---- Reports ----
+      { label: "Reports", href: "#", section: true },
+      { label: "Annual Report 2022–23", href: "/annual-report-2022-23" },
+      { label: "Annual Report 2023–24", href: "/annual-report-2023-24" },
+      { label: "Annual Report 2024–25", href: "/annual-report-2024-25" },
+
+      // ---- Publications ----
+      { label: "Publications", href: "#", section: true },
       { label: "Pond Rejuvenation SOP", href: "/publication-pond-rejuvenation-sop" },
       { label: "Green Wall of Aravalli", href: "/publication-green-wall-of-aravalli" },
       { label: "SoP of Wells", href: "/publication-sop-of-wells" },
@@ -104,6 +125,9 @@ export const footerLinks = {
   ],
   resources: [
     { label: "Reports & Publications", href: "/reports-and-publications" },
+    { label: "Annual Report 2024–25", href: "/annual-report-2024-25" },
+    { label: "Annual Report 2023–24", href: "/annual-report-2023-24" },
+    { label: "Annual Report 2022–23", href: "/annual-report-2022-23" },
     { label: "Pond Rejuvenation SOP", href: "/publication-pond-rejuvenation-sop" },
     { label: "Green Wall of Aravalli", href: "/publication-green-wall-of-aravalli" },
     { label: "SoP of Wells", href: "/publication-sop-of-wells" },

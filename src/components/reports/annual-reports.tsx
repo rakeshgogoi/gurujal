@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 /**
  * Annual Reports — three downloadable PDFs.
  *
@@ -6,21 +8,25 @@
  * a new tab so the user doesn't lose their place on the page.
  */
 
+// Each card links to the composed Annual Report page (which embeds the
+// PDF + offers download), not to the PDF directly — so readers stay
+// inside the site and we get a chance to surface highlights and other
+// years.
 const reports = [
   {
     year: "2022–23",
     title: "Annual Report",
-    pdf: "/uploads/2025/11/Annual_Report_2022-23.pdf",
+    href: "/annual-report-2022-23",
   },
   {
     year: "2023–24",
     title: "Annual Report",
-    pdf: "/uploads/2025/11/Annual_Report_2023-24.pdf",
+    href: "/annual-report-2023-24",
   },
   {
     year: "2024–25",
     title: "Annual Report",
-    pdf: "/uploads/2025/11/Annual_Report_2024-25.pdf",
+    href: "/annual-report-2024-25",
   },
 ];
 
@@ -87,10 +93,8 @@ export function AnnualReports() {
         <ul className="mx-auto mt-14 grid max-w-5xl gap-6 sm:grid-cols-3">
           {reports.map((r) => (
             <li key={r.year}>
-              <a
-                href={r.pdf}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href={r.href}
                 className="group flex h-full flex-col items-start gap-5 rounded-3xl bg-brand-mist p-7 ring-1 ring-brand-soft/80 transition hover:-translate-y-1 hover:bg-white hover:shadow-xl hover:ring-brand-accent"
               >
                 {/* Icon + year badge */}
@@ -114,10 +118,10 @@ export function AnnualReports() {
                 </div>
 
                 <span className="inline-flex items-center gap-2 rounded-full bg-brand-primary px-5 py-2.5 text-sm font-semibold text-white transition group-hover:bg-brand-primary-dark">
-                  Download PDF
+                  Read & download
                   <DownloadIcon />
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

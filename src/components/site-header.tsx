@@ -161,17 +161,28 @@ export function SiteHeader() {
                             {item.label} overview
                           </a>
                         </li>
-                        {item.children!.map((c) => (
-                          <li key={c.href + c.label}>
-                            <a
-                              href={resolveHref(c.href)}
-                              onClick={closeMobile}
-                              className="block rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
+                        {item.children!.map((c, ci) =>
+                          c.section ? (
+                            <li
+                              key={`m-section-${ci}-${c.label}`}
+                              className={`px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.16em] text-brand-muted ${
+                                ci === 0 ? "pt-2" : "pt-3"
+                              }`}
                             >
                               {c.label}
-                            </a>
-                          </li>
-                        ))}
+                            </li>
+                          ) : (
+                            <li key={c.href + c.label}>
+                              <a
+                                href={resolveHref(c.href)}
+                                onClick={closeMobile}
+                                className="block rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
+                              >
+                                {c.label}
+                              </a>
+                            </li>
+                          )
+                        )}
                       </ul>
                     )}
                   </li>
@@ -214,16 +225,27 @@ function DesktopNavItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
       </a>
       {hasChildren && (
         <div className="invisible absolute left-0 top-full z-50 pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100">
-          <div className="min-w-[240px] rounded-xl border border-brand-soft bg-white p-2 shadow-xl ring-1 ring-black/5">
-            {item.children!.map((c) => (
-              <a
-                key={c.href + c.label}
-                href={resolveHref(c.href)}
-                className="block rounded-md px-3 py-2 text-sm text-brand-ink hover:bg-brand-mist hover:text-brand-orange transition"
-              >
-                {c.label}
-              </a>
-            ))}
+          <div className="min-w-[260px] rounded-xl border border-brand-soft bg-white p-2 shadow-xl ring-1 ring-black/5">
+            {item.children!.map((c, i) =>
+              c.section ? (
+                <div
+                  key={`section-${i}-${c.label}`}
+                  className={`px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.16em] text-brand-muted ${
+                    i === 0 ? "pt-1" : "pt-3"
+                  }`}
+                >
+                  {c.label}
+                </div>
+              ) : (
+                <a
+                  key={c.href + c.label}
+                  href={resolveHref(c.href)}
+                  className="block rounded-md px-3 py-2 text-sm text-brand-ink hover:bg-brand-mist hover:text-brand-orange transition"
+                >
+                  {c.label}
+                </a>
+              )
+            )}
           </div>
         </div>
       )}

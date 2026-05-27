@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HeroAchievements } from "./hero-achievements";
-import { liveUrl } from "@/lib/live-url";
 
 /**
  * Homepage hero — YouTube video background ("Gurujal Intro", id 3olgmTIt80U)
@@ -349,7 +348,7 @@ export function Hero() {
 
         <div className="mt-12 flex items-center gap-4">
           <Link
-            href={liveUrl("/about")}
+            href="/about"
             className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-7 py-3.5 text-sm font-semibold uppercase tracking-wider text-white backdrop-blur transition hover:bg-white hover:text-brand-deep"
           >
             Know More
