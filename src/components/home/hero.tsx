@@ -89,6 +89,33 @@ export function Hero() {
       const iframe = iframeRef.current;
       if (!iframe) return;
 
+      // Best-effort quality bump. YouTube auto-selects based on player
+      // size, and 1280x720 iframes tend to get 720p. We explicitly ask
+      // for hd1080 via the IFrame API.
+      //
+      // These methods have been gradually deprecated; we call them
+      // inside try/catch and only ONCE per session (not on every
+      // state change) to minimise the re-buffer flash that triggered
+      // YouTube's center HUD in earlier iterations. Because the
+      // iframe is still invisible while we do this, any HUD that does
+      // appear is off-screen.
+      const requestHighestQuality = (p: any) => {
+        try {
+          if (typeof p.setPlaybackQualityRange === "function") {
+            p.setPlaybackQualityRange("hd1080", "hd1080");
+          }
+        } catch {
+          /* method may be removed */
+        }
+        try {
+          if (typeof p.setPlaybackQuality === "function") {
+            p.setPlaybackQuality("hd1080");
+          }
+        } catch {
+          /* method may be removed */
+        }
+      };
+
       // Wait until the video has been playing CONTINUOUSLY for 3 seconds.
       //
       // YouTube's center HUD (previous / play-pause / next buttons)
@@ -125,14 +152,28 @@ export function Hero() {
         poll();
       };
 
+      let qualityRequested = false;
       player = new w.YT.Player(iframe, {
         events: {
+          onReady: (e: any) => {
+            // Ask for 1080p as soon as the player is ready, while the
+            // iframe is still invisible.
+            requestHighestQuality(e?.target);
+            qualityRequested = true;
+          },
           onStateChange: (e: any) => {
             // YT.PlayerState.PLAYING === 1
             // YT.PlayerState.BUFFERING === 3
             if (e?.data === 1) {
-              // (Re)start the wait. waitForRealPlayback clears any
-              // existing poll and zeros the wall-clock counter.
+              // First time PLAYING after onReady: ask again. YouTube
+              // sometimes ignores pre-playback quality requests but
+              // honours one issued during playback. After this we
+              // never request again — repeated calls trigger HUD
+              // flashes.
+              if (qualityRequested) {
+                requestHighestQuality(e?.target);
+                qualityRequested = false;
+              }
               waitForRealPlayback(e?.target);
             } else if (e?.data === 3) {
               // Buffering — the HUD may reappear. Abort current wait;
@@ -213,24 +254,29 @@ export function Hero() {
             2. YouTube iframe (covers the poster once video starts)
             3. dark gradient overlay for headline contrast */}
       <div className="absolute inset-0 -z-10">
-        {/* Poster — always rendered, no fade. */}
+        {/* Poster — always rendered, no fade. Greyscaled to match the
+            video, so the crossfade from poster to iframe doesn't jump
+            from colour to B&W. */}
         <Image
           src="/uploads/2026/03/Support-a-pond-hero.jpg"
           alt=""
           fill
           priority
-          className="object-cover"
+          className="object-cover [filter:grayscale(1)]"
           sizes="100vw"
         />
 
         <div className="absolute inset-0 overflow-hidden">
           {/*
             Video-cover sizing for a 16:9 YouTube embed:
-              width  = max(100vw, 100vh * 16/9)   // i.e. max(100vw, 177.78vh)
-              height = width * 9/16                // maintained via aspect-video
-            This guarantees the iframe is at least viewport-wide AND
-            viewport-tall, with 16:9 preserved, so the video always covers
-            the hero area regardless of viewport aspect ratio.
+              width  = max(100vw, 87vh * 16/9)   // i.e. max(100vw, 155vh)
+              height = width * 9/16               // maintained via aspect-video
+            The hero is sized at min-h-[85vh], so we only need to guarantee
+            coverage up to ~87vh of height (small safety margin). This
+            gives less aggressive zoom-in than covering a full 100vh.
+            At a 1280x800 viewport the iframe lands at 1280x720, vs the
+            previous 1422x800 — ~9% less crop on each axis on typical
+            laptops while still preventing letterbox gaps.
           */}
           {/*
             Visibility is driven by inline style — not a CSS class — so
@@ -245,12 +291,17 @@ export function Hero() {
             src={ytSrc}
             allow="autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
-            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[max(100vw,177.78vh)]"
+            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[max(100vw,155vh)]"
             style={{
               border: 0,
               opacity: videoReady ? 1 : 0,
               visibility: videoReady ? "visible" : "hidden",
               pointerEvents: "none",
+              // Desaturate the video to black and white. Combined with
+              // the dark teal overlay above, the hero gets a moody,
+              // editorial feel rather than competing with the colour
+              // palette of the rest of the page.
+              filter: "grayscale(1)",
               transition: "opacity 700ms cubic-bezier(.4, 0, .2, 1)",
             }}
           />
