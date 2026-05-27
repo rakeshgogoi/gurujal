@@ -45,6 +45,10 @@ export async function generateStaticParams() {
     // Careers + Contact have composed routes now.
     .filter((s) => s !== "career")
     .filter((s) => s !== "contact")
+    // Solution sub-pages with composed routes.
+    .filter((s) => s !== "support-a-pond")
+    .filter((s) => s !== "connect-the-drop")
+    .filter((s) => s !== "water-proofing")
     .map((slug) => ({ slug }));
 }
 

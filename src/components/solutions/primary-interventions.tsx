@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { liveUrl } from "@/lib/live-url";
+import { isLocalRoute } from "@/lib/nav";
+
+/** Internal route when implemented; otherwise fall through to live WP. */
+function resolveHref(href: string): string {
+  return isLocalRoute(href) ? href : liveUrl(href);
+}
 
 /**
  * The Primary Interventions — six solution cards.
@@ -114,7 +120,7 @@ export function PrimaryInterventions() {
           {interventions.map((it) => (
             <li key={it.name}>
               <Link
-                href={liveUrl(it.href)}
+                href={resolveHref(it.href)}
                 className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-brand-soft/80 transition hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="relative aspect-[5/3] w-full overflow-hidden bg-brand-soft/60">

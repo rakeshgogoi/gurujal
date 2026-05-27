@@ -37,6 +37,9 @@ export const localRoutes = new Set<string>([
   "/real-nature-in-restored-landscapes",
   "/career",
   "/contact",
+  "/support-a-pond",
+  "/connect-the-drop",
+  "/water-proofing",
 ]);
 
 /** True when the given href is a path served by this Next.js app. */
