@@ -35,6 +35,16 @@ export async function generateStaticParams() {
     // raw MDX fallback. (The four /publication-* subpages are still
     // served from MDX via this catch-all.)
     .filter((s) => s !== "reports-and-publications")
+    // /events has its own composed route — skip the raw MDX fallback.
+    .filter((s) => s !== "events")
+    // Event-detail pages with composed routes.
+    .filter((s) => s !== "hydromingle-event")
+    .filter((s) => s !== "roots-and-recharge-symposium")
+    .filter((s) => s !== "urban-adda-25")
+    .filter((s) => s !== "real-nature-in-restored-landscapes")
+    // Careers + Contact have composed routes now.
+    .filter((s) => s !== "career")
+    .filter((s) => s !== "contact")
     .map((slug) => ({ slug }));
 }
 
