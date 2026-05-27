@@ -1,4 +1,5 @@
 import { Hero } from "@/components/home/hero";
+import { HomeSectionNav } from "@/components/home/section-nav";
 import { WaterCrisisIntro } from "@/components/home/water-crisis";
 import { SixRApproach } from "@/components/home/six-r-approach";
 import { ImpactStats } from "@/components/home/impact-stats";
@@ -24,6 +25,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <HomeSectionNav />
       <Reveal><WaterCrisisIntro /></Reveal>
       <Reveal><SixRApproach /></Reveal>
       <Reveal><ImpactStats /></Reveal>

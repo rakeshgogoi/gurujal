@@ -31,6 +31,10 @@ export async function generateStaticParams() {
     .filter((s) => s !== "team")
     // /solutions has its own composed route — skip the raw MDX fallback.
     .filter((s) => s !== "solutions")
+    // /reports-and-publications has its own composed route — skip the
+    // raw MDX fallback. (The four /publication-* subpages are still
+    // served from MDX via this catch-all.)
+    .filter((s) => s !== "reports-and-publications")
     .map((slug) => ({ slug }));
 }
 

@@ -96,7 +96,7 @@ export function PrimaryInterventions() {
       id="interventions"
       className="bg-brand-mist scroll-mt-20"
     >
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
             What we do

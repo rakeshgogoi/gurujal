@@ -45,7 +45,7 @@ export function AboutHero() {
         className="pointer-events-none absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-brand-orange/15 blur-3xl"
       />
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 items-center px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 items-center px-6 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
         <div className="grid w-full items-center gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-brand-teal-bright sm:mb-4 sm:text-sm">

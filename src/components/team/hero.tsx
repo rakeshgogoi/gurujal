@@ -37,7 +37,7 @@ export function TeamHero() {
         className="pointer-events-none absolute -right-40 -bottom-32 h-96 w-96 rounded-full bg-brand-orange/15 blur-3xl"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      <div className="relative mx-auto max-w-7xl px-6 py-16 text-center sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-brand-teal-bright sm:text-sm">
           Our Team
         </p>

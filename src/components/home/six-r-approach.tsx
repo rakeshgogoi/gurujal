@@ -94,7 +94,7 @@ const toneStepBg: Record<Tone, string> = {
  */
 export function SixRApproach() {
   return (
-    <section className="relative overflow-hidden bg-brand-mist">
+    <section id="approach" className="relative overflow-hidden bg-brand-mist scroll-mt-20">
       <div
         aria-hidden
         className="pointer-events-none absolute -left-32 top-24 h-72 w-72 rounded-full bg-brand-teal/10 blur-3xl"

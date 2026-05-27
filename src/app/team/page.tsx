@@ -42,7 +42,7 @@ export default function TeamPage() {
 
       {/* Closing CTA — invites readers to join the team or get in touch. */}
       <section className="bg-white pb-12 lg:pb-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-6 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-teal via-brand-accent to-brand-primary px-8 py-12 sm:px-12 sm:py-14 lg:px-16">
             <div
               aria-hidden

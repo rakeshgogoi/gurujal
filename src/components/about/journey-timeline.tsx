@@ -105,7 +105,7 @@ export function JourneyTimeline() {
         className="pointer-events-none absolute right-0 bottom-32 h-72 w-72 rounded-full bg-brand-orange/10 blur-3xl"
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+      <div className="relative mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
             Our Journey

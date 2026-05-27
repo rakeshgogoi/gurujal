@@ -48,7 +48,7 @@ export function StickyAnchorNav({ sections }: { sections: AnchorSection[] }) {
         aria-label="On this page"
         className="sticky top-20 z-30 border-y border-white/10 bg-brand-deep/95 backdrop-blur shadow-lg shadow-black/10 transition-[padding] duration-200"
       >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-6 sm:px-6 lg:px-8">
           <ul
             className={`flex gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-2 lg:justify-center transition-[padding] duration-200 ${
               stuck ? "py-1.5" : "py-3"

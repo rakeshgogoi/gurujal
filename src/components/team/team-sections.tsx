@@ -286,7 +286,7 @@ function SectionHeading({
 export function TeamLeadership() {
   return (
     <section id="leadership" className="bg-white scroll-mt-20">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+      <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
         <SectionHeading
           eyebrow="Leadership"
           title="Leading the way"
@@ -307,7 +307,7 @@ export function TeamLeadership() {
 export function TeamTrustees() {
   return (
     <section id="trustees" className="bg-brand-mist scroll-mt-20">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+      <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
         <SectionHeading
           eyebrow="Governance"
           title="Trustees"
@@ -328,7 +328,7 @@ export function TeamTrustees() {
 export function TeamAdvisors() {
   return (
     <section id="advisors" className="bg-white scroll-mt-20">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+      <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
         <SectionHeading
           eyebrow="Advisory board"
           title="Advisors"
@@ -349,7 +349,7 @@ export function TeamAdvisors() {
 export function TeamExecutive() {
   return (
     <section id="executive" className="bg-brand-mist scroll-mt-20">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+      <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
         <SectionHeading
           eyebrow="Day-to-day"
           title="Executive Team"

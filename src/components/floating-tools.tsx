@@ -36,8 +36,11 @@ function LanguagePicker() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("EN");
 
+  // Hidden on phones (below sm). The button sits near the page's main
+  // CTAs on small screens and crowds the thumb zone; we only show it
+  // on tablets and up where there's room for a persistent floater.
   return (
-    <div className="fixed bottom-6 left-6 z-40">
+    <div className="fixed bottom-6 left-6 z-40 hidden sm:block">
       {/* Popover */}
       {open && (
         <div

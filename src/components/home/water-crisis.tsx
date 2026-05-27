@@ -50,7 +50,7 @@ export function WaterCrisisIntro() {
   }, []);
 
   return (
-    <section className="bg-white">
+    <section id="crisis" className="bg-white scroll-mt-20">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-12">
           {/* Left: heading + copy */}

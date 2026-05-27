@@ -38,7 +38,7 @@ const toneNumberClass: Record<Stat["tone"], string> = {
 
 export function ImpactStats() {
   return (
-    <section className="bg-brand-deep text-white">
+    <section id="impact" className="bg-brand-deep text-white scroll-mt-20">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="mb-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div className="max-w-2xl">

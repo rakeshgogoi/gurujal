@@ -44,7 +44,7 @@ const events = [
  */
 export function RecentEvents() {
   return (
-    <section className="bg-white">
+    <section id="events" className="bg-white scroll-mt-20">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="flex items-end justify-between gap-6">
           <div className="max-w-2xl">
