@@ -1,5 +1,14 @@
 import Link from "next/link";
+import { isLocalRoute } from "@/lib/nav";
 import { liveUrl } from "@/lib/live-url";
+
+/**
+ * Resolve a news/notice href to either an internal path or the live
+ * site. Same helper pattern used by the site header and home/stories.
+ */
+function resolveHref(href: string): string {
+  return isLocalRoute(href) ? href : liveUrl(href);
+}
 
 /**
  * Two-column "Recent News" + "Notice" section.
@@ -20,7 +29,7 @@ const recentNews = [
   {
     date: "21 Feb 2026",
     title: "Real Nature in Restored Landscapes — site visit at BSF Bhondsi, Khandewla & Bhokarka",
-    href: "/experiential-learning",
+    href: "/real-nature-in-restored-landscapes",
   },
   {
     date: "10 Dec 2025",
@@ -115,7 +124,7 @@ function Column({
           </h2>
         </div>
         <Link
-          href={liveUrl(seeAllHref)}
+          href={resolveHref(seeAllHref)}
           className="shrink-0 text-sm font-semibold text-brand-primary hover:text-brand-orange"
         >
           See all →
@@ -125,7 +134,7 @@ function Column({
         {items.map((n) => (
           <li key={n.title}>
             <Link
-              href={liveUrl(n.href)}
+              href={resolveHref(n.href)}
               className="group flex items-start gap-4 py-3.5 transition hover:bg-brand-mist/60 -mx-2 px-2 rounded-md"
             >
               <span className="mt-0.5 shrink-0 rounded-md bg-brand-soft px-2.5 py-1 text-xs font-semibold text-brand-primary">
