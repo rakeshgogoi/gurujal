@@ -1,6 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { isLocalRoute } from "@/lib/nav";
 import { liveUrl } from "@/lib/live-url";
+
+/**
+ * Resolve a story href to either an internal path or the live site —
+ * mirrors the helper used by the site header.
+ */
+function resolveHref(href: string): string {
+  return isLocalRoute(href) ? href : liveUrl(href);
+}
 
 /**
  * "Do not Miss Incredible Stories From Our Journey" — editorial / magazine
@@ -57,7 +66,7 @@ export function Stories() {
             </h2>
           </div>
           <Link
-            href={liveUrl("/events")}
+            href={resolveHref("/events")}
             className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-brand-primary px-5 py-2.5 text-sm font-semibold text-brand-primary transition hover:bg-brand-primary hover:text-white"
           >
             Read more
@@ -71,7 +80,7 @@ export function Stories() {
         <div className="mt-12 grid gap-6 lg:grid-cols-12">
           {/* Hero feature — left, large */}
           <Link
-            href={liveUrl(feature.href)}
+            href={resolveHref(feature.href)}
             className="group relative flex flex-col overflow-hidden rounded-3xl bg-brand-mist lg:col-span-7"
           >
             {/* Image container — explicit aspect ratio on every viewport
@@ -121,7 +130,7 @@ export function Stories() {
             {rest.map((s) => (
               <Link
                 key={s.href + s.title}
-                href={liveUrl(s.href)}
+                href={resolveHref(s.href)}
                 className="group flex flex-1 flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-brand-soft transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-brand-accent sm:flex-row"
               >
                 <div className="relative h-44 w-full shrink-0 overflow-hidden sm:h-auto sm:w-48">

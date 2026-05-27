@@ -60,6 +60,8 @@ export async function generateStaticParams() {
     .filter((s) => s !== "publication-green-wall-of-aravalli")
     .filter((s) => s !== "publication-sop-of-wells")
     .filter((s) => s !== "publication-wells-of-gurugram")
+    // Story / case-study pages with composed routes.
+    .filter((s) => s !== "chandla-dungarwas-pond")
     .map((slug) => ({ slug }));
 }
 

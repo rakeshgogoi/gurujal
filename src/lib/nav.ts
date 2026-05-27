@@ -57,6 +57,7 @@ export const localRoutes = new Set<string>([
   "/publication-green-wall-of-aravalli",
   "/publication-sop-of-wells",
   "/publication-wells-of-gurugram",
+  "/chandla-dungarwas-pond",
 ]);
 
 /** True when the given href is a path served by this Next.js app. */
