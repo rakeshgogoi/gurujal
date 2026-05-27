@@ -1,6 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { isLocalRoute } from "@/lib/nav";
 import { liveUrl } from "@/lib/live-url";
+
+/**
+ * Resolve an event href to either an internal path or the live site.
+ * Same helper pattern used by the site header / home stories / news card.
+ */
+function resolveHref(href: string): string {
+  return isLocalRoute(href) ? href : liveUrl(href);
+}
 
 /**
  * Real past events sourced verbatim from /content/pages/events.mdx
@@ -13,7 +22,7 @@ const events = [
     blurb:
       "Site Visit & Experiential Learning Program hosted by GuruJal & Prana Earth under Delhi Climate Innovation Week 2026 — BSF Bhondsi, Khandewla Well, Triveni Pond, Bhokarka.",
     image: "/uploads/2024/08/real-nature-event.jpeg",
-    href: "/experiential-learning",
+    href: "/real-nature-in-restored-landscapes",
     date: "21 Feb 2026",
     kind: "Site Visit",
   },
@@ -56,7 +65,7 @@ export function RecentEvents() {
             </h2>
           </div>
           <Link
-            href={liveUrl("/events")}
+            href={resolveHref("/events")}
             className="hidden shrink-0 items-center gap-1.5 text-sm font-semibold text-brand-primary hover:text-brand-orange sm:inline-flex"
           >
             See all events
@@ -71,7 +80,7 @@ export function RecentEvents() {
           {events.map((e) => (
             <Link
               key={e.href + e.title}
-              href={liveUrl(e.href)}
+              href={resolveHref(e.href)}
               className="group relative flex flex-col overflow-hidden rounded-2xl bg-brand-mist shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className="relative aspect-[16/10] w-full overflow-hidden">

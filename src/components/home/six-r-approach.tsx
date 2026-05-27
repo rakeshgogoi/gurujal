@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+import { isLocalRoute } from "@/lib/nav";
 import { liveUrl } from "@/lib/live-url";
+
+/** Resolve a 6R card href to either an internal path or the live site. */
+function resolveHref(href: string): string {
+  return isLocalRoute(href) ? href : liveUrl(href);
+}
 
 const sixR = [
   {
@@ -155,7 +161,7 @@ function Card({
 }) {
   return (
     <Link
-      href={liveUrl(r.href)}
+      href={resolveHref(r.href)}
       className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-brand-soft/80 bg-white p-7 shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-brand-accent hover:shadow-2xl"
     >
       {/* Background tone gradient — invisible at rest, sweeps in on hover */}

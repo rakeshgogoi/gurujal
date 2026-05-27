@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { isLocalRoute } from "@/lib/nav";
 import { liveUrl } from "@/lib/live-url";
+
+/** Resolve a CTA href to either an internal path or the live site. */
+function resolveHref(href: string): string {
+  return isLocalRoute(href) ? href : liveUrl(href);
+}
 
 /**
  * "The time to Act is Now" — editorial stat-card visualisation.
@@ -76,7 +82,7 @@ export function WaterCrisisIntro() {
             </p>
             <div className="mt-10">
               <Link
-                href={liveUrl("/support-a-pond")}
+                href={resolveHref("/support-a-pond")}
                 className="inline-flex items-center gap-2 rounded-full bg-brand-primary px-7 py-3.5 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-brand-primary-dark"
               >
                 Discover Our Solutions

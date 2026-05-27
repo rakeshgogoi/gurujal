@@ -3,7 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { isLocalRoute } from "@/lib/nav";
 import { liveUrl } from "@/lib/live-url";
+
+/** Resolve a CTA href to either an internal path or the live site. */
+function resolveHref(href: string): string {
+  return isLocalRoute(href) ? href : liveUrl(href);
+}
 
 /**
  * Impact at a Glance — bento grid layout.
@@ -50,7 +56,7 @@ export function ImpactStats() {
             </h2>
           </div>
           <Link
-            href={liveUrl("/about")}
+            href={resolveHref("/about")}
             className="hidden shrink-0 items-center gap-1.5 rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white hover:text-brand-deep sm:inline-flex"
           >
             How we measure impact
