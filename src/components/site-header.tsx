@@ -13,8 +13,9 @@ function resolveHref(href: string): string {
 /**
  * Site header — light theme.
  *
- *  - All nav links resolve to the live gurujal.org site via liveUrl().
- *    The home link stays internal so the new homepage is reachable.
+ *  - Nav links resolve via resolveHref(): local routes (listed in
+ *    localRoutes) stay internal; everything else falls back to the
+ *    live gurujal.org page via liveUrl().
  *  - Logo on the left, primary nav in the middle, Support Us pill on the
  *    right. Mobile drawer collapses everything into a column.
  */
@@ -62,7 +63,7 @@ export function SiteHeader() {
         {/* Right side: CTA + menu */}
         <div className="flex items-center gap-3">
           <a
-            href={liveUrl(ctaNav.href)}
+            href={resolveHref(ctaNav.href)}
             className="hidden lg:inline-flex items-center rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-orange-dark"
           >
             {ctaNav.label}
@@ -190,7 +191,7 @@ export function SiteHeader() {
               })}
               <li className="mt-4">
                 <a
-                  href={liveUrl(ctaNav.href)}
+                  href={resolveHref(ctaNav.href)}
                   onClick={closeMobile}
                   className="block rounded-full bg-brand-orange px-5 py-2.5 text-center text-sm font-semibold text-white"
                 >

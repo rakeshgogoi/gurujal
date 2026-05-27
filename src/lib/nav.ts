@@ -106,7 +106,7 @@ export const primaryNav: NavItem[] = [
 ];
 
 /** Separate Support Us CTA, rendered as a button to the right of nav. */
-export const ctaNav = { label: "Support Us", href: "/support-a-pond" };
+export const ctaNav = { label: "Support Us", href: "/contact" };
 
 export const footerLinks = {
   solutions: [
