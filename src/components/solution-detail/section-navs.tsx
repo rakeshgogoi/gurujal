@@ -48,3 +48,45 @@ export function WaterProofingSectionNav() {
     />
   );
 }
+
+export function EcoRestorationSectionNav() {
+  return (
+    <StickyAnchorNav
+      sections={[
+        { label: "The Crisis", href: "#crisis" },
+        { label: "Our Approach", href: "#approach" },
+        { label: "Six Pillars", href: "#pillars" },
+        { label: "Impact", href: "#impact" },
+        { label: "Case Study", href: "#case-study" },
+      ]}
+    />
+  );
+}
+
+export function WeForWaterSectionNav() {
+  return (
+    <StickyAnchorNav
+      sections={[
+        { label: "Why Green Jobs", href: "#crisis" },
+        { label: "Six Tracks", href: "#tracks" },
+        { label: "Programme", href: "#programme" },
+        { label: "Placements", href: "#placements" },
+        { label: "Alumni Stories", href: "#alumni" },
+      ]}
+    />
+  );
+}
+
+export function EsgAdvisorySectionNav() {
+  return (
+    <StickyAnchorNav
+      sections={[
+        { label: "Our Offerings", href: "#offerings" },
+        { label: "ESG Process", href: "#process" },
+        { label: "Solutions Menu", href: "#solutions" },
+        { label: "Case Study", href: "#case-study" },
+        { label: "Frameworks", href: "#frameworks" },
+      ]}
+    />
+  );
+}

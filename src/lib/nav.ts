@@ -40,6 +40,9 @@ export const localRoutes = new Set<string>([
   "/support-a-pond",
   "/connect-the-drop",
   "/water-proofing",
+  "/eco-restoration",
+  "/we-for-water",
+  "/esg-advisory",
 ]);
 
 /** True when the given href is a path served by this Next.js app. */

@@ -49,6 +49,9 @@ export async function generateStaticParams() {
     .filter((s) => s !== "support-a-pond")
     .filter((s) => s !== "connect-the-drop")
     .filter((s) => s !== "water-proofing")
+    .filter((s) => s !== "eco-restoration")
+    .filter((s) => s !== "we-for-water")
+    .filter((s) => s !== "esg-advisory")
     .map((slug) => ({ slug }));
 }
 
