@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { HeroAchievements } from "./hero-achievements";
 import { liveUrl } from "@/lib/live-url";
 
@@ -45,6 +45,14 @@ const AUTO_MS = 6000;
 export function Hero() {
   const [idx, setIdx] = useState(0);
 
+  // Keep the YouTube iframe hidden until the video is actually playing.
+  // Otherwise YouTube's branded "loading + play button" overlay flashes
+  // on top of the poster for a beat while the player initialises, even
+  // with controls=0 and modestbranding=1. We listen for the iframe's
+  // postMessage "PLAYING" state and only then fade the iframe in.
+  const [videoReady, setVideoReady] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
   const next = useCallback(() => setIdx((i) => (i + 1) % headlines.length), []);
   const prev = useCallback(() => setIdx((i) => (i - 1 + headlines.length) % headlines.length), []);
 
@@ -52,6 +60,54 @@ export function Hero() {
     const t = setInterval(next, AUTO_MS);
     return () => clearInterval(t);
   }, [next]);
+
+  // YouTube iframe lifecycle:
+  //   1. Subscribe to player events by posting {event:"listening"} to the
+  //      iframe at a short interval until it answers (it ignores us until
+  //      its own bootstrap completes).
+  //   2. Listen for `onStateChange` info=1 (PLAYING) to flip videoReady.
+  //   3. Belt-and-braces: a 1800ms fallback flips videoReady regardless,
+  //      so the iframe still appears on slow networks or in browsers
+  //      where postMessage is throttled. The fade-in is short so users
+  //      effectively see only the poster → video, no controls flash.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const send = () => {
+      const w = iframeRef.current?.contentWindow;
+      if (!w) return;
+      w.postMessage(JSON.stringify({ event: "listening" }), "*");
+    };
+
+    const ping = setInterval(send, 500);
+    // Send one immediately too — usually the iframe is up by the time
+    // this effect runs.
+    send();
+
+    const onMessage = (e: MessageEvent) => {
+      // YouTube posts from www.youtube.com (the embed origin).
+      if (!e.origin.endsWith("youtube.com")) return;
+      try {
+        const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+        // PLAYING == 1 in the YouTube IFrame API.
+        if (data?.event === "onStateChange" && data?.info === 1) {
+          setVideoReady(true);
+        }
+      } catch {
+        /* non-JSON message — ignore */
+      }
+    };
+    window.addEventListener("message", onMessage);
+
+    // Fallback in case the message handshake never completes.
+    const fallback = setTimeout(() => setVideoReady(true), 1800);
+
+    return () => {
+      clearInterval(ping);
+      clearTimeout(fallback);
+      window.removeEventListener("message", onMessage);
+    };
+  }, []);
 
   // YouTube embed params — tuned for reliable muted autoplay.
   //  - Use youtube.com (some browsers' autoplay heuristics treat the
@@ -97,11 +153,14 @@ export function Hero() {
             the hero area regardless of viewport aspect ratio.
           */}
           <iframe
+            ref={iframeRef}
             title="GuruJal Intro"
             src={ytSrc}
             allow="autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
-            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[max(100vw,177.78vh)]"
+            className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 aspect-video w-[max(100vw,177.78vh)] transition-opacity duration-700 ${
+              videoReady ? "opacity-100" : "opacity-0"
+            }`}
             style={{ border: 0 }}
           />
         </div>
