@@ -613,11 +613,11 @@ function ConstructionSection() {
           <div className="grid sm:grid-cols-2">
             <div className="relative aspect-[4/3]">
               <Image
-                src="/uploads/2025/06/bhonsi-ba.jpg"
-                alt="Before — sewage-waterlogged ground with defunct infrastructure"
+                src="/uploads/2026/05/bhondsi-pond-before.png"
+                alt="BSF Bhondsi Pond before restoration — sewage-waterlogged ground with defunct infrastructure"
                 fill
                 sizes="(min-width: 640px) 50vw, 100vw"
-                className="object-cover [filter:grayscale(1)_brightness(0.85)]"
+                className="object-cover"
               />
               <span className="absolute left-4 top-4 inline-flex rounded-full bg-brand-deep/80 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white ring-1 ring-white/15">
                 Before
@@ -625,8 +625,8 @@ function ConstructionSection() {
             </div>
             <div className="relative aspect-[4/3]">
               <Image
-                src="/uploads/2025/04/freshwater-pond-1.jpg"
-                alt="After — thriving community oasis with functional treatment system"
+                src="/uploads/2026/05/bhondsi-pond-after.jpg"
+                alt="BSF Bhondsi Pond after restoration — thriving community oasis with functional treatment system"
                 fill
                 sizes="(min-width: 640px) 50vw, 100vw"
                 className="object-cover"
