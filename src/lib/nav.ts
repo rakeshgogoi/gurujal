@@ -58,6 +58,8 @@ export const localRoutes = new Set<string>([
   "/publication-sop-of-wells",
   "/publication-wells-of-gurugram",
   "/chandla-dungarwas-pond",
+  "/mojabad-pond",
+  "/bhondsi-pond",
 ]);
 
 /** True when the given href is a path served by this Next.js app. */
@@ -75,7 +77,15 @@ export const primaryNav: NavItem[] = [
     label: "Solutions",
     href: "/solutions",
     children: [
-      { label: "Support A Pond", href: "/support-a-pond" },
+      {
+        label: "Support A Pond",
+        href: "/support-a-pond",
+        children: [
+          { label: "Chandla Dungerwas Pond", href: "/chandla-dungarwas-pond" },
+          { label: "Mojabad Pond", href: "/mojabad-pond" },
+          { label: "Bhondsi Pond", href: "/bhondsi-pond" },
+        ],
+      },
       { label: "Connect The Drop", href: "/connect-the-drop" },
       { label: "Water Proofing", href: "/water-proofing" },
       { label: "Eco Restoration", href: "/eco-restoration" },
@@ -87,18 +97,25 @@ export const primaryNav: NavItem[] = [
     label: "Resources",
     href: "/reports-and-publications",
     children: [
-      // ---- Reports ----
-      { label: "Reports", href: "#", section: true },
-      { label: "Annual Report 2022–23", href: "/annual-report-2022-23" },
-      { label: "Annual Report 2023–24", href: "/annual-report-2023-24" },
-      { label: "Annual Report 2024–25", href: "/annual-report-2024-25" },
-
-      // ---- Publications ----
-      { label: "Publications", href: "#", section: true },
-      { label: "Pond Rejuvenation SOP", href: "/publication-pond-rejuvenation-sop" },
-      { label: "Green Wall of Aravalli", href: "/publication-green-wall-of-aravalli" },
-      { label: "SoP of Wells", href: "/publication-sop-of-wells" },
-      { label: "Wells of Gurugram", href: "/publication-wells-of-gurugram" },
+      {
+        label: "Reports",
+        href: "/reports-and-publications#reports",
+        children: [
+          { label: "Annual Report 2022–23", href: "/annual-report-2022-23" },
+          { label: "Annual Report 2023–24", href: "/annual-report-2023-24" },
+          { label: "Annual Report 2024–25", href: "/annual-report-2024-25" },
+        ],
+      },
+      {
+        label: "Publications",
+        href: "/reports-and-publications#publications",
+        children: [
+          { label: "Pond Rejuvenation SOP", href: "/publication-pond-rejuvenation-sop" },
+          { label: "Green Wall of Aravalli", href: "/publication-green-wall-of-aravalli" },
+          { label: "SoP of Wells", href: "/publication-sop-of-wells" },
+          { label: "Wells of Gurugram", href: "/publication-wells-of-gurugram" },
+        ],
+      },
     ],
   },
   { label: "Events", href: "/events" },

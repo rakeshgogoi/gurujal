@@ -162,17 +162,77 @@ export function SiteHeader() {
                             {item.label} overview
                           </a>
                         </li>
-                        {item.children!.map((c, ci) =>
-                          c.section ? (
-                            <li
-                              key={`m-section-${ci}-${c.label}`}
-                              className={`px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.16em] text-brand-muted ${
-                                ci === 0 ? "pt-2" : "pt-3"
-                              }`}
-                            >
-                              {c.label}
-                            </li>
-                          ) : (
+                        {item.children!.map((c, ci) => {
+                          if (c.section) {
+                            return (
+                              <li
+                                key={`m-section-${ci}-${c.label}`}
+                                className={`px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.16em] text-brand-muted ${
+                                  ci === 0 ? "pt-2" : "pt-3"
+                                }`}
+                              >
+                                {c.label}
+                              </li>
+                            );
+                          }
+                          const childHasChildren = !!c.children?.length;
+                          if (childHasChildren) {
+                            const subKey = `${item.label}::${c.label}`;
+                            const subOpen = !!expanded[subKey];
+                            return (
+                              <li key={c.href + c.label}>
+                                <div className="flex items-center gap-1">
+                                  <a
+                                    href={resolveHref(c.href)}
+                                    onClick={closeMobile}
+                                    className="flex-1 rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
+                                  >
+                                    {c.label}
+                                  </a>
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleSection(subKey)}
+                                    aria-expanded={subOpen}
+                                    aria-label={`Toggle ${c.label} sub-menu`}
+                                    className="inline-flex h-8 w-8 items-center justify-center rounded-md text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
+                                  >
+                                    <svg
+                                      width="12"
+                                      height="12"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      aria-hidden
+                                      className={`transition-transform duration-200 ${
+                                        subOpen ? "rotate-180" : ""
+                                      }`}
+                                    >
+                                      <polyline points="6 9 12 15 18 9" />
+                                    </svg>
+                                  </button>
+                                </div>
+                                {subOpen && (
+                                  <ul className="ml-3 mt-1 mb-1 border-l border-brand-soft pl-3">
+                                    {c.children!.map((gc) => (
+                                      <li key={gc.href + gc.label}>
+                                        <a
+                                          href={resolveHref(gc.href)}
+                                          onClick={closeMobile}
+                                          className="block rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
+                                        >
+                                          {gc.label}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </li>
+                            );
+                          }
+                          return (
                             <li key={c.href + c.label}>
                               <a
                                 href={resolveHref(c.href)}
@@ -182,8 +242,8 @@ export function SiteHeader() {
                                 {c.label}
                               </a>
                             </li>
-                          )
-                        )}
+                          );
+                        })}
                       </ul>
                     )}
                   </li>
@@ -237,6 +297,8 @@ function DesktopNavItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
                 >
                   {c.label}
                 </div>
+              ) : c.children && c.children.length > 0 ? (
+                <DesktopNestedItem key={c.href + c.label} item={c} />
               ) : (
                 <a
                   key={c.href + c.label}
@@ -250,6 +312,51 @@ function DesktopNavItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * Nested dropdown item — rendered inside a parent dropdown. The parent
+ * link is still clickable (so e.g. "Support A Pond" navigates to the
+ * solution page), but hovering its chevron expands a side flyout with
+ * the third-level children.
+ */
+function DesktopNestedItem({ item }: { item: NavItem }) {
+  return (
+    <div className="group/sub relative">
+      <a
+        href={resolveHref(item.href)}
+        className="flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm text-brand-ink hover:bg-brand-mist hover:text-brand-orange transition"
+      >
+        <span>{item.label}</span>
+        <svg
+          width="11"
+          height="11"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <polyline points="9 6 15 12 9 18" />
+        </svg>
+      </a>
+      <div className="invisible absolute left-full top-0 z-50 pl-2 opacity-0 transition group-hover/sub:visible group-hover/sub:opacity-100">
+        <div className="min-w-[240px] rounded-xl border border-brand-soft bg-white p-2 shadow-xl ring-1 ring-black/5">
+          {item.children!.map((c) => (
+            <a
+              key={c.href + c.label}
+              href={resolveHref(c.href)}
+              className="block rounded-md px-3 py-2 text-sm text-brand-ink hover:bg-brand-mist hover:text-brand-orange transition"
+            >
+              {c.label}
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
