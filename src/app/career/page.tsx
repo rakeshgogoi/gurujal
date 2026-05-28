@@ -16,7 +16,7 @@ function DiversityStrip() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-6 pb-20 sm:px-6 lg:px-8 lg:pb-24">
-        <div className="mx-auto max-w-4xl rounded-3xl bg-gradient-to-br from-brand-mist via-white to-brand-mist p-8 ring-1 ring-brand-soft/70 sm:p-10">
+        <div className="mx-auto max-w-4xl">
           <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
             <span
               aria-hidden
