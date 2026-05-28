@@ -15,7 +15,7 @@ const APPLY_FORM = "https://forms.gle/obmREQzpeTe3dirg9";
 function DiversityStrip() {
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-7xl px-6 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+      <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
             <span
