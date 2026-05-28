@@ -23,12 +23,12 @@ function resolveHref(href: string): string {
 const stories = [
   {
     category: "Pond Restoration",
-    title: "Chandla Dungerwas — echoes of renewal",
+    title: "Maujabad — a village reclaims its water",
     excerpt:
-      "Manesar Tehsil, Gurugram. 1.07-acre pond restored: 7,200 m³ of expanded capacity after desilting, 700+ villagers directly benefiting, groundwater table addressed at 42 m depth.",
-    image: "/uploads/2026/03/chandla-dungerwas-hero.jpg",
-    href: "/chandla-dungarwas-pond",
-    meta: "Jul 2024 · Pond restoration story",
+      "Pataudi Block, Gurugram. 1.2-acre pond restored with a 100 KLD phytorid wastewater treatment plant. ₹31.33 lakhs of government investment matched by ₹6 lakhs of community crowdfunding — a pond Maujabad paid to save.",
+    image: "/uploads/2024/08/DJI_0793.jpg",
+    href: "/mojabad-pond",
+    meta: "May 2024 · Pond restoration story",
   },
   {
     category: "Publication",

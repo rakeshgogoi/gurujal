@@ -81,7 +81,6 @@ export const primaryNav: NavItem[] = [
         label: "Support A Pond",
         href: "/support-a-pond",
         children: [
-          { label: "Chandla Dungerwas Pond", href: "/chandla-dungarwas-pond" },
           { label: "Mojabad Pond", href: "/mojabad-pond" },
           { label: "Bhondsi Pond", href: "/bhondsi-pond" },
         ],
