@@ -1,55 +1,30 @@
-import Image from "next/image";
-
 /**
- * "Latest from LinkedIn" — curated recent posts from the GuruJal company
- * page (https://www.linkedin.com/company/gurujal/).
+ * "Latest from LinkedIn" — recent posts from the GuruJal company page
+ * (https://www.linkedin.com/company/gurujal/) rendered via LinkedIn's
+ * official per-post embed iframes.
  *
- * LinkedIn's API doesn't permit a live feed embed without their paid
- * widget, so we keep four hand-curated cards that mirror the look of a
- * LinkedIn post and link straight back to the page. Update the array
- * when newer posts are worth surfacing.
+ * Each iframe renders the live post — including images, video, and
+ * up-to-date like/comment counts. To refresh the feed: on a post, click
+ * ⋯ → "Embed this post", copy the iframe URL, and update the EMBEDS
+ * array. The per-post height comes from LinkedIn's embed code; keep it
+ * so text posts and image posts both render without scrollbars.
  */
-const POSTS: {
-  excerpt: string;
-  posted: string;
-  likes?: number;
-  comments?: number;
-  category: string;
-  href: string;
-}[] = [
+const EMBEDS: { url: string; height: number }[] = [
   {
-    category: "Story",
-    excerpt:
-      "A pond once forgotten by the village is now becoming a space of life, reflection, and community again. In Mankrola, floating wetlands and native plantations are bringing back biodiversity.",
-    posted: "Just now",
-    href: "https://www.linkedin.com/company/gurujal/",
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:share:7464938057067048960?collapsed=1",
+    height: 570,
   },
   {
-    category: "Hiring",
-    excerpt:
-      "Are you passionate about sustainable design, ecological restoration, and creating spaces that work in harmony with nature? We&apos;re hiring an Architect Intern for water-sensitive landscape projects.",
-    posted: "1 day ago",
-    likes: 14,
-    comments: 2,
-    href: "https://www.linkedin.com/company/gurujal/",
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:share:7464541461041090560?collapsed=1",
+    height: 670,
   },
   {
-    category: "Hiring",
-    excerpt:
-      "Passionate about water, maps, hydrology, and environmental restoration? Join our team and work on meaningful projects — GIS &amp; Hydrology Associate and Intern roles in Gurugram.",
-    posted: "3 days ago",
-    likes: 61,
-    comments: 6,
-    href: "https://www.linkedin.com/company/gurujal/",
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7463209985569816576?collapsed=1",
+    height: 567,
   },
   {
-    category: "Education",
-    excerpt:
-      "What if the waste we throw every day could become nutrition for the soil? At Tajnagar Senior Secondary School, students learned to compost everyday waste into nutrient-rich soil amendment.",
-    posted: "4 days ago",
-    likes: 7,
-    comments: 2,
-    href: "https://www.linkedin.com/company/gurujal/",
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7462866123257090048?collapsed=1",
+    height: 567,
   },
 ];
 
@@ -80,75 +55,24 @@ export function LinkedInFeed() {
           </a>
         </div>
 
-        {/* Below sm: single touch-scroll row with snap. sm+: regular grid. */}
-        <div className="mt-12 -mx-4 overflow-x-auto overscroll-x-contain px-4 sm:mx-0 sm:overflow-visible sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex w-max gap-6 snap-x snap-mandatory sm:grid sm:w-auto sm:grid-cols-2 sm:gap-6 sm:snap-none lg:grid-cols-4">
-          {POSTS.map((p, i) => (
-            <a
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+          {EMBEDS.map((e, i) => (
+            <div
               key={i}
-              href={p.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex w-[280px] shrink-0 snap-start flex-col rounded-2xl bg-white ring-1 ring-brand-soft transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-brand-accent sm:w-auto sm:shrink sm:snap-none"
+              className="overflow-hidden rounded-2xl ring-1 ring-brand-soft"
             >
-              {/* "Author" strip — mimics a LinkedIn post header */}
-              <div className="flex items-center gap-3 border-b border-brand-soft/70 p-4">
-                <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-brand-mist ring-1 ring-brand-soft">
-                  <Image
-                    src="/brand/gurujal-logo.png"
-                    alt=""
-                    fill
-                    sizes="40px"
-                    className="object-contain p-1.5"
-                  />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm font-semibold text-brand-ink">
-                    GuruJal
-                  </div>
-                  <div className="truncate text-[11px] text-brand-muted">
-                    {p.posted} ·{" "}
-                    <span className="font-medium text-brand-teal-dark">
-                      {p.category}
-                    </span>
-                  </div>
-                </div>
-                <LinkedInGlyph className="h-5 w-5 shrink-0 text-[#0a66c2]" />
-              </div>
-
-              {/* Body */}
-              <p
-                className="flex-1 p-4 text-sm leading-relaxed text-brand-ink/85"
-                dangerouslySetInnerHTML={{ __html: p.excerpt }}
+              <iframe
+                src={e.url}
+                height={e.height}
+                width="100%"
+                frameBorder={0}
+                allowFullScreen
+                title={`GuruJal LinkedIn post ${i + 1}`}
+                loading="lazy"
+                className="block w-full"
               />
-
-              {/* Footer — engagement counts */}
-              <div className="flex items-center justify-between border-t border-brand-soft/70 px-4 py-3 text-xs text-brand-muted">
-                <span className="inline-flex items-center gap-3">
-                  {typeof p.likes === "number" && (
-                    <span className="inline-flex items-center gap-1">
-                      <span aria-hidden>👍</span>
-                      {p.likes}
-                    </span>
-                  )}
-                  {typeof p.comments === "number" && (
-                    <span className="inline-flex items-center gap-1">
-                      <span aria-hidden>💬</span>
-                      {p.comments}
-                    </span>
-                  )}
-                </span>
-                <span className="inline-flex items-center gap-1 font-semibold text-[#0a66c2] transition group-hover:gap-1.5">
-                  View post
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </span>
-              </div>
-            </a>
+            </div>
           ))}
-          </div>
         </div>
       </div>
     </section>
