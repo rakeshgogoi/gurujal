@@ -260,7 +260,7 @@ export function Hero() {
           alt=""
           fill
           priority
-          className="object-cover [filter:brightness(0.8)]"
+          className="object-cover [filter:brightness(0.65)]"
           sizes="100vw"
         />
 
@@ -299,7 +299,7 @@ export function Hero() {
               // over bright frames (sky, sunlit water, etc.). Matches
               // the brightness on the poster image so the crossfade
               // doesn't pop.
-              filter: "brightness(0.8)",
+              filter: "brightness(0.65)",
               transition: "opacity 700ms cubic-bezier(.4, 0, .2, 1)",
             }}
           />
@@ -322,7 +322,7 @@ export function Hero() {
         sm+: revert to 85vh for the cinematic full-viewport feel on
         bigger screens.
       */}
-      <div className="mx-auto flex min-h-[calc(100svh-200px)] sm:min-h-[85vh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+      <div className="mx-auto flex min-h-[calc(100svh-200px)] sm:min-h-[85vh] max-w-7xl flex-col justify-center px-8 py-20 sm:px-16 sm:py-24 lg:px-32 lg:py-28">
         {/* Rotating headline — one <h1> swapped on idx change, with a key
             forcing remount so the fade-in animation replays cleanly without
             overlapping the previous slide. */}
