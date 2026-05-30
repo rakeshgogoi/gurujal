@@ -137,7 +137,7 @@ export function SixRApproach() {
                 <Fragment key={i}>
                   <li
                     data-card
-                    className="snap-start shrink-0 w-[280px] sm:w-[320px] lg:w-[340px] lg:snap-none"
+                    className="snap-start shrink-0 w-[240px] sm:w-[260px] lg:w-[280px] lg:snap-none"
                   >
                     <Card r={r} stepIndex={stepIndex} />
                   </li>
@@ -162,7 +162,7 @@ function Card({
   return (
     <Link
       href={resolveHref(r.href)}
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-brand-soft/80 bg-white p-7 shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-brand-accent hover:shadow-2xl"
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-brand-soft/80 bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-brand-accent hover:shadow-2xl"
     >
       {/* Background tone gradient — invisible at rest, sweeps in on hover */}
       <div
@@ -173,42 +173,42 @@ function Card({
       {/* Floating accent halo behind the icon */}
       <div
         aria-hidden
-        className={`absolute -right-10 -top-10 h-36 w-36 rounded-full ${toneIconHalo[r.tone]} blur-2xl opacity-60 transition-all duration-500 group-hover:scale-125 group-hover:opacity-90`}
+        className={`absolute -right-8 -top-8 h-28 w-28 rounded-full ${toneIconHalo[r.tone]} blur-2xl opacity-60 transition-all duration-500 group-hover:scale-125 group-hover:opacity-90`}
       />
 
       {/* Step badge + icon row */}
       <div className="relative flex items-center justify-between">
         <span
-          className={`inline-flex h-7 items-center rounded-full px-2.5 text-[10px] font-bold uppercase tracking-[0.18em] ${toneStepBg[r.tone]}`}
+          className={`inline-flex h-6 items-center rounded-full px-2 text-[10px] font-bold uppercase tracking-[0.18em] ${toneStepBg[r.tone]}`}
         >
           Step {String(stepIndex + 1).padStart(2, "0")}
         </span>
         <span
-          className={`inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl ring-1 ${toneIconRing[r.tone]} transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110`}
+          className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ring-1 ${toneIconRing[r.tone]} transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110`}
         >
           <Image
             src={r.icon}
             alt=""
-            width={44}
-            height={44}
-            className="h-11 w-11 object-contain"
+            width={36}
+            height={36}
+            className="h-9 w-9 object-contain"
           />
         </span>
       </div>
 
       <div
-        className={`relative mt-7 text-3xl font-bold tracking-tight ${toneTitle[r.tone]}`}
+        className={`relative mt-5 text-2xl font-bold tracking-tight ${toneTitle[r.tone]}`}
       >
         {r.key}
       </div>
-      <p className="relative mt-3 flex-1 text-sm leading-relaxed text-brand-muted">
+      <p className="relative mt-2 flex-1 text-[13px] leading-relaxed text-brand-muted">
         {r.blurb}
       </p>
-      <span className="relative mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-orange">
+      <span className="relative mt-5 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand-orange">
         Learn more
         <svg
-          width="14"
-          height="14"
+          width="13"
+          height="13"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -244,8 +244,8 @@ function FlowArrow({ tone }: { tone: Tone }) {
       className="flex shrink-0 items-center justify-center self-center"
     >
       <svg
-        width="48"
-        height="32"
+        width="36"
+        height="24"
         viewBox="0 0 48 32"
         fill="none"
         stroke="currentColor"
