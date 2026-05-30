@@ -252,15 +252,14 @@ export function Hero() {
             2. YouTube iframe (covers the poster once video starts)
             3. dark gradient overlay for headline contrast */}
       <div className="absolute inset-0 -z-10">
-        {/* Poster — always rendered, no fade. Greyscaled to match the
-            video, so the crossfade from poster to iframe doesn't jump
-            from colour to B&W. */}
+        {/* Poster — always rendered, no fade. Shown in full colour to
+            match the (now also full-colour) video. */}
         <Image
           src="/uploads/2026/03/Support-a-pond-hero.jpg"
           alt=""
           fill
           priority
-          className="object-cover [filter:grayscale(1)]"
+          className="object-cover"
           sizes="100vw"
         />
 
@@ -295,18 +294,13 @@ export function Hero() {
               opacity: videoReady ? 1 : 0,
               visibility: videoReady ? "visible" : "hidden",
               pointerEvents: "none",
-              // Desaturate the video to black and white. Combined with
-              // the dark teal overlay above, the hero gets a moody,
-              // editorial feel rather than competing with the colour
-              // palette of the rest of the page.
-              filter: "grayscale(1)",
               transition: "opacity 700ms cubic-bezier(.4, 0, .2, 1)",
             }}
           />
         </div>
 
-        {/* Dark overlay for readability — keep it light so the video shows through */}
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/55 via-brand-deep/35 to-brand-deep/70" />
+        {/* Dark overlay for readability — kept light so the video colour shows through */}
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/30 via-brand-deep/15 to-brand-deep/40" />
       </div>
 
       {/*
