@@ -7,8 +7,6 @@ import { SdgAlignment } from "@/components/home/sdg-alignment";
 import { Testimonials } from "@/components/home/testimonials";
 import { Partners } from "@/components/home/partners";
 import { Stories } from "@/components/home/stories";
-import { RecentEvents } from "@/components/home/upcoming-events";
-import { NewsAndNotice } from "@/components/home/news-and-notice";
 import { LinkedInFeed } from "@/components/home/linkedin-feed";
 import { Reveal } from "@/components/reveal";
 import Link from "next/link";
@@ -30,11 +28,12 @@ export default function Home() {
       <Reveal><SixRApproach /></Reveal>
       <Reveal><ImpactStats /></Reveal>
       <Reveal><SdgAlignment /></Reveal>
-      <Reveal><NewsAndNotice /></Reveal>
-      <Reveal><RecentEvents /></Reveal>
+      <Reveal><Stories /></Reveal>
+      {/* Hidden for now — may be re-enabled later.
+          <Reveal><NewsAndNotice /></Reveal>
+          <Reveal><RecentEvents /></Reveal> */}
       <Reveal><Testimonials /></Reveal>
       <Reveal><Partners /></Reveal>
-      <Reveal><Stories /></Reveal>
       <Reveal><LinkedInFeed /></Reveal>
 
       {/* Closing CTA — bright teal-cyan gradient that contrasts the dark
