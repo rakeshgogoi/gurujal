@@ -54,7 +54,7 @@ const [feature, ...rest] = stories;
 
 export function Stories() {
   return (
-    <section className="bg-white">
+    <section className="bg-brand-mist">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div className="max-w-2xl">
