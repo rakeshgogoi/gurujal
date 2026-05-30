@@ -6,27 +6,21 @@
  * Each iframe renders the live post — including images, video, and
  * up-to-date like/comment counts. To refresh the feed: on a post, click
  * ⋯ → "Embed this post", copy the iframe URL, and update the EMBEDS
- * array. The per-post height comes from LinkedIn's embed code; keep it
- * so text posts and image posts both render without scrollbars.
+ * array.
+ *
+ * Iframe heights are uniformly clamped to CARD_H so the row of cards
+ * reads as a clean grid; LinkedIn's own taller height suggestions get
+ * clipped (post comment composer etc. is cut off, which is fine — the
+ * "View post" link in the iframe still goes to LinkedIn).
  */
-const EMBEDS: { url: string; height: number }[] = [
-  {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:share:7464938057067048960?collapsed=1",
-    height: 570,
-  },
-  {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:share:7464541461041090560?collapsed=1",
-    height: 670,
-  },
-  {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7463209985569816576?collapsed=1",
-    height: 567,
-  },
-  {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7462866123257090048?collapsed=1",
-    height: 567,
-  },
+const EMBEDS: string[] = [
+  "https://www.linkedin.com/embed/feed/update/urn:li:share:7464938057067048960?collapsed=1",
+  "https://www.linkedin.com/embed/feed/update/urn:li:share:7464541461041090560?collapsed=1",
+  "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7463209985569816576?collapsed=1",
+  "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7462866123257090048?collapsed=1",
 ];
+
+const CARD_H = 460;
 
 const LINKEDIN_URL = "https://www.linkedin.com/company/gurujal/";
 
@@ -56,20 +50,21 @@ export function LinkedInFeed() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-          {EMBEDS.map((e, i) => (
+          {EMBEDS.map((url, i) => (
             <div
               key={i}
               className="overflow-hidden rounded-2xl ring-1 ring-brand-soft"
+              style={{ height: CARD_H }}
             >
               <iframe
-                src={e.url}
-                height={e.height}
+                src={url}
+                height={CARD_H}
                 width="100%"
                 frameBorder={0}
                 allowFullScreen
                 title={`GuruJal LinkedIn post ${i + 1}`}
                 loading="lazy"
-                className="block w-full"
+                className="block h-full w-full"
               />
             </div>
           ))}
