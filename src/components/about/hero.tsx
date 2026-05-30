@@ -30,9 +30,9 @@ export function AboutHero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover opacity-50"
+          className="object-cover [filter:brightness(0.5)]"
         />
-        <div className="absolute inset-0 bg-brand-deep/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/50 via-brand-deep/35 to-brand-deep/55" />
       </div>
 
       {/* Soft brand glows */}
