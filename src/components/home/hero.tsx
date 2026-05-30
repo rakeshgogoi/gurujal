@@ -329,7 +329,7 @@ export function Hero() {
         <div className="relative min-h-[120px] sm:min-h-[140px] lg:min-h-[170px]">
           <h1
             key={idx}
-            className="absolute inset-0 flex flex-col justify-center text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl gj-headline-enter"
+            className="absolute inset-0 flex flex-col justify-center text-center text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl gj-headline-enter"
           >
             <span>
               <span className="inline-block rounded-md bg-brand-teal px-3 py-1 text-white shadow-lg shadow-black/20">
@@ -342,7 +342,7 @@ export function Hero() {
           </h1>
         </div>
 
-        <div className="mt-12 flex items-center gap-4">
+        <div className="mt-12 flex items-center justify-center gap-4">
           <Link
             href="/about"
             className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-7 py-3.5 text-sm font-semibold uppercase tracking-wider text-white backdrop-blur transition hover:bg-white hover:text-brand-deep"
@@ -355,7 +355,7 @@ export function Hero() {
           </Link>
 
           {/* Headline dot pagination */}
-          <div className="ml-2 flex gap-2" role="tablist" aria-label="Hero slides">
+          <div className="flex gap-2" role="tablist" aria-label="Hero slides">
             {headlines.map((_, i) => (
               <button
                 key={i}
