@@ -253,13 +253,14 @@ export function Hero() {
             3. dark gradient overlay for headline contrast */}
       <div className="absolute inset-0 -z-10">
         {/* Poster — always rendered, no fade. Shown in full colour to
-            match the (now also full-colour) video. */}
+            match the (now also full-colour) video. Brightness dialled
+            down slightly so the headline reads cleanly over it. */}
         <Image
           src="/uploads/2026/03/Support-a-pond-hero.jpg"
           alt=""
           fill
           priority
-          className="object-cover"
+          className="object-cover [filter:brightness(0.8)]"
           sizes="100vw"
         />
 
@@ -294,6 +295,11 @@ export function Hero() {
               opacity: videoReady ? 1 : 0,
               visibility: videoReady ? "visible" : "hidden",
               pointerEvents: "none",
+              // Slight exposure reduction so the headline stays readable
+              // over bright frames (sky, sunlit water, etc.). Matches
+              // the brightness on the poster image so the crossfade
+              // doesn't pop.
+              filter: "brightness(0.8)",
               transition: "opacity 700ms cubic-bezier(.4, 0, .2, 1)",
             }}
           />
