@@ -185,3 +185,27 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up, .animate-ping-slow { animation: none; }
 }
+
+/* ============================================================
+ * Google Translate widget — suppress all of Google's injected
+ * chrome (banner iframe, tooltip, "highlight" outlines) so the
+ * only UI is our own language picker. The banner is an <iframe>
+ * with class `skiptranslate` (the actual class varies — the
+ * newer Material variant has VIpgJd-ZVi9od-ORHb-OEVmcd in the
+ * class list — so we match anything with skiptranslate). The
+ * popup hover tooltip is `#goog-gt-tt`.
+ * ============================================================ */
+iframe.skiptranslate,
+.goog-te-banner-frame,
+.goog-te-gadget-icon,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-text-highlight,
+#goog-gt-tt {
+  display: none !important;
+}
+body {
+  /* Google Translate pushes body down with top: 40px to make room
+     for its banner; we hide the banner so undo the shift. */
+  top: 0 !important;
+}

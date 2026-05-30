@@ -1,18 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Floating UI tools that sit above the page content:
- *   - Language picker on the bottom-left (display only — opens a dummy
- *     popover listing common languages).
- *   - AI assistant on the bottom-right (display only — opens a dummy
- *     panel hinting at chat support).
+ *   - Language picker on the bottom-left — English / Hindi via Google
+ *     Translate.
+ *   - AI assistant on the bottom-right — display only.
  *
  * Both are present on every page via the root layout. They are
  * positioned with `fixed` and a high z-index so they float above
- * marquees, slides and section background blobs. Real functionality
- * will be wired up later — for now these are visual placeholders.
+ * marquees, slides and section background blobs.
  */
 export function FloatingTools() {
   return (
@@ -23,99 +21,169 @@ export function FloatingTools() {
   );
 }
 
-const LANGUAGES = [
+type LangCode = "EN" | "HI";
+
+const LANGUAGES: { code: LangCode; label: string }[] = [
   { code: "EN", label: "English" },
-  { code: "हि", label: "हिन्दी (Hindi)" },
-  { code: "বা", label: "বাংলা (Bengali)" },
-  { code: "த", label: "தமிழ் (Tamil)" },
-  { code: "తె", label: "తెలుగు (Telugu)" },
-  { code: "मर", label: "मराठी (Marathi)" },
+  { code: "HI", label: "हिन्दी (Hindi)" },
 ];
+
+/** Read the current Google Translate target language from the `googtrans`
+ *  cookie (format: `/en/hi`). Returns "EN" when the cookie is missing
+ *  or points back to source. */
+function readActiveLang(): LangCode {
+  if (typeof document === "undefined") return "EN";
+  const m = document.cookie.match(/googtrans=\/en\/(\w+)/);
+  return m && m[1].toLowerCase() === "hi" ? "HI" : "EN";
+}
+
+/** Write or clear the `googtrans` cookie on both the bare host and the
+ *  apex domain (Google Translate looks at both), then full-reload so
+ *  the widget picks up the new state. */
+function setLanguage(target: LangCode) {
+  const expire = "Thu, 01 Jan 1970 00:00:01 GMT";
+  const host = window.location.hostname;
+  // Apex domain helper — strips a single subdomain so e.g.
+  // "www.gurujal.org" → ".gurujal.org". On bare hosts (localhost,
+  // gurujal.vercel.app first segment), the dot-prefixed variant is a
+  // no-op which is fine.
+  const apex = "." + host.split(".").slice(-2).join(".");
+
+  if (target === "EN") {
+    document.cookie = `googtrans=; path=/; expires=${expire}`;
+    document.cookie = `googtrans=; path=/; domain=${apex}; expires=${expire}`;
+  } else {
+    document.cookie = `googtrans=/en/hi; path=/`;
+    document.cookie = `googtrans=/en/hi; path=/; domain=${apex}`;
+  }
+  window.location.reload();
+}
 
 function LanguagePicker() {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("EN");
+  // SSR-safe initial state: assume English. On mount we read the cookie
+  // and correct, avoiding hydration mismatch.
+  const [active, setActive] = useState<LangCode>("EN");
 
-  // Hidden on phones (below sm). The button sits near the page's main
-  // CTAs on small screens and crowds the thumb zone; we only show it
-  // on tablets and up where there's room for a persistent floater.
+  useEffect(() => {
+    setActive(readActiveLang());
+
+    // Inject the Google Translate Element script exactly once. It looks
+    // for #google_translate_element below to render its (hidden) widget
+    // and respects the googtrans cookie we set in setLanguage().
+    if (document.getElementById("gj-google-translate")) return;
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    (window as any).googleTranslateElementInit = () => {
+      const g = (window as any).google;
+      if (!g?.translate?.TranslateElement) return;
+      new g.translate.TranslateElement(
+        {
+          pageLanguage: "en",
+          includedLanguages: "hi",
+          autoDisplay: false,
+        },
+        "google_translate_element"
+      );
+    };
+    /* eslint-enable @typescript-eslint/no-explicit-any */
+    const s = document.createElement("script");
+    s.id = "gj-google-translate";
+    s.src =
+      "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    s.async = true;
+    document.body.appendChild(s);
+  }, []);
+
+  // Hidden on phones (below sm).
   return (
-    <div className="fixed bottom-6 left-6 z-40 hidden sm:block">
-      {/* Popover */}
-      {open && (
-        <div
-          role="dialog"
-          aria-label="Language picker"
-          className="absolute bottom-16 left-0 w-56 rounded-2xl bg-white p-2 shadow-2xl shadow-black/15 ring-1 ring-brand-soft animate-fade-up"
-        >
-          <div className="px-3 pb-2 pt-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-muted">
-            Translate page
-          </div>
-          <ul className="max-h-72 overflow-y-auto">
-            {LANGUAGES.map((l) => {
-              const selected = l.code === active;
-              return (
-                <li key={l.code}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActive(l.code);
-                      setOpen(false);
-                    }}
-                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition ${
-                      selected
-                        ? "bg-brand-mist text-brand-primary"
-                        : "text-brand-ink hover:bg-brand-mist/60"
-                    }`}
-                  >
-                    <span
-                      className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[11px] font-bold ${
+    <>
+      {/* Google Translate mount point. Kept in the DOM but hidden — the
+          widget's UI is replaced by our own picker, and translation is
+          driven by the googtrans cookie. */}
+      <div id="google_translate_element" className="hidden" aria-hidden />
+
+      {/* `translate="no"` + `notranslate` opt the picker out of Google
+          Translate. Without it Google rewrites our "HI" chip label to
+          "नमस्ते" (taking it as the English greeting) once the page is
+          translated, which makes the active state confusing. */}
+      <div
+        className="fixed bottom-6 left-6 z-40 hidden sm:block notranslate"
+        translate="no"
+      >
+        {open && (
+          <div
+            role="dialog"
+            aria-label="Language picker"
+            className="absolute bottom-16 left-0 w-56 rounded-2xl bg-white p-2 shadow-2xl shadow-black/15 ring-1 ring-brand-soft animate-fade-up"
+          >
+            <div className="px-3 pb-2 pt-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-muted">
+              Translate page
+            </div>
+            <ul>
+              {LANGUAGES.map((l) => {
+                const selected = l.code === active;
+                return (
+                  <li key={l.code}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOpen(false);
+                        if (l.code !== active) setLanguage(l.code);
+                      }}
+                      className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition ${
                         selected
-                          ? "bg-brand-primary text-white"
-                          : "bg-brand-mist text-brand-primary"
+                          ? "bg-brand-mist text-brand-primary"
+                          : "text-brand-ink hover:bg-brand-mist/60"
                       }`}
                     >
-                      {l.code}
-                    </span>
-                    <span className="flex-1 truncate">{l.label}</span>
-                    {selected && (
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden
+                      <span
+                        className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[11px] font-bold ${
+                          selected
+                            ? "bg-brand-primary text-white"
+                            : "bg-brand-mist text-brand-primary"
+                        }`}
                       >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    )}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-          <div className="border-t border-brand-soft px-3 pt-2 pb-1 text-[10px] text-brand-muted">
-            Powered by GuruJal Translate · Coming soon
+                        {l.code}
+                      </span>
+                      <span className="flex-1 truncate">{l.label}</span>
+                      {selected && (
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden
+                        >
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="border-t border-brand-soft px-3 pt-2 pb-1 text-[10px] text-brand-muted">
+              Translated by Google
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Trigger */}
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Translate page"
-        aria-expanded={open}
-        className="group inline-flex items-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-brand-ink shadow-xl shadow-black/10 ring-1 ring-brand-soft transition hover:bg-brand-primary hover:text-white"
-      >
-        <GlobeIcon className="h-5 w-5 text-brand-primary transition group-hover:text-white" />
-        <span className="font-bold tracking-tight">{active}</span>
-      </button>
-    </div>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Translate page"
+          aria-expanded={open}
+          className="group inline-flex items-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-brand-ink shadow-xl shadow-black/10 ring-1 ring-brand-soft transition hover:bg-brand-primary hover:text-white"
+        >
+          <GlobeIcon className="h-5 w-5 text-brand-primary transition group-hover:text-white" />
+          <span className="font-bold tracking-tight">{active}</span>
+        </button>
+      </div>
+    </>
   );
 }
 
