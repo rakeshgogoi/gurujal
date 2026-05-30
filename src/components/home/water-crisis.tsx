@@ -11,21 +11,52 @@ function resolveHref(href: string): string {
 }
 
 /**
- * "The time to Act is Now" — editorial stat-card visualisation.
+ * "The time to Act is Now" — grouped bar chart of demand vs supply.
  *
- *   - Hero number: -754 bcm (2030 supply shortfall).
- *   - "From → To" pill above the hero number showing the swing from a
- *     +16 surplus in 2008 to a -754 deficit in 2030.
- *   - Three supporting stat tiles below: demand/supply numbers and the
- *     "2× demand exceeds supply" framing.
- *   - All numbers animate up from zero on scroll-into-view; the
- *     percentage fill bars under the demand/supply tiles draw in to
- *     reflect each value against a 0-1600 bcm scale.
- *
- *   Source: NITI Aayog (verbatim from gurujal.org's crisis widget).
+ *   - Two year groups (2008, 2030), each with a Demand bar (orange) and
+ *     a Supply bar (teal). Values sourced from NITI Aayog.
+ *   - The 2030 group carries a shortfall bracket + pill showing the
+ *     754 bcm gap between demand and supply.
+ *   - Bars grow up from the baseline on scroll-into-view.
  */
 
-const SCALE_MAX = 1600;
+// Sourced NITI Aayog values — bcm.
+const DEMAND_2008 = 634;
+const DEMAND_2030 = 1498;
+const SUPPLY_2008 = 650;
+const SUPPLY_2030 = 744;
+const SHORTFALL_2030 = DEMAND_2030 - SUPPLY_2030; // 754
+
+// Chart drawing coordinates (viewBox units).
+const CHART_W = 640;
+const CHART_H = 360;
+const PAD_L = 56;
+const PAD_R = 130;
+const PAD_T = 36;
+const PAD_B = 48;
+const PLOT_W = CHART_W - PAD_L - PAD_R;
+const PLOT_H = CHART_H - PAD_T - PAD_B;
+const BASELINE_Y = PAD_T + PLOT_H;
+
+// Two groups, two bars per group, with gutters between bars and groups.
+const BAR_W = 56;
+const BAR_GAP = 10;
+const GROUP_W = BAR_W * 2 + BAR_GAP;
+
+// Y scale tuned a touch above the largest value for breathing room.
+const Y_MAX = 1600;
+const Y_TICKS = [0, 400, 800, 1200, 1600];
+
+function yAt(v: number) {
+  return PAD_T + (1 - v / Y_MAX) * PLOT_H;
+}
+
+// Center of each year group along the x-axis.
+function groupCenter(i: 0 | 1) {
+  // Evenly split the plot width into two group slots.
+  const slot = PLOT_W / 2;
+  return PAD_L + slot * (i + 0.5);
+}
 
 export function WaterCrisisIntro() {
   const ref = useRef<HTMLDivElement>(null);
@@ -94,73 +125,41 @@ export function WaterCrisisIntro() {
             </div>
           </div>
 
-          {/* Right: editorial stat layout */}
+          {/* Right: slope chart — demand vs supply, 2008 → 2030 */}
           <div ref={ref} className="lg:col-span-7">
-            <div className="relative overflow-hidden rounded-3xl border border-brand-soft/80 bg-gradient-to-br from-brand-mist via-white to-white p-8 sm:p-10">
-              {/* Subtle decorative orange glow on the warning side */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand-orange/15 blur-3xl"
-              />
-
-              {/* Swing pill — from balanced surplus to a yawning deficit */}
-              <div className="relative inline-flex items-center gap-3 rounded-full bg-white px-3.5 py-1.5 ring-1 ring-brand-soft shadow-sm">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-green-dark">
-                  <Dot className="bg-brand-green" />
-                  2008 · +16 bcm
-                </span>
-                <Arrow />
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-orange-dark">
-                  <Dot className="bg-brand-orange" />
-                  2030 · −754 bcm
+            <div className="relative overflow-hidden rounded-3xl border border-brand-soft/80 bg-white p-6 sm:p-8">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="text-base font-semibold text-brand-ink">
+                  Water demand vs supply
+                </h3>
+                <span className="text-[11px] font-medium uppercase tracking-wider text-brand-muted">
+                  India · 2008 → 2030
                 </span>
               </div>
 
-              {/* Hero number — the 2030 supply shortfall */}
-              <div className="relative mt-8">
-                <div className="flex items-baseline gap-3 text-brand-ink">
-                  <span className="text-sm font-medium uppercase tracking-[0.18em] text-brand-orange-dark">
-                    Projected shortfall by 2030
+              <DemandSupplyChart show={show} />
+
+              <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-5 text-xs text-brand-ink/80">
+                  <span className="inline-flex items-center gap-2">
+                    <span
+                      aria-hidden
+                      className="inline-block h-3 w-3 rounded-sm bg-brand-orange"
+                    />
+                    Demand
+                  </span>
+                  <span className="inline-flex items-center gap-2">
+                    <span
+                      aria-hidden
+                      className="inline-block h-3 w-3 rounded-sm bg-brand-teal"
+                    />
+                    Supply
                   </span>
                 </div>
-                <div className="mt-3 flex items-baseline gap-3">
-                  <span className="text-7xl font-bold tracking-tight text-brand-orange-dark sm:text-8xl">
-                    <CountUp to={754} show={show} prefix="−" />
-                  </span>
-                  <span className="text-2xl font-semibold tracking-tight text-brand-ink/80 sm:text-3xl">
-                    bcm
-                  </span>
-                </div>
-                <p className="mt-3 max-w-md text-sm leading-relaxed text-brand-muted">
-                  Up from a balanced 16 bcm surplus in 2008 — a swing wide
-                  enough to refill nearly half of India&apos;s reservoirs.
+                <p className="text-[11px] text-brand-muted">
+                  bcm = billion cubic metres · Source: NITI Aayog
                 </p>
               </div>
-
-              {/* Three supporting tiles */}
-              <div className="relative mt-10 grid gap-4 sm:grid-cols-3">
-                <StatTile
-                  label="Demand"
-                  year="2008 → 2030"
-                  from={634}
-                  to={1498}
-                  show={show}
-                  tone="orange"
-                />
-                <StatTile
-                  label="Supply"
-                  year="2008 → 2030"
-                  from={650}
-                  to={744}
-                  show={show}
-                  tone="teal"
-                />
-                <RatioTile show={show} />
-              </div>
-
-              <p className="relative mt-6 text-[11px] text-brand-muted">
-                bcm = billion cubic metres · Source: NITI Aayog
-              </p>
             </div>
           </div>
         </div>
@@ -170,145 +169,261 @@ export function WaterCrisisIntro() {
 }
 
 /* ============================================================
- * Small components
+ * Chart components
  * ============================================================ */
 
-function CountUp({
-  to,
-  show,
-  duration = 1600,
-  prefix = "",
-  suffix = "",
-}: {
-  to: number;
-  show: boolean;
-  duration?: number;
-  prefix?: string;
-  suffix?: string;
-}) {
-  const [val, setVal] = useState(0);
-
-  useEffect(() => {
-    if (!show) return;
-    const start = Date.now();
-    const interval = setInterval(() => {
-      const t = Math.min(1, (Date.now() - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3); // Ease-out cubic
-      setVal(Math.round(to * eased));
-      if (t >= 1) clearInterval(interval);
-    }, 32); // ~30 fps — plenty for counter motion, robust to tab focus
-    return () => clearInterval(interval);
-  }, [show, to, duration]);
+function DemandSupplyChart({ show }: { show: boolean }) {
+  const groups = [
+    {
+      year: "2008",
+      demand: DEMAND_2008,
+      supply: SUPPLY_2008,
+      cx: groupCenter(0),
+    },
+    {
+      year: "2030",
+      demand: DEMAND_2030,
+      supply: SUPPLY_2030,
+      cx: groupCenter(1),
+    },
+  ] as const;
 
   return (
-    <span className="tabular-nums">
-      {prefix}
-      {val.toLocaleString("en-IN")}
-      {suffix}
-    </span>
-  );
-}
+    <div className="relative mt-5">
+      <svg
+        viewBox={`0 0 ${CHART_W} ${CHART_H}`}
+        className="block w-full h-auto"
+        role="img"
+        aria-label="Grouped bar chart: in 2008 India's water demand (634 bcm) and supply (650 bcm) are roughly balanced. By 2030 demand rises to 1,498 bcm while supply reaches only 744 bcm, leaving a 754 bcm shortfall."
+      >
+        {/* Gridlines + y-axis labels */}
+        {Y_TICKS.map((t) => {
+          const y = yAt(t);
+          return (
+            <g key={t}>
+              <line
+                x1={PAD_L}
+                x2={CHART_W - PAD_R}
+                y1={y}
+                y2={y}
+                stroke="currentColor"
+                className="text-brand-soft"
+                strokeWidth={1}
+                strokeDasharray={t === 0 ? "" : "3 4"}
+              />
+              <text
+                x={PAD_L - 10}
+                y={y + 4}
+                textAnchor="end"
+                className="fill-brand-muted text-[11px] tabular-nums"
+              >
+                {t.toLocaleString("en-IN")}
+              </text>
+            </g>
+          );
+        })}
 
-function StatTile({
-  label,
-  year,
-  from,
-  to,
-  show,
-  tone,
-}: {
-  label: string;
-  year: string;
-  from: number;
-  to: number;
-  show: boolean;
-  tone: "orange" | "teal";
-}) {
-  const fillClass = tone === "orange" ? "bg-brand-orange" : "bg-brand-teal";
-  const valueClass =
-    tone === "orange" ? "text-brand-orange-dark" : "text-brand-teal-dark";
-  const fillPct = (to / SCALE_MAX) * 100;
-
-  return (
-    <div className="relative rounded-2xl bg-white p-5 ring-1 ring-brand-soft/70 shadow-sm">
-      <div className="flex items-baseline justify-between">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-muted">
-          {label}
-        </span>
-        <span className="text-[10px] font-medium text-brand-muted">{year}</span>
-      </div>
-      <div className={`mt-3 text-3xl font-bold tracking-tight ${valueClass}`}>
-        <CountUp to={to} show={show} />
-        <span className="ml-1 text-base font-semibold text-brand-ink/60">
+        {/* Y-axis unit */}
+        <text
+          x={PAD_L - 10}
+          y={PAD_T - 14}
+          textAnchor="end"
+          className="fill-brand-muted text-[10px] font-semibold uppercase tracking-wider"
+        >
           bcm
-        </span>
-      </div>
-      <div className="mt-1 text-[11px] text-brand-muted">
-        from {from.toLocaleString("en-IN")} bcm
-      </div>
+        </text>
 
-      {/* Track */}
-      <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-brand-mist">
-        <div
-          className={`h-full rounded-full ${fillClass}`}
-          style={{
-            width: show ? `${fillPct}%` : "0%",
-            transition: "width 1400ms cubic-bezier(.22,1,.36,1)",
-          }}
+        {/* Bars + year labels */}
+        {groups.map((g, i) => {
+          const demandX = g.cx - BAR_W - BAR_GAP / 2;
+          const supplyX = g.cx + BAR_GAP / 2;
+          return (
+            <g key={g.year}>
+              <Bar
+                x={demandX}
+                value={g.demand}
+                colorClass="fill-brand-orange"
+                show={show}
+                delay={i * 120}
+              />
+              <Bar
+                x={supplyX}
+                value={g.supply}
+                colorClass="fill-brand-teal"
+                show={show}
+                delay={i * 120 + 60}
+              />
+
+              {/* Value labels above each bar */}
+              <BarValueLabel
+                x={demandX + BAR_W / 2}
+                value={g.demand}
+                colorClass="fill-brand-orange-dark"
+                show={show}
+                delay={i * 120 + 600}
+              />
+              <BarValueLabel
+                x={supplyX + BAR_W / 2}
+                value={g.supply}
+                colorClass="fill-brand-teal-dark"
+                show={show}
+                delay={i * 120 + 660}
+              />
+
+              {/* Year label below the group */}
+              <text
+                x={g.cx}
+                y={BASELINE_Y + 22}
+                textAnchor="middle"
+                className="fill-brand-ink text-[13px] font-semibold"
+              >
+                {g.year}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Shortfall callout — bracket spanning supply→demand on the
+            2030 group, plus a pill anchored to the right of the chart. */}
+        <ShortfallCallout
+          xBar={groupCenter(1) + BAR_GAP / 2 + BAR_W}
+          yDemand={yAt(DEMAND_2030)}
+          ySupply={yAt(SUPPLY_2030)}
+          show={show}
         />
-      </div>
+      </svg>
     </div>
   );
 }
 
-function RatioTile({ show }: { show: boolean }) {
+function Bar({
+  x,
+  value,
+  colorClass,
+  show,
+  delay = 0,
+}: {
+  x: number;
+  value: number;
+  colorClass: string;
+  show: boolean;
+  delay?: number;
+}) {
+  const fullH = BASELINE_Y - yAt(value);
+  const h = show ? fullH : 0;
+  const y = BASELINE_Y - h;
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-brand-deep p-5 text-white shadow-sm">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-brand-orange/30 blur-2xl"
-      />
-      <span className="text-[11px] font-semibold uppercase tracking-wider text-white/70">
-        2030 ratio
-      </span>
-      <div className="mt-3 flex items-baseline gap-2">
-        <span className="text-5xl font-bold tracking-tight text-white">
-          <CountUp to={2} show={show} />
-          <span className="text-brand-orange">×</span>
-        </span>
-      </div>
-      <p className="mt-2 text-[11px] leading-snug text-white/80">
-        Demand will outpace supply — twice over.
-      </p>
-    </div>
-  );
-}
-
-function Dot({ className }: { className?: string }) {
-  return (
-    <span
-      aria-hidden
-      className={`inline-block h-1.5 w-1.5 rounded-full ${className}`}
+    <rect
+      x={x}
+      y={y}
+      width={BAR_W}
+      height={h}
+      rx={3}
+      className={colorClass}
+      style={{
+        transition: `y 1100ms cubic-bezier(.22,1,.36,1) ${delay}ms, height 1100ms cubic-bezier(.22,1,.36,1) ${delay}ms`,
+      }}
     />
   );
 }
 
-function Arrow() {
+function BarValueLabel({
+  x,
+  value,
+  colorClass,
+  show,
+  delay = 0,
+}: {
+  x: number;
+  value: number;
+  colorClass: string;
+  show: boolean;
+  delay?: number;
+}) {
   return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      className="text-brand-muted"
+    <text
+      x={x}
+      y={yAt(value) - 8}
+      textAnchor="middle"
+      className={`${colorClass} text-[12px] font-bold tabular-nums`}
+      style={{
+        opacity: show ? 1 : 0,
+        transition: `opacity 400ms ease-out ${delay}ms`,
+      }}
     >
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
+      {value.toLocaleString("en-IN")}
+    </text>
+  );
+}
+
+function ShortfallCallout({
+  xBar,
+  yDemand,
+  ySupply,
+  show,
+}: {
+  xBar: number;
+  yDemand: number;
+  ySupply: number;
+  show: boolean;
+}) {
+  const midY = (yDemand + ySupply) / 2;
+  const bracketX = xBar + 16;
+  const pillX = bracketX + 12;
+  return (
+    <g
+      style={{
+        opacity: show ? 1 : 0,
+        transition: "opacity 500ms ease-out 1400ms",
+      }}
+    >
+      {/* Bracket spanning demand-top to supply-top of the 2030 group */}
+      <path
+        d={`M ${xBar + 4} ${yDemand} L ${bracketX} ${yDemand} L ${bracketX} ${ySupply} L ${xBar + 4} ${ySupply}`}
+        fill="none"
+        stroke="currentColor"
+        className="text-brand-orange"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+      />
+      <line
+        x1={bracketX}
+        y1={midY}
+        x2={pillX}
+        y2={midY}
+        stroke="currentColor"
+        className="text-brand-orange"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+      />
+
+      {/* Shortfall pill */}
+      <g transform={`translate(${pillX}, ${midY - 24})`}>
+        <rect
+          x={0}
+          y={0}
+          width={96}
+          height={48}
+          rx={10}
+          className="fill-brand-orange-dark"
+        />
+        <text
+          x={48}
+          y={19}
+          textAnchor="middle"
+          className="fill-white text-[10px] font-semibold uppercase tracking-wider"
+        >
+          Shortfall
+        </text>
+        <text
+          x={48}
+          y={38}
+          textAnchor="middle"
+          className="fill-white text-[15px] font-bold tabular-nums"
+        >
+          −{SHORTFALL_2030} bcm
+        </text>
+      </g>
+    </g>
   );
 }
