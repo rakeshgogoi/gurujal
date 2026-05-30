@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { HeroAchievements } from "./hero-achievements";
 
 /**
  * Homepage hero — YouTube video background ("Gurujal Intro", id 3olgmTIt80U)
@@ -315,18 +314,15 @@ export function Hero() {
         can use the full viewport for impact. min-h tuned so the headline
         and CTA sit comfortably with breathing room above and below.
       */}
-      {/* On lg+ the right side is reserved for the achievements ticker, so
-          the headline gets right-padding to avoid running into it. */}
       {/*
         Mobile: min-h reserves 200px for the announcement bar (50),
         sticky header (80) and the section anchor nav below the hero
         (~70) — so the nav peeks into view at first paint without
         scrolling.
         sm+: revert to 85vh for the cinematic full-viewport feel on
-        bigger screens where the achievements ticker + arrows fill the
-        sides.
+        bigger screens.
       */}
-      <div className="mx-auto flex min-h-[calc(100svh-200px)] sm:min-h-[85vh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28 lg:pr-[400px]">
+      <div className="mx-auto flex min-h-[calc(100svh-200px)] sm:min-h-[85vh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
         {/* Rotating headline — one <h1> swapped on idx change, with a key
             forcing remount so the fade-in animation replays cleanly without
             overlapping the previous slide. */}
@@ -376,9 +372,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Vertical achievements ticker on the right edge */}
-      <HeroAchievements />
 
       {/* Prev / next arrows */}
       <button
