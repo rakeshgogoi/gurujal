@@ -393,7 +393,7 @@ function AiAssistant() {
         >
           <div className="relative flex items-center gap-3 bg-gradient-to-br from-brand-primary via-brand-teal to-brand-accent p-4 text-white">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/30 backdrop-blur">
-              <SparkleIcon className="h-5 w-5" />
+              <GuruJalGlyph className="h-6 w-6" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="text-sm font-semibold">GuruJal Assistant</div>
@@ -502,7 +502,7 @@ function AiAssistant() {
           aria-hidden
           className="absolute inset-0 -z-10 animate-ping-slow rounded-full bg-brand-accent/40"
         />
-        <SparkleIcon className="h-6 w-6 transition group-hover:rotate-12" />
+        <GuruJalGlyph className="h-8 w-8 transition group-hover:rotate-12" />
         {/* Status dot */}
         <span
           aria-hidden
@@ -576,20 +576,19 @@ function GlobeIcon({ className }: { className?: string }) {
   );
 }
 
-function SparkleIcon({ className }: { className?: string }) {
+/** GuruJal hand-and-droplet emblem, rendered in pure white via a CSS
+ *  filter so it reads cleanly over the dark teal trigger / header. */
+function GuruJalGlyph({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
+    // eslint-disable-next-line @next/next/no-img-element -- decorative UI chrome, not a content image
+    <img
+      src="/brand/gurujal-icon.png"
+      alt=""
       aria-hidden
-    >
-      <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" />
-      <circle cx="12" cy="12" r="3.5" />
-    </svg>
+      className={className}
+      // brightness(0) collapses every visible pixel to black; invert(1)
+      // flips it to pure white. Transparent pixels stay transparent.
+      style={{ filter: "brightness(0) invert(1)" }}
+    />
   );
 }
