@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import MiniSearch, { type SearchResult } from "minisearch";
 
 /**
  * Floating UI tools that sit above the page content:
@@ -188,16 +189,20 @@ function LanguagePicker() {
 }
 
 /**
- * GuruJal site guide — quick-nav hub.
+ * GuruJal site guide — quick-nav hub + full-text site search.
  *
- * A floating panel that helps a first-time visitor find the page they
- * want in one click. No LLM, no API calls: a curated index of the
- * site's pages, grouped by intent. The search box filters the index by
- * label / keyword as the visitor types, falling back to the categorical
- * view when the box is empty. Each item is a Link, so navigation is
- * client-side and the panel closes on click.
+ *   - With an empty query: shows curated category buttons (Get involved
+ *     / About GuruJal / Our work / Resources) so a first-time visitor
+ *     sees the highest-intent destinations immediately.
+ *   - As the visitor types: runs full-text search over the static
+ *     search index in /public/search-index.json (built by
+ *     `npm run search:index`) using MiniSearch. Returns ranked hits
+ *     with title + snippet of the matching body text + link.
  *
- * To add or rename a destination, edit the GUIDE_ITEMS array.
+ * No LLM, no API calls — the entire search happens in the browser
+ * against a static JSON index built from the real rendered page HTML.
+ * To refresh the index after content changes: run `npm run dev` in
+ * one terminal and `npm run search:index` in another.
  */
 type GuideItem = {
   label: string;
@@ -235,18 +240,154 @@ const CATEGORY_ORDER: GuideItem["category"][] = [
   "Resources",
 ];
 
+/** Shape of each doc in public/search-index.json (see
+ *  scripts/build-search-index.mjs). */
+type IndexedDoc = {
+  route: string;
+  title: string;
+  headings: string[];
+  body: string;
+};
+
+type IndexedDocFlat = {
+  id: number;
+  route: string;
+  title: string;
+  headings: string;
+  body: string;
+  /** Curated synonym terms from GUIDE_ITEMS (e.g. "donate", "volunteer")
+   *  so queries that use these words still hit the right page even when
+   *  the page itself never literally says them. */
+  keywords: string;
+};
+
+type Hit = {
+  route: string;
+  title: string;
+  snippet: string;
+  /** Ranking score from MiniSearch — useful for debugging. */
+  score: number;
+};
+
+/** Build a ~140-char snippet centred on the earliest matching term. */
+function buildSnippet(body: string, terms: string[], max = 160): string {
+  if (!body) return "";
+  if (terms.length === 0) return body.slice(0, max) + (body.length > max ? "…" : "");
+  const lower = body.toLowerCase();
+  let earliest = -1;
+  for (const t of terms) {
+    const idx = lower.indexOf(t.toLowerCase());
+    if (idx >= 0 && (earliest < 0 || idx < earliest)) earliest = idx;
+  }
+  if (earliest < 0) return body.slice(0, max) + (body.length > max ? "…" : "");
+  const start = Math.max(0, earliest - 40);
+  const end = Math.min(body.length, start + max);
+  let s = body.slice(start, end);
+  if (start > 0) s = "…" + s;
+  if (end < body.length) s = s + "…";
+  return s;
+}
+
 function AiAssistant() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [docs, setDocs] = useState<IndexedDoc[] | null>(null);
+  const [indexError, setIndexError] = useState<string | null>(null);
 
-  const q = query.trim().toLowerCase();
-  const matches = q
-    ? GUIDE_ITEMS.filter(
-        (it) =>
-          it.label.toLowerCase().includes(q) ||
-          (it.keywords && it.keywords.toLowerCase().includes(q))
-      )
-    : [];
+  // Lazy-load the static search index the first time the panel opens.
+  useEffect(() => {
+    if (!open || docs || indexError) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/search-index.json");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = (await res.json()) as { docs: IndexedDoc[] };
+        if (!cancelled) setDocs(json.docs || []);
+      } catch (e) {
+        if (!cancelled) {
+          setIndexError(e instanceof Error ? e.message : "fetch failed");
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open, docs, indexError]);
+
+  // Build the MiniSearch instance once docs are available. `headings`
+  // collapses to a single string so MiniSearch indexes them as one
+  // field with the requested boost.
+  const miniSearch = useMemo(() => {
+    if (!docs) return null;
+    // English stopwords pulled from queries before searching so
+    // conversational filler ("how can I…", "what is the…") doesn't
+    // drag every page in the index up the ranking.
+    const STOPWORDS = new Set([
+      "a", "an", "and", "are", "as", "at", "be", "but", "by", "can",
+      "do", "does", "for", "from", "has", "have", "how", "i", "if",
+      "in", "into", "is", "it", "its", "me", "my", "of", "on", "or",
+      "our", "should", "so", "that", "the", "their", "there", "this",
+      "to", "us", "want", "was", "we", "were", "what", "when", "where",
+      "which", "who", "why", "will", "with", "would", "you", "your",
+    ]);
+    const processTerm = (term: string) => {
+      const t = term.toLowerCase();
+      if (STOPWORDS.has(t)) return null;
+      return t;
+    };
+
+    const ms = new MiniSearch<IndexedDocFlat>({
+      fields: ["title", "keywords", "headings", "body"],
+      storeFields: ["route", "title", "body"],
+      processTerm,
+      searchOptions: {
+        // title and keywords are highest signal — boost them so a hit
+        // on "donate" via keywords ranks above any incidental mention.
+        boost: { title: 4, keywords: 3, headings: 2 },
+        prefix: true,
+        fuzzy: 0.2,
+        // AND so every non-stopword term must match — gives precise
+        // results once filler words are stripped.
+        combineWith: "AND",
+        processTerm,
+      },
+    });
+    // Build a route → keywords lookup from the curated GUIDE_ITEMS so
+    // we can graft those synonyms onto the matching indexed doc.
+    const keywordsByRoute = new Map<string, string>();
+    for (const it of GUIDE_ITEMS) {
+      if (it.keywords) keywordsByRoute.set(it.href, it.keywords);
+    }
+    ms.addAll(
+      docs.map((d, i) => ({
+        id: i,
+        route: d.route,
+        title: d.title,
+        headings: d.headings.join(" "),
+        body: d.body,
+        keywords: keywordsByRoute.get(d.route) || "",
+      }))
+    );
+    return ms;
+  }, [docs]);
+
+  const q = query.trim();
+  const hits: Hit[] = useMemo(() => {
+    if (!q) return [];
+    if (!miniSearch) return [];
+    const raw = miniSearch.search(q).slice(0, 6) as (SearchResult & {
+      route: string;
+      title: string;
+      body: string;
+    })[];
+    return raw.map((r) => ({
+      route: r.route,
+      title: r.title,
+      snippet: buildSnippet(r.body, r.terms || []),
+      score: r.score,
+    }));
+  }, [q, miniSearch]);
 
   return (
     <div className="fixed bottom-6 right-6 z-40">
@@ -319,23 +460,31 @@ function AiAssistant() {
 
             <div className="max-h-[60vh] overflow-y-auto pr-1 [scrollbar-width:thin]">
               {q ? (
-                matches.length === 0 ? (
+                /* Search mode — full-text hits ranked by MiniSearch. */
+                !miniSearch ? (
                   <p className="px-1 py-6 text-center text-sm text-brand-muted">
-                    No matches. Try &ldquo;ponds&rdquo;, &ldquo;donate&rdquo;,
-                    or &ldquo;reports&rdquo;.
+                    {indexError
+                      ? "Search index unavailable. Try the categories below."
+                      : "Searching the site…"}
+                  </p>
+                ) : hits.length === 0 ? (
+                  <p className="px-1 py-6 text-center text-sm text-brand-muted">
+                    No matches for &ldquo;{q}&rdquo;. Try &ldquo;ponds&rdquo;,
+                    &ldquo;donate&rdquo;, or &ldquo;careers&rdquo;.
                   </p>
                 ) : (
                   <ul className="space-y-1">
-                    {matches.map((it) => (
-                      <GuideLink
-                        key={it.href}
-                        item={it}
+                    {hits.map((h) => (
+                      <SearchHit
+                        key={h.route}
+                        hit={h}
                         onClick={() => setOpen(false)}
                       />
                     ))}
                   </ul>
                 )
               ) : (
+                /* Browse mode — curated category buttons. */
                 CATEGORY_ORDER.map((cat) => {
                   const items = GUIDE_ITEMS.filter((i) => i.category === cat);
                   return (
@@ -382,6 +531,50 @@ function AiAssistant() {
         />
       </button>
     </div>
+  );
+}
+
+function SearchHit({
+  hit,
+  onClick,
+}: {
+  hit: Hit;
+  onClick: () => void;
+}) {
+  return (
+    <li>
+      <a
+        href={hit.route}
+        onClick={onClick}
+        className="group block rounded-lg px-3 py-2.5 transition hover:bg-brand-mist"
+      >
+        <div className="flex items-center justify-between gap-3">
+          <span className="truncate text-sm font-semibold text-brand-ink">
+            {hit.title}
+          </span>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+            className="shrink-0 text-brand-muted transition group-hover:translate-x-0.5 group-hover:text-brand-primary"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </div>
+        {hit.snippet && (
+          <p className="mt-1 line-clamp-2 text-[12px] leading-relaxed text-brand-muted">
+            {hit.snippet}
+          </p>
+        )}
+      </a>
+    </li>
   );
 }
 
