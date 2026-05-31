@@ -147,14 +147,13 @@ export function JourneyTimeline() {
           </div>
         </div>
 
-        {/* Horizontal timeline.
-            Below lg: native touch-scroll with scroll-snap so the user
-            swipes through the milestones at their own pace.
-            lg+: the track auto-marquees left via gj-journey-marquee
-            (two copies of the list make the loop seamless). Hover
-            anywhere over the band pauses the animation so visitors
-            can read. */}
-        <div className="gj-journey-paused relative mt-16 -mx-4 overflow-x-auto overscroll-x-contain pb-4 sm:-mx-6 lg:-mx-8 lg:overflow-hidden [scrollbar-width:thin] [&::-webkit-scrollbar]:hidden">
+        {/* Horizontal timeline that auto-scrolls left on its own.
+            Two copies of the milestone list slide -50% over the CSS
+            keyframe for a seamless loop. Hover anywhere over the band
+            pauses the animation so visitors can read the year. Mobile
+            keeps the same behaviour but each card fills ~88vw so only
+            one milestone is in view at a time. */}
+        <div className="gj-journey-paused relative mt-16 -mx-4 overflow-hidden pb-4 sm:-mx-6 lg:-mx-8">
           <ol className="gj-journey-marquee flex w-max items-stretch gap-4 px-4 sm:gap-6 sm:px-6 lg:gap-8 lg:px-8">
             {[...milestones, ...milestones].map((m, i) => {
               // `isFirst` / `isLast` toggle the spine endpoint segments
@@ -166,7 +165,7 @@ export function JourneyTimeline() {
               return (
                 <li
                   key={i}
-                  className="flex w-[260px] shrink-0 snap-start flex-col sm:w-[300px] lg:w-[360px]"
+                  className="flex w-[88vw] shrink-0 flex-col sm:w-[300px] lg:w-[360px]"
                 >
                   {/* Year + sub-date */}
                   <div className="text-center">

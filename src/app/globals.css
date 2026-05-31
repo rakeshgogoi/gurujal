@@ -174,13 +174,15 @@ html { scroll-behavior: smooth; }
   to   { transform: translateX(-50%); }
 }
 .gj-journey-marquee {
-  animation: gj-journey-marquee 80s linear infinite;
+  /* Slower on mobile where cards are ~one-per-view, faster on desktop
+   * where multiple cards are visible at once. */
+  animation: gj-journey-marquee 60s linear infinite;
+}
+@media (min-width: 1024px) {
+  .gj-journey-marquee { animation-duration: 80s; }
 }
 .gj-journey-paused:hover .gj-journey-marquee {
   animation-play-state: paused;
-}
-@media (max-width: 1023px) {
-  .gj-journey-marquee { animation: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .gj-journey-marquee { animation: none; }
