@@ -164,30 +164,6 @@ html { scroll-behavior: smooth; }
   .gj-sixr-marquee { animation: none; }
 }
 
-/* ----- Our Journey timeline marquee -----
- * Same pattern as gj-sixr-marquee — the track holds two copies of the
- * milestone list and slides left by -50% to seamlessly loop. Slightly
- * slower than the 6R band so the longer text cards stay readable.
- */
-@keyframes gj-journey-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.gj-journey-marquee {
-  /* Slower on mobile where cards are ~one-per-view, faster on desktop
-   * where multiple cards are visible at once. */
-  animation: gj-journey-marquee 60s linear infinite;
-}
-@media (min-width: 1024px) {
-  .gj-journey-marquee { animation-duration: 80s; }
-}
-.gj-journey-paused:hover .gj-journey-marquee {
-  animation-play-state: paused;
-}
-@media (prefers-reduced-motion: reduce) {
-  .gj-journey-marquee { animation: none; }
-}
-
 /* ----- Floating tools (FAB + language picker) -----
  * Soft pulse halo on the AI assistant trigger, fade-in for the popovers.
  */

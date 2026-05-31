@@ -1,13 +1,25 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 /**
  * Our Journey — horizontal milestone timeline from SPV (2019) to
  * pan-India scale (2025).
  *
  * Layout per column: year on top → tinted dot on the horizontal spine
  * → card below with the year's one-line headline and milestone list.
- * The whole row scrolls horizontally with scroll-snap so the timeline
- * works at every viewport width — six cards rarely all fit on one
- * screen, but the swipe / drag pattern keeps the chronological story
- * intact.
+ *
+ * The row auto-scrolls left via a requestAnimationFrame loop that
+ * advances `scrollLeft` on the native overflow-x-auto wrapper. Because
+ * the scroll is real (not a CSS transform), the user can still drive
+ * the timeline themselves at any time — mouse wheel, trackpad swipe,
+ * or finger swipe on touch. We pause the auto-scroll for ~2.5s after
+ * any user interaction and indefinitely while the cursor hovers over
+ * the band, so manual control always wins.
+ *
+ * Two copies of the milestones live in the track; when auto-scroll
+ * advances past the halfway point we silently subtract half the
+ * scrollWidth so the loop is seamless.
  */
 
 type Tone = "teal" | "green" | "orange";
@@ -103,6 +115,76 @@ const toneYear: Record<Tone, string> = {
 };
 
 export function JourneyTimeline() {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    // Respect the OS-level "reduce motion" preference — don't auto-
+    // scroll at all in that case, but leave native scrolling fully
+    // functional.
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduce) return;
+
+    // Speed scales with viewport: mobile shows one big card at a
+    // time, so a slightly slower scroll feels right; desktop has
+    // multiple cards visible and can afford a faster sweep.
+    const speedPxPerSec = window.innerWidth < 1024 ? 25 : 40;
+
+    let raf = 0;
+    let last = performance.now();
+    let pausedUntil = 0;
+    let hover = false;
+
+    const tick = (now: number) => {
+      const dt = now - last;
+      last = now;
+      if (!hover && now >= pausedUntil) {
+        el.scrollLeft += (speedPxPerSec * dt) / 1000;
+        // Seamless wrap: two copies of the list live in the track,
+        // so once we're past half of the scrollable width we can
+        // subtract that distance without the user noticing.
+        const half = el.scrollWidth / 2;
+        if (half > 0 && el.scrollLeft >= half) {
+          el.scrollLeft -= half;
+        }
+      }
+      raf = window.requestAnimationFrame(tick);
+    };
+    raf = window.requestAnimationFrame(tick);
+
+    // Any deliberate user interaction holds the auto-scroll back
+    // for a couple seconds so we never fight the user's intent.
+    const pauseFor = (ms: number) => {
+      pausedUntil = performance.now() + ms;
+    };
+    const onWheel = () => pauseFor(2500);
+    const onTouch = () => pauseFor(2500);
+    const onEnter = () => {
+      hover = true;
+    };
+    const onLeave = () => {
+      hover = false;
+    };
+
+    el.addEventListener("wheel", onWheel, { passive: true });
+    el.addEventListener("touchstart", onTouch, { passive: true });
+    el.addEventListener("touchmove", onTouch, { passive: true });
+    el.addEventListener("pointerenter", onEnter);
+    el.addEventListener("pointerleave", onLeave);
+
+    return () => {
+      window.cancelAnimationFrame(raf);
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchstart", onTouch);
+      el.removeEventListener("touchmove", onTouch);
+      el.removeEventListener("pointerenter", onEnter);
+      el.removeEventListener("pointerleave", onLeave);
+    };
+  }, []);
+
   return (
     <section id="our-journey" className="relative bg-brand-mist scroll-mt-20">
       <div
@@ -147,14 +229,17 @@ export function JourneyTimeline() {
           </div>
         </div>
 
-        {/* Horizontal timeline that auto-scrolls left on its own.
-            Two copies of the milestone list slide -50% over the CSS
-            keyframe for a seamless loop. Hover anywhere over the band
-            pauses the animation so visitors can read the year. Mobile
-            keeps the same behaviour but each card fills ~88vw so only
-            one milestone is in view at a time. */}
-        <div className="gj-journey-paused relative mt-16 -mx-4 overflow-hidden pb-4 sm:-mx-6 lg:-mx-8">
-          <ol className="gj-journey-marquee flex w-max items-stretch gap-4 px-4 sm:gap-6 sm:px-6 lg:gap-8 lg:px-8">
+        {/* Horizontal timeline.
+            The wrapper is a real native scroller (overflow-x-auto) so
+            the user can always wheel / swipe / touch-drag through the
+            milestones; an effect in the parent component nudges
+            scrollLeft over time for the auto-scroll. Mobile cards
+            fill ~88vw so only one milestone is in view at a time. */}
+        <div
+          ref={scrollerRef}
+          className="relative mt-16 -mx-4 overflow-x-auto overscroll-x-contain pb-4 sm:-mx-6 lg:-mx-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          <ol className="flex w-max items-stretch gap-4 px-4 sm:gap-6 sm:px-6 lg:gap-8 lg:px-8">
             {[...milestones, ...milestones].map((m, i) => {
               // `isFirst` / `isLast` toggle the spine endpoint segments
               // off only at the true ends of the original list; the
