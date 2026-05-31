@@ -187,8 +187,66 @@ function LanguagePicker() {
   );
 }
 
+/**
+ * GuruJal site guide — quick-nav hub.
+ *
+ * A floating panel that helps a first-time visitor find the page they
+ * want in one click. No LLM, no API calls: a curated index of the
+ * site's pages, grouped by intent. The search box filters the index by
+ * label / keyword as the visitor types, falling back to the categorical
+ * view when the box is empty. Each item is a Link, so navigation is
+ * client-side and the panel closes on click.
+ *
+ * To add or rename a destination, edit the GUIDE_ITEMS array.
+ */
+type GuideItem = {
+  label: string;
+  href: string;
+  category: "Get involved" | "About GuruJal" | "Our work" | "Resources";
+  /** Extra terms a visitor might type that should match this item. */
+  keywords?: string;
+};
+
+const GUIDE_ITEMS: GuideItem[] = [
+  // Get involved — the highest-intent destinations.
+  { label: "Support a pond", href: "/support-a-pond", category: "Get involved", keywords: "donate adopt fund pond restoration give" },
+  { label: "Careers & jobs", href: "/career", category: "Get involved", keywords: "volunteer work hiring internship apply" },
+  { label: "Contact us", href: "/contact", category: "Get involved", keywords: "email phone reach get in touch partner collaborate" },
+  // About — who we are, what we do.
+  { label: "About GuruJal", href: "/about", category: "About GuruJal", keywords: "mission vision story" },
+  { label: "Our team", href: "/team", category: "About GuruJal", keywords: "people leadership trustees" },
+  { label: "The 6R Approach", href: "/#approach", category: "About GuruJal", keywords: "framework strategy reduce restore revive rethink" },
+  // Programs / services.
+  { label: "All solutions", href: "/solutions", category: "Our work", keywords: "services programs" },
+  { label: "Eco-restoration", href: "/eco-restoration", category: "Our work", keywords: "forest aravalli landscape" },
+  { label: "Water proofing", href: "/water-proofing", category: "Our work", keywords: "rainwater harvesting buildings" },
+  { label: "Connect the Drop", href: "/connect-the-drop", category: "Our work", keywords: "behaviour change conservation school" },
+  { label: "We for Water", href: "/we-for-water", category: "Our work", keywords: "youth training green economy" },
+  { label: "ESG advisory", href: "/esg-advisory", category: "Our work", keywords: "corporate companies sustainability" },
+  // Resources / proof.
+  { label: "Events", href: "/events", category: "Resources", keywords: "urban adda symposium conference upcoming past" },
+  { label: "Reports & publications", href: "/reports-and-publications", category: "Resources", keywords: "annual report research papers downloads" },
+];
+
+const CATEGORY_ORDER: GuideItem["category"][] = [
+  "Get involved",
+  "About GuruJal",
+  "Our work",
+  "Resources",
+];
+
 function AiAssistant() {
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const q = query.trim().toLowerCase();
+  const matches = q
+    ? GUIDE_ITEMS.filter(
+        (it) =>
+          it.label.toLowerCase().includes(q) ||
+          (it.keywords && it.keywords.toLowerCase().includes(q))
+      )
+    : [];
 
   return (
     <div className="fixed bottom-6 right-6 z-40">
@@ -196,23 +254,23 @@ function AiAssistant() {
       {open && (
         <div
           role="dialog"
-          aria-label="GuruJal AI assistant"
-          className="absolute bottom-20 right-0 w-[20rem] max-w-[calc(100vw-3rem)] overflow-hidden rounded-2xl bg-white shadow-2xl shadow-black/20 ring-1 ring-brand-soft animate-fade-up"
+          aria-label="GuruJal site guide"
+          className="absolute bottom-20 right-0 w-[22rem] max-w-[calc(100vw-3rem)] overflow-hidden rounded-2xl bg-white shadow-2xl shadow-black/20 ring-1 ring-brand-soft animate-fade-up"
         >
           <div className="relative flex items-center gap-3 bg-gradient-to-br from-brand-primary via-brand-teal to-brand-accent p-4 text-white">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/30 backdrop-blur">
               <SparkleIcon className="h-5 w-5" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-sm font-semibold">GuruJal Assistant</div>
+              <div className="text-sm font-semibold">GuruJal Guide</div>
               <div className="text-[11px] text-white/80">
-                Coming soon · We&apos;re still teaching it about water.
+                Find your way around the site.
               </div>
             </div>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              aria-label="Close assistant"
+              aria-label="Close guide"
               className="rounded-full p-1 text-white/85 transition hover:bg-white/20 hover:text-white"
             >
               <svg
@@ -232,30 +290,72 @@ function AiAssistant() {
             </button>
           </div>
 
-          <div className="space-y-3 p-4 text-sm text-brand-ink/85">
-            <p>
-              Hi! I&apos;ll soon be able to help you with:
-            </p>
-            <ul className="space-y-1.5 text-[13px] text-brand-muted">
-              <li className="flex items-start gap-2">
-                <Pip /> Pond restoration enquiries
-              </li>
-              <li className="flex items-start gap-2">
-                <Pip /> Rainwater harvesting questions
-              </li>
-              <li className="flex items-start gap-2">
-                <Pip /> Volunteer & partnership info
-              </li>
-              <li className="flex items-start gap-2">
-                <Pip /> Finding the right report or page
-              </li>
-            </ul>
-            <div className="pt-1">
+          <div className="space-y-3 p-4">
+            <div className="relative">
               <input
-                disabled
-                placeholder="Ask anything about GuruJal…"
-                className="w-full cursor-not-allowed rounded-full border border-brand-soft bg-brand-mist/50 px-4 py-2.5 text-sm text-brand-muted placeholder:text-brand-muted/70"
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search the site (e.g. donate, ponds, careers)"
+                aria-label="Search the site"
+                className="w-full rounded-full border border-brand-soft bg-brand-mist/40 py-2.5 pl-9 pr-3 text-sm text-brand-ink placeholder:text-brand-muted focus:border-brand-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
               />
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-brand-muted"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </div>
+
+            <div className="max-h-[60vh] overflow-y-auto pr-1 [scrollbar-width:thin]">
+              {q ? (
+                matches.length === 0 ? (
+                  <p className="px-1 py-6 text-center text-sm text-brand-muted">
+                    No matches. Try &ldquo;ponds&rdquo;, &ldquo;donate&rdquo;,
+                    or &ldquo;reports&rdquo;.
+                  </p>
+                ) : (
+                  <ul className="space-y-1">
+                    {matches.map((it) => (
+                      <GuideLink
+                        key={it.href}
+                        item={it}
+                        onClick={() => setOpen(false)}
+                      />
+                    ))}
+                  </ul>
+                )
+              ) : (
+                CATEGORY_ORDER.map((cat) => {
+                  const items = GUIDE_ITEMS.filter((i) => i.category === cat);
+                  return (
+                    <div key={cat} className="mb-3 last:mb-0">
+                      <div className="px-1 pb-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-muted">
+                        {cat}
+                      </div>
+                      <ul className="space-y-1">
+                        {items.map((it) => (
+                          <GuideLink
+                            key={it.href}
+                            item={it}
+                            onClick={() => setOpen(false)}
+                          />
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
@@ -265,7 +365,7 @@ function AiAssistant() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label="Open AI assistant"
+        aria-label="Open GuruJal site guide"
         aria-expanded={open}
         className="group relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-brand-primary via-brand-teal to-brand-accent text-white shadow-xl shadow-brand-primary/30 transition hover:scale-105 hover:shadow-2xl"
       >
@@ -285,12 +385,42 @@ function AiAssistant() {
   );
 }
 
-function Pip() {
+function GuideLink({
+  item,
+  onClick,
+}: {
+  item: GuideItem;
+  onClick: () => void;
+}) {
+  // Internal in-page anchors and routes use a regular <a> so navigation
+  // works even on routes that aren't yet migrated to the new app
+  // (those still live on gurujal.org via liveUrl, but every entry in
+  // GUIDE_ITEMS points to a path that exists locally).
   return (
-    <span
-      aria-hidden
-      className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-accent"
-    />
+    <li>
+      <a
+        href={item.href}
+        onClick={onClick}
+        className="group flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm text-brand-ink transition hover:bg-brand-mist"
+      >
+        <span className="truncate">{item.label}</span>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+          className="shrink-0 text-brand-muted transition group-hover:translate-x-0.5 group-hover:text-brand-primary"
+        >
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </a>
+    </li>
   );
 }
 
