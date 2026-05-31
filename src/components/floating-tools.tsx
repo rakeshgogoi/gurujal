@@ -189,7 +189,7 @@ function LanguagePicker() {
 }
 
 /**
- * GuruJal site guide — quick-nav hub + full-text site search.
+ * GuruJal Assistant — quick-nav hub + full-text site search.
  *
  *   - With an empty query: shows curated category buttons (Get involved
  *     / About GuruJal / Our work / Resources) so a first-time visitor
@@ -395,7 +395,7 @@ function AiAssistant() {
       {open && (
         <div
           role="dialog"
-          aria-label="GuruJal site guide"
+          aria-label="GuruJal Assistant"
           className="absolute bottom-20 right-0 w-[22rem] max-w-[calc(100vw-3rem)] overflow-hidden rounded-2xl bg-white shadow-2xl shadow-black/20 ring-1 ring-brand-soft animate-fade-up"
         >
           <div className="relative flex items-center gap-3 bg-gradient-to-br from-brand-primary via-brand-teal to-brand-accent p-4 text-white">
@@ -403,7 +403,7 @@ function AiAssistant() {
               <SparkleIcon className="h-5 w-5" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-sm font-semibold">GuruJal Guide</div>
+              <div className="text-sm font-semibold">GuruJal Assistant</div>
               <div className="text-[11px] text-white/80">
                 Find your way around the site.
               </div>
@@ -411,7 +411,7 @@ function AiAssistant() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              aria-label="Close guide"
+              aria-label="Close assistant"
               className="rounded-full p-1 text-white/85 transition hover:bg-white/20 hover:text-white"
             >
               <svg
@@ -514,7 +514,7 @@ function AiAssistant() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label="Open GuruJal site guide"
+        aria-label="Open GuruJal Assistant"
         aria-expanded={open}
         className="group relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-brand-primary via-brand-teal to-brand-accent text-white shadow-xl shadow-brand-primary/30 transition hover:scale-105 hover:shadow-2xl"
       >
