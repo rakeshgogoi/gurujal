@@ -159,7 +159,7 @@ export function JourneyTimeline() {
               return (
                 <li
                   key={m.date}
-                  className="flex w-[240px] shrink-0 snap-start flex-col sm:w-[260px] lg:w-[240px]"
+                  className="flex w-[260px] shrink-0 snap-start flex-col sm:w-[300px] lg:w-[360px]"
                 >
                   {/* Year + sub-date */}
                   <div className="text-center">
