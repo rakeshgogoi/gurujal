@@ -315,14 +315,14 @@ export function Hero() {
         and CTA sit comfortably with breathing room above and below.
       */}
       {/*
-        Mobile: min-h reserves 200px for the announcement bar (50),
-        sticky header (80) and the section anchor nav below the hero
-        (~70) — so the nav peeks into view at first paint without
-        scrolling.
+        Mobile: min-h reserves only the announcement bar (50) + sticky
+        header (80) = 130px, so the hero fills the full remaining
+        viewport and the section anchor nav stays below the fold
+        (the user has to scroll to see it).
         sm+: revert to 85vh for the cinematic full-viewport feel on
         bigger screens.
       */}
-      <div className="mx-auto flex min-h-[calc(100svh-200px)] sm:min-h-[85vh] max-w-7xl flex-col justify-center px-8 py-20 sm:px-16 sm:py-24 lg:px-32 lg:py-28">
+      <div className="mx-auto flex min-h-[calc(100svh-130px)] sm:min-h-[85vh] max-w-7xl flex-col justify-center px-8 py-20 sm:px-16 sm:py-24 lg:px-32 lg:py-28">
         {/* Rotating headline — one <h1> swapped on idx change, with a key
             forcing remount so the fade-in animation replays cleanly without
             overlapping the previous slide. */}
