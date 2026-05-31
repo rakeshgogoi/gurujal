@@ -47,28 +47,43 @@ export default function Home() {
             <div className="relative grid items-center gap-8 lg:grid-cols-2">
               <div>
                 <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-white/85">
-                  Follow GuruJal · 1,411 followers
+                  Connect with GuruJal
                 </p>
                 <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
                   Stay connected with our work.
                 </h2>
                 <p className="mt-4 max-w-xl text-base text-white/85">
-                  Follow us on LinkedIn for the latest updates from the field —
-                  pond rejuvenations, eco-restoration progress, and stories
-                  from the communities we work with.
+                  Follow us on Facebook and Instagram for the latest from the
+                  field — pond rejuvenations, eco-restoration progress, and
+                  stories from the communities we work with.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3 lg:justify-end">
                 <a
-                  href="https://www.linkedin.com/company/gurujal/"
+                  href="https://www.facebook.com/gurujal.gurugram/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Follow GuruJal on Facebook"
                   className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-brand-primary transition hover:bg-brand-orange hover:text-white"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                    <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z" />
+                    <path d="M22 12.07C22 6.51 17.52 2 12 2S2 6.51 2 12.07c0 5.02 3.66 9.18 8.44 9.93v-7.02H7.9v-2.91h2.54V9.84c0-2.51 1.49-3.9 3.78-3.9 1.09 0 2.24.2 2.24.2v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.77l-.44 2.91h-2.33V22c4.78-.75 8.43-4.91 8.43-9.93z" />
                   </svg>
-                  Follow on LinkedIn
+                  Facebook
+                </a>
+                <a
+                  href="https://www.instagram.com/gurujal_/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Follow GuruJal on Instagram"
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-brand-primary transition hover:bg-brand-orange hover:text-white"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <rect x="3" y="3" width="18" height="18" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                  </svg>
+                  Instagram
                 </a>
                 <Link
                   href={liveUrl("/contact")}
