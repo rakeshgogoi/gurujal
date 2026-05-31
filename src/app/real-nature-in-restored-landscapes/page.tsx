@@ -309,7 +309,7 @@ export default function RealNatureInRestoredLandscapesPage() {
           { label: "Participants", value: "21" },
           { label: "Water Bodies", value: "4" },
         ]}
-        backdrop="/uploads/2024/08/real-nature-event.jpeg"
+        backdrop="/uploads/2026/05/real-nature-hero.avif"
       />
 
       <EventOverview
