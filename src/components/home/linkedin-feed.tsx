@@ -3,15 +3,18 @@
  * (https://www.linkedin.com/company/gurujal/) rendered via LinkedIn's
  * official per-post embed iframes.
  *
- * Each iframe renders the live post — including images, video, and
- * up-to-date like/comment counts. To refresh the feed: on a post, click
- * ⋯ → "Embed this post", copy the iframe URL, and update the EMBEDS
- * array.
+ * Each iframe renders the live post — including image, body text, and
+ * the like / comment / share engagement bar. To refresh the feed:
+ * on a post click ⋯ → "Embed this post" and update the EMBEDS array.
  *
- * Iframe heights are uniformly clamped to CARD_H and scrolling is
- * disabled, so each card shows the post's author + image + first lines
- * of body without an internal scrollbar. The "see more" link in the
- * iframe still opens the full post on LinkedIn.
+ * Sizing trick:
+ *   We can't shrink content inside a cross-origin LinkedIn iframe, so
+ *   we render the iframe at its natural width and a generous height
+ *   (NAT_H, tall enough to contain the full post + engagement bar),
+ *   then apply `transform: scale(SCALE)` to shrink the entire iframe
+ *   down. The wrapper has `overflow: hidden` and a clamped height of
+ *   CARD_H so the page sees a compact card — image, text and buttons
+ *   all proportionally smaller — with no internal scrollbar.
  *
  * Mobile layout is a single-row horizontal carousel with scroll-snap
  * (one card per swipe). At sm+ it becomes a 2-up grid; at xl+ a 4-up
@@ -24,10 +27,10 @@ const EMBEDS: string[] = [
   "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7462866123257090048?collapsed=1",
 ];
 
-// Tuned so a "collapsed" post with an image displays its header, hero
-// image and ~2 lines of text without overflow. Most posts fit; longer
-// captions get truncated with LinkedIn's own "…see more" link.
-const CARD_H = 380;
+const CARD_H = 380;          // Visible card height after scaling.
+const SCALE = 0.72;          // Shrink factor applied to the iframe.
+const NAT_H = Math.round(CARD_H / SCALE); // Natural iframe height (~528).
+const NAT_W_PCT = 100 / SCALE;             // Natural iframe width (~139%).
 
 const LINKEDIN_URL = "https://www.linkedin.com/company/gurujal/";
 
@@ -69,14 +72,18 @@ export function LinkedInFeed() {
               >
                 <iframe
                   src={url}
-                  height={CARD_H}
-                  width="100%"
                   frameBorder={0}
                   scrolling="no"
                   allowFullScreen
                   title={`GuruJal LinkedIn post ${i + 1}`}
                   loading="lazy"
-                  className="block h-full w-full"
+                  className="block"
+                  style={{
+                    width: `${NAT_W_PCT}%`,
+                    height: `${NAT_H}px`,
+                    transform: `scale(${SCALE})`,
+                    transformOrigin: "top left",
+                  }}
                 />
               </div>
             ))}
