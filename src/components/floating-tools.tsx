@@ -233,13 +233,6 @@ const GUIDE_ITEMS: GuideItem[] = [
   { label: "Reports & publications", href: "/reports-and-publications", category: "Resources", keywords: "annual report research papers downloads" },
 ];
 
-const CATEGORY_ORDER: GuideItem["category"][] = [
-  "Get involved",
-  "About GuruJal",
-  "Our work",
-  "Resources",
-];
-
 /** Shape of each doc in public/search-index.json (see
  *  scripts/build-search-index.mjs). */
 type IndexedDoc = {
@@ -458,13 +451,13 @@ function AiAssistant() {
               </svg>
             </div>
 
-            <div className="max-h-[60vh] overflow-y-auto pr-1 [scrollbar-width:thin]">
+            <div className="max-h-[22rem] overflow-y-auto pr-1 [scrollbar-width:thin]">
               {q ? (
                 /* Search mode — full-text hits ranked by MiniSearch. */
                 !miniSearch ? (
                   <p className="px-1 py-6 text-center text-sm text-brand-muted">
                     {indexError
-                      ? "Search index unavailable. Try the categories below."
+                      ? "Search index unavailable right now."
                       : "Searching the site…"}
                   </p>
                 ) : hits.length === 0 ? (
@@ -484,26 +477,12 @@ function AiAssistant() {
                   </ul>
                 )
               ) : (
-                /* Browse mode — curated category buttons. */
-                CATEGORY_ORDER.map((cat) => {
-                  const items = GUIDE_ITEMS.filter((i) => i.category === cat);
-                  return (
-                    <div key={cat} className="mb-3 last:mb-0">
-                      <div className="px-1 pb-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-muted">
-                        {cat}
-                      </div>
-                      <ul className="space-y-1">
-                        {items.map((it) => (
-                          <GuideLink
-                            key={it.href}
-                            item={it}
-                            onClick={() => setOpen(false)}
-                          />
-                        ))}
-                      </ul>
-                    </div>
-                  );
-                })
+                /* Empty-state welcome — no menu, just a prompt. */
+                <p className="px-2 py-4 text-sm leading-relaxed text-brand-muted">
+                  How can I help you? Type anything you would like to know
+                  about GuruJal and I will help you navigate across our
+                  website.
+                </p>
               )}
             </div>
           </div>
@@ -573,45 +552,6 @@ function SearchHit({
             {hit.snippet}
           </p>
         )}
-      </a>
-    </li>
-  );
-}
-
-function GuideLink({
-  item,
-  onClick,
-}: {
-  item: GuideItem;
-  onClick: () => void;
-}) {
-  // Internal in-page anchors and routes use a regular <a> so navigation
-  // works even on routes that aren't yet migrated to the new app
-  // (those still live on gurujal.org via liveUrl, but every entry in
-  // GUIDE_ITEMS points to a path that exists locally).
-  return (
-    <li>
-      <a
-        href={item.href}
-        onClick={onClick}
-        className="group flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm text-brand-ink transition hover:bg-brand-mist"
-      >
-        <span className="truncate">{item.label}</span>
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-          className="shrink-0 text-brand-muted transition group-hover:translate-x-0.5 group-hover:text-brand-primary"
-        >
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
       </a>
     </li>
   );
