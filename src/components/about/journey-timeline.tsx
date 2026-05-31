@@ -1,9 +1,13 @@
 /**
- * Our Journey — vertical milestone timeline mirroring the live site's
- * year-by-year story from SPV (2019) to pan-India scale (2025).
+ * Our Journey — horizontal milestone timeline from SPV (2019) to
+ * pan-India scale (2025).
  *
- * Each entry shows the year + month, a one-line headline, and a list of
- * milestones. The center spine dot is tinted by the entry's tone.
+ * Layout per column: year on top → tinted dot on the horizontal spine
+ * → card below with the year's one-line headline and milestone list.
+ * The whole row scrolls horizontally with scroll-snap so the timeline
+ * works at every viewport width — six cards rarely all fit on one
+ * screen, but the swipe / drag pattern keeps the chronological story
+ * intact.
  */
 
 type Tone = "teal" | "green" | "orange";
@@ -82,10 +86,15 @@ const milestones: {
   },
 ];
 
-const toneDot: Record<Tone, string> = {
-  teal: "bg-brand-teal ring-brand-teal/30",
-  green: "bg-brand-green ring-brand-green/30",
-  orange: "bg-brand-orange ring-brand-orange/30",
+const toneBg: Record<Tone, string> = {
+  teal: "bg-brand-teal",
+  green: "bg-brand-green",
+  orange: "bg-brand-orange",
+};
+const toneRing: Record<Tone, string> = {
+  teal: "ring-brand-teal/25",
+  green: "ring-brand-green/25",
+  orange: "ring-brand-orange/25",
 };
 const toneYear: Record<Tone, string> = {
   teal: "text-brand-teal-dark",
@@ -138,62 +147,72 @@ export function JourneyTimeline() {
           </div>
         </div>
 
-        {/* Timeline */}
-        <ol className="relative mx-auto mt-16 max-w-4xl">
-          {/* Vertical spine */}
-          <span
-            aria-hidden
-            className="absolute left-4 top-2 h-[calc(100%-1rem)] w-px bg-gradient-to-b from-brand-teal/60 via-brand-soft to-brand-orange/60 sm:left-1/2 sm:-translate-x-1/2"
-          />
-
-          {milestones.map((m, i) => {
-            const alignRight = i % 2 === 0; // alternating sides on sm+
-            return (
-              <li
-                key={m.date}
-                className={`relative mb-12 grid grid-cols-[2rem_1fr] gap-4 sm:grid-cols-2 sm:gap-8 ${
-                  alignRight ? "" : "sm:[direction:rtl]"
-                }`}
-              >
-                {/* Dot on the spine */}
-                <span
-                  aria-hidden
-                  className={`absolute left-4 top-2 -translate-x-1/2 sm:left-1/2 inline-block h-4 w-4 rounded-full ring-4 ${toneDot[m.tone]}`}
-                />
-
-                {/* Spacer on the empty side */}
-                <div className="hidden sm:block" />
-
-                {/* Card */}
-                <div
-                  className={`col-span-1 col-start-2 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-brand-soft/80 transition hover:-translate-y-0.5 hover:shadow-md sm:col-start-auto sm:[direction:ltr] ${
-                    alignRight ? "sm:col-start-2" : "sm:col-start-1"
-                  }`}
+        {/* Horizontal timeline.
+            The wrapper bleeds to the screen edges with -mx-* so the
+            first card aligns flush on small viewports; scroll-snap +
+            shrink-0 cards make the row swipeable. */}
+        <div className="relative mt-16 -mx-4 overflow-x-auto overscroll-x-contain pb-4 sm:-mx-6 lg:-mx-8 [scrollbar-width:thin]">
+          <ol className="flex w-max items-stretch gap-4 px-4 sm:gap-6 sm:px-6 lg:gap-8 lg:px-8">
+            {milestones.map((m, i) => {
+              const isFirst = i === 0;
+              const isLast = i === milestones.length - 1;
+              return (
+                <li
+                  key={m.date}
+                  className="flex w-[240px] shrink-0 snap-start flex-col sm:w-[260px] lg:w-[240px]"
                 >
-                  <p
-                    className={`text-xs font-semibold uppercase tracking-[0.18em] ${toneYear[m.tone]}`}
-                  >
-                    {m.date}
-                  </p>
-                  <h3 className="mt-2 text-xl font-semibold text-brand-ink">
-                    {m.headline}
-                  </h3>
-                  <ul className="mt-4 space-y-2.5 text-sm leading-relaxed text-brand-muted">
-                    {m.items.map((it) => (
-                      <li key={it} className="flex gap-2">
-                        <span
-                          aria-hidden
-                          className={`mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full ${toneDot[m.tone].split(" ")[0]}`}
-                        />
-                        <span>{it}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+                  {/* Year + sub-date */}
+                  <div className="text-center">
+                    <div
+                      className={`text-3xl font-extrabold tracking-tight sm:text-4xl ${toneYear[m.tone]}`}
+                    >
+                      {m.year}
+                    </div>
+                    <div className="mt-1 text-[11px] font-medium uppercase tracking-[0.14em] text-brand-muted">
+                      {m.date}
+                    </div>
+                  </div>
+
+                  {/* Spine row — dot in the middle, faint line extending
+                      to the next / previous card. Hidden on the outer
+                      edges so the spine doesn't dangle. */}
+                  <div className="relative mt-4 mb-5 flex items-center">
+                    <span
+                      aria-hidden
+                      className={`h-0.5 flex-1 ${isFirst ? "" : "bg-brand-soft"}`}
+                    />
+                    <span
+                      aria-hidden
+                      className={`inline-block h-4 w-4 rounded-full ring-4 ring-brand-mist ${toneBg[m.tone]} ${toneRing[m.tone]}`}
+                    />
+                    <span
+                      aria-hidden
+                      className={`h-0.5 flex-1 ${isLast ? "" : "bg-brand-soft"}`}
+                    />
+                  </div>
+
+                  {/* Card */}
+                  <div className="flex-1 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-brand-soft/80 transition hover:-translate-y-0.5 hover:shadow-md">
+                    <h3 className="text-base font-semibold leading-snug text-brand-ink">
+                      {m.headline}
+                    </h3>
+                    <ul className="mt-3 space-y-2 text-[13px] leading-relaxed text-brand-muted">
+                      {m.items.map((it) => (
+                        <li key={it} className="flex gap-2">
+                          <span
+                            aria-hidden
+                            className={`mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full ${toneBg[m.tone]}`}
+                          />
+                          <span>{it}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
       </div>
     </section>
   );
