@@ -8,10 +8,14 @@
  * ⋯ → "Embed this post", copy the iframe URL, and update the EMBEDS
  * array.
  *
- * Iframe heights are uniformly clamped to CARD_H so the row of cards
- * reads as a clean grid; LinkedIn's own taller height suggestions get
- * clipped (post comment composer etc. is cut off, which is fine — the
- * "View post" link in the iframe still goes to LinkedIn).
+ * Iframe heights are uniformly clamped to CARD_H and scrolling is
+ * disabled, so each card shows the post's author + image + first lines
+ * of body without an internal scrollbar. The "see more" link in the
+ * iframe still opens the full post on LinkedIn.
+ *
+ * Mobile layout is a single-row horizontal carousel with scroll-snap
+ * (one card per swipe). At sm+ it becomes a 2-up grid; at xl+ a 4-up
+ * grid.
  */
 const EMBEDS: string[] = [
   "https://www.linkedin.com/embed/feed/update/urn:li:share:7464938057067048960?collapsed=1",
@@ -20,7 +24,10 @@ const EMBEDS: string[] = [
   "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7462866123257090048?collapsed=1",
 ];
 
-const CARD_H = 460;
+// Tuned so a "collapsed" post with an image displays its header, hero
+// image and ~2 lines of text without overflow. Most posts fit; longer
+// captions get truncated with LinkedIn's own "…see more" link.
+const CARD_H = 380;
 
 const LINKEDIN_URL = "https://www.linkedin.com/company/gurujal/";
 
@@ -49,25 +56,31 @@ export function LinkedInFeed() {
           </a>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-          {EMBEDS.map((url, i) => (
-            <div
-              key={i}
-              className="overflow-hidden rounded-2xl ring-1 ring-brand-soft"
-              style={{ height: CARD_H }}
-            >
-              <iframe
-                src={url}
-                height={CARD_H}
-                width="100%"
-                frameBorder={0}
-                allowFullScreen
-                title={`GuruJal LinkedIn post ${i + 1}`}
-                loading="lazy"
-                className="block h-full w-full"
-              />
-            </div>
-          ))}
+        {/* Below sm: native horizontal swipe with snap (-mx-* lets the
+            row bleed to the screen edges so the first card aligns
+            flush). sm+: settle into a 2/4-col grid. */}
+        <div className="mt-12 -mx-4 overflow-x-auto overscroll-x-contain sm:mx-0 sm:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex w-max snap-x snap-mandatory gap-4 px-4 sm:grid sm:w-auto sm:snap-none sm:grid-cols-2 sm:gap-6 sm:px-0 xl:grid-cols-4">
+            {EMBEDS.map((url, i) => (
+              <div
+                key={i}
+                className="snap-start shrink-0 w-[85vw] sm:w-auto sm:shrink overflow-hidden rounded-2xl ring-1 ring-brand-soft bg-white"
+                style={{ height: CARD_H }}
+              >
+                <iframe
+                  src={url}
+                  height={CARD_H}
+                  width="100%"
+                  frameBorder={0}
+                  scrolling="no"
+                  allowFullScreen
+                  title={`GuruJal LinkedIn post ${i + 1}`}
+                  loading="lazy"
+                  className="block h-full w-full"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
