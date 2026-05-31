@@ -148,17 +148,24 @@ export function JourneyTimeline() {
         </div>
 
         {/* Horizontal timeline.
-            The wrapper bleeds to the screen edges with -mx-* so the
-            first card aligns flush on small viewports; scroll-snap +
-            shrink-0 cards make the row swipeable. */}
-        <div className="relative mt-16 -mx-4 overflow-x-auto overscroll-x-contain pb-4 sm:-mx-6 lg:-mx-8 [scrollbar-width:thin]">
-          <ol className="flex w-max items-stretch gap-4 px-4 sm:gap-6 sm:px-6 lg:gap-8 lg:px-8">
-            {milestones.map((m, i) => {
+            Below lg: native touch-scroll with scroll-snap so the user
+            swipes through the milestones at their own pace.
+            lg+: the track auto-marquees left via gj-journey-marquee
+            (two copies of the list make the loop seamless). Hover
+            anywhere over the band pauses the animation so visitors
+            can read. */}
+        <div className="gj-journey-paused relative mt-16 -mx-4 overflow-x-auto overscroll-x-contain pb-4 sm:-mx-6 lg:-mx-8 lg:overflow-hidden [scrollbar-width:thin] [&::-webkit-scrollbar]:hidden">
+          <ol className="gj-journey-marquee flex w-max items-stretch gap-4 px-4 sm:gap-6 sm:px-6 lg:gap-8 lg:px-8">
+            {[...milestones, ...milestones].map((m, i) => {
+              // `isFirst` / `isLast` toggle the spine endpoint segments
+              // off only at the true ends of the original list; the
+              // duplicated copy keeps full segments so the loop reads
+              // as a continuous spine.
               const isFirst = i === 0;
-              const isLast = i === milestones.length - 1;
+              const isLast = i === milestones.length * 2 - 1;
               return (
                 <li
-                  key={m.date}
+                  key={i}
                   className="flex w-[260px] shrink-0 snap-start flex-col sm:w-[300px] lg:w-[360px]"
                 >
                   {/* Year + sub-date */}
