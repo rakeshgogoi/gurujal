@@ -5,32 +5,44 @@
  *
  * Each iframe renders the live post — including image, body text, and
  * the like / comment / share engagement bar. To refresh the feed:
- * on a post click ⋯ → "Embed this post" and update the EMBEDS array.
+ * on a post click ⋯ → "Embed this post" — LinkedIn gives you both an
+ * iframe URL and a `height` value. Put them both in the EMBEDS array
+ * below; the natural height matters because it tells us how tall the
+ * post actually is (image-heavy posts are much taller than text-only
+ * ones) and lets us compute a per-post scale.
  *
  * Sizing trick:
  *   We can't shrink content inside a cross-origin LinkedIn iframe, so
- *   we render the iframe at its natural width and a generous height
- *   (NAT_H, tall enough to contain the full post + engagement bar),
- *   then apply `transform: scale(SCALE)` to shrink the entire iframe
- *   down. The wrapper has `overflow: hidden` and a clamped height of
- *   CARD_H so the page sees a compact card — image, text and buttons
- *   all proportionally smaller — with no internal scrollbar.
+ *   we render each iframe at its natural full height, then apply
+ *   `transform: scale(...)` to shrink it down. The scale per card is
+ *   CARD_H / natH so the engagement bar always reaches exactly the
+ *   bottom of the card — no clipping, no scrollbar, just slightly
+ *   smaller content for taller (image-heavy) posts.
  *
  * Mobile layout is a single-row horizontal carousel with scroll-snap
  * (one card per swipe). At sm+ it becomes a 2-up grid; at xl+ a 4-up
  * grid.
  */
-const EMBEDS: string[] = [
-  "https://www.linkedin.com/embed/feed/update/urn:li:share:7464938057067048960?collapsed=1",
-  "https://www.linkedin.com/embed/feed/update/urn:li:share:7464541461041090560?collapsed=1",
-  "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7463209985569816576?collapsed=1",
-  "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7462866123257090048?collapsed=1",
+const EMBEDS: { url: string; natH: number }[] = [
+  {
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:share:7464938057067048960?collapsed=1",
+    natH: 570,
+  },
+  {
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:share:7464541461041090560?collapsed=1",
+    natH: 670,
+  },
+  {
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7463209985569816576?collapsed=1",
+    natH: 567,
+  },
+  {
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7462866123257090048?collapsed=1",
+    natH: 567,
+  },
 ];
 
-const CARD_H = 380;          // Visible card height after scaling.
-const SCALE = 0.72;          // Shrink factor applied to the iframe.
-const NAT_H = Math.round(CARD_H / SCALE); // Natural iframe height (~528).
-const NAT_W_PCT = 100 / SCALE;             // Natural iframe width (~139%).
+const CARD_H = 380; // Uniform visible card height after scaling.
 
 const LINKEDIN_URL = "https://www.linkedin.com/company/gurujal/";
 
@@ -64,29 +76,38 @@ export function LinkedInFeed() {
             flush). sm+: settle into a 2/4-col grid. */}
         <div className="mt-12 -mx-4 overflow-x-auto overscroll-x-contain sm:mx-0 sm:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex w-max snap-x snap-mandatory gap-4 px-4 sm:grid sm:w-auto sm:snap-none sm:grid-cols-2 sm:gap-6 sm:px-0 xl:grid-cols-4">
-            {EMBEDS.map((url, i) => (
-              <div
-                key={i}
-                className="snap-start shrink-0 w-[85vw] sm:w-auto sm:shrink overflow-hidden rounded-2xl ring-1 ring-brand-soft bg-white"
-                style={{ height: CARD_H }}
-              >
-                <iframe
-                  src={url}
-                  frameBorder={0}
-                  scrolling="no"
-                  allowFullScreen
-                  title={`GuruJal LinkedIn post ${i + 1}`}
-                  loading="lazy"
-                  className="block"
-                  style={{
-                    width: `${NAT_W_PCT}%`,
-                    height: `${NAT_H}px`,
-                    transform: `scale(${SCALE})`,
-                    transformOrigin: "top left",
-                  }}
-                />
-              </div>
-            ))}
+            {EMBEDS.map((e, i) => {
+              // Per-post scale: the iframe's natural height is e.natH;
+              // we shrink it so the bottom of the post (the engagement
+              // bar) lands exactly at CARD_H. The matching width
+              // adjustment (100/scale)% keeps the iframe filling the
+              // card visually after the transform.
+              const scale = CARD_H / e.natH;
+              const widthPct = 100 / scale;
+              return (
+                <div
+                  key={i}
+                  className="snap-start shrink-0 w-[85vw] sm:w-auto sm:shrink overflow-hidden rounded-2xl ring-1 ring-brand-soft bg-white"
+                  style={{ height: CARD_H }}
+                >
+                  <iframe
+                    src={e.url}
+                    frameBorder={0}
+                    scrolling="no"
+                    allowFullScreen
+                    title={`GuruJal LinkedIn post ${i + 1}`}
+                    loading="lazy"
+                    className="block"
+                    style={{
+                      width: `${widthPct}%`,
+                      height: `${e.natH}px`,
+                      transform: `scale(${scale})`,
+                      transformOrigin: "top left",
+                    }}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
