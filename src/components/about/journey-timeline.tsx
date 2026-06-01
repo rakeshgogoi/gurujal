@@ -9,13 +9,14 @@ import { useEffect, useRef } from "react";
  * Layout per column: year on top → tinted dot on the horizontal spine
  * → card below with the year's one-line headline and milestone list.
  *
- * The row auto-scrolls left via a requestAnimationFrame loop that
- * advances `scrollLeft` on the native overflow-x-auto wrapper. Because
- * the scroll is real (not a CSS transform), the user can still drive
- * the timeline themselves at any time — mouse wheel, trackpad swipe,
- * or finger swipe on touch. We pause the auto-scroll for ~2.5s after
- * any user interaction and indefinitely while the cursor hovers over
- * the band, so manual control always wins.
+ * The row auto-scrolls left continuously via a requestAnimationFrame
+ * loop that advances `scrollLeft` on the native overflow-x-auto
+ * wrapper. Because the scroll is real (not a CSS transform), the user
+ * can still drive the timeline themselves at any time — mouse wheel,
+ * trackpad swipe, or finger swipe on touch — and the auto-scroll
+ * pauses for ~2.5s after any such interaction so we don't fight the
+ * user's intent. Hover alone does NOT pause; the timeline keeps
+ * moving so the chronology keeps animating while users read.
  *
  * Two copies of the milestones live in the track; when auto-scroll
  * advances past the halfway point we silently subtract half the
@@ -136,12 +137,11 @@ export function JourneyTimeline() {
     let raf = 0;
     let last = performance.now();
     let pausedUntil = 0;
-    let hover = false;
 
     const tick = (now: number) => {
       const dt = now - last;
       last = now;
-      if (!hover && now >= pausedUntil) {
+      if (now >= pausedUntil) {
         el.scrollLeft += (speedPxPerSec * dt) / 1000;
         // Seamless wrap: two copies of the list live in the track,
         // so once we're past half of the scrollable width we can
@@ -155,33 +155,25 @@ export function JourneyTimeline() {
     };
     raf = window.requestAnimationFrame(tick);
 
-    // Any deliberate user interaction holds the auto-scroll back
-    // for a couple seconds so we never fight the user's intent.
+    // Any deliberate user-driven scroll (wheel, trackpad, touch) holds
+    // the auto-scroll back for a couple seconds so we never fight the
+    // user's intent. Hover alone does NOT pause — the timeline keeps
+    // animating regardless of cursor position.
     const pauseFor = (ms: number) => {
       pausedUntil = performance.now() + ms;
     };
     const onWheel = () => pauseFor(2500);
     const onTouch = () => pauseFor(2500);
-    const onEnter = () => {
-      hover = true;
-    };
-    const onLeave = () => {
-      hover = false;
-    };
 
     el.addEventListener("wheel", onWheel, { passive: true });
     el.addEventListener("touchstart", onTouch, { passive: true });
     el.addEventListener("touchmove", onTouch, { passive: true });
-    el.addEventListener("pointerenter", onEnter);
-    el.addEventListener("pointerleave", onLeave);
 
     return () => {
       window.cancelAnimationFrame(raf);
       el.removeEventListener("wheel", onWheel);
       el.removeEventListener("touchstart", onTouch);
       el.removeEventListener("touchmove", onTouch);
-      el.removeEventListener("pointerenter", onEnter);
-      el.removeEventListener("pointerleave", onLeave);
     };
   }, []);
 
