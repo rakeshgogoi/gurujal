@@ -8,8 +8,11 @@ import { StickyAnchorNav } from "@/components/sticky-anchor-nav";
  * Top-level destinations chosen for first-time visitors who want to
  * jump straight to the meat of the page:
  *   • The Crisis     → why the work matters
- *   • The Approach   → how GuruJal works (the 6R framework)
+ *   • Our Approach   → how GuruJal works (the 6R framework)
  *   • Our Impact     → the numbers that prove it works
+ *   • Global Goals   → SDG alignment
+ *   • Our Stories    → editorial story tiles
+ *   • Testimonials   → words from partners + communities
  *   • Partners       → who we work with
  */
 
@@ -17,6 +20,9 @@ const sections = [
   { label: "The Crisis", href: "#crisis" },
   { label: "Our Approach", href: "#approach" },
   { label: "Our Impact", href: "#impact" },
+  { label: "Global Goals", href: "#goals" },
+  { label: "Our Stories", href: "#stories" },
+  { label: "Testimonials", href: "#testimonials" },
   { label: "Partners", href: "#partners" },
 ];
 

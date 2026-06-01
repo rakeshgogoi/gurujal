@@ -9,7 +9,7 @@ import Image from "next/image";
  */
 export function SdgAlignment() {
   return (
-    <section className="bg-white">
+    <section id="goals" className="bg-white scroll-mt-20">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">

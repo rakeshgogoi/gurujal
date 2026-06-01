@@ -172,7 +172,8 @@ export function Testimonials() {
 
   return (
     <section
-      className="relative overflow-hidden bg-brand-deep text-white"
+      id="testimonials"
+      className="relative overflow-hidden bg-brand-deep text-white scroll-mt-20"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
