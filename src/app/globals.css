@@ -209,3 +209,18 @@ body {
      for its banner; we hide the banner so undo the shift. */
   top: 0 !important;
 }
+
+/* ============================================================
+ * iOS Safari: any form control with font-size below 16px makes
+ * the page zoom in when the field gains focus. Force every input
+ * / select / textarea to 16px on phone-sized viewports so we
+ * never trigger the zoom; desktop styling (text-sm utilities) is
+ * unaffected.
+ * ============================================================ */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
