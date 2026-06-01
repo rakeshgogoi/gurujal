@@ -29,22 +29,22 @@ const recentNews = [
   {
     date: "21 Feb 2026",
     title: "Real Nature in Restored Landscapes — site visit at BSF Bhondsi, Khandewla & Bhokarka",
-    href: "/events/real-nature-in-restored-landscapes",
+    href: "/real-nature-in-restored-landscapes",
   },
   {
     date: "10 Dec 2025",
     title: "HydroMingle Delhi 2025 convened innovators, policymakers & CSR partners at IHC",
-    href: "/events/hydromingle-event",
+    href: "/hydromingle-event",
   },
   {
     date: "9 Dec 2025",
     title: "Roots & Recharge Symposium with Wipro Foundation revives heritage water wisdom",
-    href: "/events/roots-and-recharge-symposium",
+    href: "/roots-and-recharge-symposium",
   },
   {
     date: "3–5 Jun 2025",
     title: "Urban Adda 2025 — 3-day national conference on cities for people, not cars",
-    href: "/events/urban-adda-25",
+    href: "/urban-adda-25",
   },
 ];
 

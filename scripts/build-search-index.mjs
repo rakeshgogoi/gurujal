@@ -52,11 +52,11 @@ const ROUTES = [
   "/bhondsi-pond",
   "/chandla-dungarwas-pond",
   "/mojabad-pond",
-  // Events (sourced from Sanity — see /events/[slug])
-  "/events/urban-adda-25",
-  "/events/roots-and-recharge-symposium",
-  "/events/hydromingle-event",
-  "/events/real-nature-in-restored-landscapes",
+  // Events
+  "/urban-adda-25",
+  "/roots-and-recharge-symposium",
+  "/hydromingle-event",
+  "/real-nature-in-restored-landscapes",
   // Reports & publications
   "/annual-report-2022-23",
   "/annual-report-2023-24",

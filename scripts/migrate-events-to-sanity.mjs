@@ -165,8 +165,9 @@ async function uploadBackdrop(repoRelPath) {
 async function migrateEvent(ev) {
   process.stdout.write(`  ${ev.slug.padEnd(40)} `);
   const backdrop = await uploadBackdrop(ev.backdropPath);
-
-  const fields = {
+  const doc = {
+    _id: `event-${ev.slug}`,
+    _type: "event",
     title: ev.title,
     slug: { _type: "slug", current: ev.slug },
     eyebrow: ev.eyebrow,
@@ -180,24 +181,8 @@ async function migrateEvent(ev) {
     facts: ev.facts,
     backdrop,
   };
-
-  // Look up an existing document by slug; if found, patch it in place
-  // so re-runs don't duplicate. Otherwise create a fresh one. Both
-  // operations are within the standard Editor token's permission set,
-  // unlike `createOrReplace` with a custom _id which Sanity's newer
-  // RBAC treats as a privileged action.
-  const existing = await client.fetch(
-    `*[_type == "event" && slug.current == $slug][0]{_id}`,
-    { slug: ev.slug }
-  );
-
-  if (existing?._id) {
-    await client.patch(existing._id).set(fields).commit();
-    process.stdout.write(`✓ updated\n`);
-  } else {
-    await client.create({ _type: "event", ...fields });
-    process.stdout.write(`✓ created\n`);
-  }
+  await client.createOrReplace(doc);
+  process.stdout.write(`✓\n`);
 }
 
 async function main() {
