@@ -1,10 +1,11 @@
-import Image from "next/image";
+import { GalleryGrid } from "./gallery-grid";
 
 /**
  * Event gallery — image grid with optional "view all" link.
  *
- * Uses a 4-column masonry-ish grid on lg, 3 on sm, 2 on mobile. Each
- * tile clips a 4:3 thumbnail and zooms slightly on hover.
+ * The grid + lightbox modal live in the GalleryGrid client component
+ * so each thumbnail is clickable; this wrapper is a server component
+ * that owns the section header / CTA so they stay statically rendered.
  */
 
 export function EventGallery({
@@ -30,22 +31,7 @@ export function EventGallery({
           </h2>
         </div>
 
-        <ul className="mx-auto mt-12 grid max-w-6xl grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {photos.map((p, i) => (
-            <li
-              key={i}
-              className="group relative aspect-[4/3] overflow-hidden rounded-2xl bg-brand-soft/60 ring-1 ring-brand-soft/70"
-            >
-              <Image
-                src={p.src}
-                alt={p.alt}
-                fill
-                sizes="(min-width: 1024px) 280px, (min-width: 640px) 30vw, 45vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </li>
-          ))}
-        </ul>
+        <GalleryGrid photos={photos} />
 
         {viewAllHref && (
           <div className="mt-10 text-center">
