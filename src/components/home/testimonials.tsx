@@ -225,7 +225,7 @@ export function Testimonials() {
                 {/* pt-* is set so the quote-mark icon clears the top
                     of the text (icon h-8/h-12 minus negative top
                     offset = 24px / 24px, plus a comfortable gap). */}
-                <p className="relative line-clamp-5 pt-12 text-sm leading-relaxed text-white/95 sm:line-clamp-none sm:pt-10 sm:text-lg lg:text-xl">
+                <p className="relative line-clamp-5 pt-8 text-sm leading-relaxed text-white/95 sm:line-clamp-none sm:pt-10 sm:text-lg lg:text-xl">
                   {t.quote}
                 </p>
                 <div className="mt-4 flex items-center gap-3 sm:mt-6">
