@@ -20,16 +20,7 @@
  */
 
 import { Resend } from "resend";
-
-export type ContactFormState = {
-  status: "idle" | "success" | "error";
-  message: string;
-};
-
-export const initialContactState: ContactFormState = {
-  status: "idle",
-  message: "",
-};
+import type { ContactFormState } from "./state";
 
 export async function sendContactMessage(
   _prev: ContactFormState,

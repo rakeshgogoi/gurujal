@@ -2,10 +2,8 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import {
-  sendContactMessage,
-  initialContactState,
-} from "@/app/contact/actions";
+import { sendContactMessage } from "@/app/contact/actions";
+import { initialContactState } from "@/app/contact/state";
 
 /**
  * Contact form (left) + Google Maps embed (right) on a single section.
