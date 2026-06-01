@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "search:index": "node scripts/build-search-index.mjs"
+    "search:index": "node scripts/build-search-index.mjs",
+    "sanity:migrate-events": "node scripts/migrate-events-to-sanity.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

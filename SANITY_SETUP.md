@@ -70,6 +70,50 @@ at a time, or just author new events there.
 
 ---
 
+## Migrating the four existing hardcoded events
+
+The Studio starts empty — the existing event pages
+(`urban-adda-25`, `roots-and-recharge-symposium`, `hydromingle-event`,
+`real-nature-in-restored-landscapes`) live as hardcoded TSX files
+under `src/app/`, **not** in Sanity. A one-time migration script
+copies their hero data into Sanity so you can edit them from the
+Studio going forward.
+
+### Steps
+
+1. At <https://www.sanity.io/manage> → your project →
+   **API → Tokens → Add API token**.
+2. Name it `migration`, permission **Editor**, click **Save**.
+3. Copy the token (`sk...`). Sanity only shows it once.
+4. Add it to `.env.local` (alongside the project ID):
+   ```
+   SANITY_WRITE_TOKEN=sk...your-token...
+   ```
+5. Run:
+   ```
+   npm run sanity:migrate-events
+   ```
+
+You'll see four ✓s and the events will appear under **Event** in
+the Studio.
+
+Re-running the script is safe — it upserts by deterministic id
+(`event-<slug>`), so a second run replaces instead of duplicating.
+
+### After verifying
+
+Once each event renders at `/events/<slug>` correctly, you can
+delete the old hardcoded pages (they're replaced by Sanity):
+
+- `src/app/urban-adda-25/`
+- `src/app/roots-and-recharge-symposium/`
+- `src/app/hydromingle-event/`
+- `src/app/real-nature-in-restored-landscapes/`
+
+And revoke the migration token at sanity.io/manage when done.
+
+---
+
 ## Day-to-day editing
 
 - Open `/studio` (production URL once deployed) → log in → edit →
