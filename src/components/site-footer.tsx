@@ -59,11 +59,17 @@ export function SiteFooter() {
           <FooterColumn title="Organisation" links={footerLinks.organisation} className="lg:col-span-2" />
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-center sm:flex-row sm:items-center sm:text-left">
-          <p className="text-xs text-white/60">
+        {/* Bottom bar.
+            sm+: three columns on one row — credit left, copyright
+            centered, legal links right. Each column flex-1 so the
+            centered copyright sits at the visual centre of the band.
+            Mobile: stacks copyright → legal → credit with tight
+            spacing. */}
+        <div className="mt-10 flex flex-col items-center gap-2 border-t border-white/10 pt-4 text-center sm:mt-14 sm:flex-row sm:gap-4 sm:pt-6 sm:text-left">
+          <p className="text-xs text-white/60 sm:order-2 sm:flex-1 sm:text-center">
             © {year} GuruJal. All rights reserved.
           </p>
-          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-white/60 sm:justify-start">
+          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs text-white/60 sm:order-3 sm:flex-1 sm:justify-end">
             {footerLinks.legal.map((l) => (
               <li key={l.href}>
                 <a href={resolveHref(l.href)} className="hover:text-white">
@@ -72,20 +78,18 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
+          <p className="text-[11px] text-white/45 sm:order-1 sm:flex-1 sm:text-left">
+            Designed and developed by{" "}
+            <a
+              href="https://codingryder.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-white/65 transition hover:text-white"
+            >
+              Coding Ryder
+            </a>
+          </p>
         </div>
-
-        {/* Credit line — small, centered on every viewport. */}
-        <p className="mt-4 text-center text-[11px] text-white/45">
-          Designed and developed by{" "}
-          <a
-            href="https://codingryder.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-white/65 transition hover:text-white"
-          >
-            Coding Ryder
-          </a>
-        </p>
       </div>
     </footer>
   );
