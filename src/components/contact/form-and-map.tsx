@@ -14,7 +14,12 @@ import { initialContactState } from "@/app/contact/state";
  * button's pending state.
  */
 
-const OFFICE_EMAIL = "management@gurujal.org";
+// The helper line below the form names the inbox the server action
+// actually delivers to (CONTACT_RECIPIENT_EMAIL on Vercel), so keep
+// this in sync if you change the env var. It is separate from the
+// public-facing management@gurujal.org address shown elsewhere on
+// the page (Contact info grid, action error fallback).
+const FORM_RECIPIENT_EMAIL = "communications@gurujal.org";
 
 function ContactForm() {
   const [state, formAction] = useActionState(
@@ -133,8 +138,8 @@ function ContactForm() {
 
       <p className="text-xs leading-relaxed text-brand-muted">
         Your message goes straight to{" "}
-        <strong>{OFFICE_EMAIL}</strong>. Prefer to write directly? Email
-        us any time.
+        <strong>{FORM_RECIPIENT_EMAIL}</strong>. Prefer to write
+        directly? Email us any time.
       </p>
     </form>
   );
