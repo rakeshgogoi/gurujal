@@ -1,44 +1,75 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+import {
+  sendContactMessage,
+  initialContactState,
+} from "@/app/contact/actions";
 
 /**
  * Contact form (left) + Google Maps embed (right) on a single section.
  *
- * The form is a no-op for now — submits build a mailto: link to
- * management@gurujal.org with the message body so the user's email
- * client takes over. Once we have a backend / form provider we can
- * swap the submit handler.
+ * The form posts to the `sendContactMessage` server action which
+ * delivers the submission via Resend. UI uses `useActionState` for
+ * the success / error message and `useFormStatus` for the submit
+ * button's pending state.
  */
 
 const OFFICE_EMAIL = "management@gurujal.org";
 
 function ContactForm() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
+  const [state, formAction] = useActionState(
+    sendContactMessage,
+    initialContactState
+  );
 
-  function buildMailto() {
-    const subject = `Website enquiry from ${name || "a visitor"}`;
-    const body = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      `Phone: ${phone}`,
-      "",
-      "Message:",
-      message,
-    ].join("\n");
-    return `mailto:${OFFICE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  // After a successful send, replace the whole form with a thank-you
+  // card so the user gets clear confirmation and can't accidentally
+  // submit twice.
+  if (state.status === "success") {
+    return (
+      <div className="flex flex-col items-start gap-4 rounded-2xl border border-brand-green/30 bg-brand-green/10 p-6 text-brand-ink">
+        <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-green/20 text-brand-green-dark">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </div>
+        <p className="text-base leading-relaxed sm:text-lg">{state.message}</p>
+      </div>
+    );
   }
 
   return (
-    <form
-      action={buildMailto()}
-      method="post"
-      encType="text/plain"
-      className="flex flex-col gap-4"
-    >
+    <form action={formAction} className="flex flex-col gap-4">
+      {/* Honeypot — visually hidden, off the tab order. Real users
+          won't see or fill it; bots that auto-fill every input do,
+          and the server action silently drops those submissions. */}
+      <div
+        aria-hidden
+        className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+      >
+        <label>
+          Company (leave blank)
+          <input
+            type="text"
+            name="company"
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </label>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-muted">
@@ -46,9 +77,8 @@ function ContactForm() {
           </span>
           <input
             type="text"
+            name="name"
             required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
             placeholder="Your full name"
             className="mt-2 w-full rounded-xl border border-brand-soft bg-white px-4 py-3 text-sm text-brand-ink placeholder:text-brand-muted/70 focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/30"
           />
@@ -59,8 +89,7 @@ function ContactForm() {
           </span>
           <input
             type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            name="phone"
             placeholder="Optional"
             className="mt-2 w-full rounded-xl border border-brand-soft bg-white px-4 py-3 text-sm text-brand-ink placeholder:text-brand-muted/70 focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/30"
           />
@@ -73,9 +102,8 @@ function ContactForm() {
         </span>
         <input
           type="email"
+          name="email"
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
           className="mt-2 w-full rounded-xl border border-brand-soft bg-white px-4 py-3 text-sm text-brand-ink placeholder:text-brand-muted/70 focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/30"
         />
@@ -86,20 +114,47 @@ function ContactForm() {
           Message
         </span>
         <textarea
+          name="message"
           required
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
           rows={5}
           placeholder="Tell us how we can help — collaboration, research, volunteering, supporting a pond…"
           className="mt-2 w-full rounded-xl border border-brand-soft bg-white px-4 py-3 text-sm text-brand-ink placeholder:text-brand-muted/70 focus:border-brand-accent focus:outline-none focus:ring-2 focus:ring-brand-accent/30"
         />
       </label>
 
-      <button
-        type="submit"
-        className="mt-2 inline-flex items-center justify-center gap-2 self-start rounded-full bg-brand-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-primary-dark"
-      >
-        Send message
+      {state.status === "error" && (
+        <div
+          role="alert"
+          className="rounded-xl border border-brand-orange/40 bg-brand-orange/10 px-4 py-3 text-sm text-brand-orange-dark"
+        >
+          {state.message}
+        </div>
+      )}
+
+      <SubmitButton />
+
+      <p className="text-xs leading-relaxed text-brand-muted">
+        Your message goes straight to{" "}
+        <strong>{OFFICE_EMAIL}</strong>. Prefer to write directly? Email
+        us any time.
+      </p>
+    </form>
+  );
+}
+
+/** Submit button uses useFormStatus so it can swap to a "Sending…"
+ *  label while the server action is in flight. Must be a separate
+ *  component because useFormStatus only reads from a parent <form>. */
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="mt-2 inline-flex items-center justify-center gap-2 self-start rounded-full bg-brand-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-primary-dark disabled:cursor-not-allowed disabled:opacity-70"
+    >
+      {pending ? "Sending…" : "Send message"}
+      {!pending && (
         <svg
           width="14"
           height="14"
@@ -114,14 +169,8 @@ function ContactForm() {
           <line x1="5" y1="12" x2="19" y2="12" />
           <polyline points="12 5 19 12 12 19" />
         </svg>
-      </button>
-
-      <p className="text-xs leading-relaxed text-brand-muted">
-        Submitting opens your email client with the message ready to send
-        to <strong>{OFFICE_EMAIL}</strong>. Prefer to write directly?
-        Email us any time.
-      </p>
-    </form>
+      )}
+    </button>
   );
 }
 
