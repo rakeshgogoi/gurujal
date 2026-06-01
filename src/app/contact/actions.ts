@@ -89,7 +89,6 @@ export async function sendContactMessage(
     };
   }
 
-  const resend = new Resend(apiKey);
   const subject = `Website enquiry from ${name}`;
 
   // Plain-text body — readable in any client, no template dependency.
@@ -117,7 +116,12 @@ export async function sendContactMessage(
     <p style="white-space:pre-wrap;">${escapeHtml(message)}</p>
   `;
 
+  // Wrap the whole Resend interaction (including client construction)
+  // in try/catch so a malformed API key, invalid From address, or any
+  // SDK validation failure surfaces as a friendly error instead of a
+  // Next.js 500 screen.
   try {
+    const resend = new Resend(apiKey);
     const result = await resend.emails.send({
       from,
       to,
@@ -128,16 +132,26 @@ export async function sendContactMessage(
       text,
       html,
     });
-    if (result.error) {
-      console.error("[contact] Resend error:", result.error);
+    if (result && "error" in result && result.error) {
+      console.error(
+        "[contact] Resend returned an error:",
+        JSON.stringify(result.error)
+      );
       return {
         status: "error",
         message:
           "We couldn't send your message right now. Please try again, or email us directly at management@gurujal.org.",
       };
     }
+    console.log(
+      "[contact] Sent OK. id=",
+      (result as { data?: { id?: string } })?.data?.id || "(no id)"
+    );
   } catch (e) {
-    console.error("[contact] Unexpected error sending email:", e);
+    console.error(
+      "[contact] Unexpected exception while sending email:",
+      e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : e
+    );
     return {
       status: "error",
       message:

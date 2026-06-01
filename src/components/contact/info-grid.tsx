@@ -8,7 +8,7 @@
  */
 
 const OFFICE_ADDRESS =
-  "GuruJal Office, 6/9, F-2, Block F, DLF Phase 1, Sector 26A, Gurugram, Haryana 122002";
+  "F6/9, Block F, DLF Phase 1, Sector 26A, Gurugram, Haryana 122001";
 
 type Tone = "teal" | "green" | "orange";
 
