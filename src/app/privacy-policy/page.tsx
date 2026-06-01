@@ -1,80 +1,222 @@
 import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/legal/legal-page";
-import { contactInfo } from "@/lib/nav";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How GuruJal collects, uses and protects the personal information of visitors, donors, volunteers, and partners.",
+    "How Abhipsa Foundation — through its GuruJal initiative — collects, uses and protects the personal data of individuals across our programmes, events, and digital channels.",
 };
 
+/**
+ * Authoritative copy mirrors the official Abhipsa Foundation /
+ * GuruJal Privacy Policy. Update lastUpdated whenever the source
+ * policy changes.
+ */
 const sections: LegalSection[] = [
   {
-    heading: "Introduction",
+    heading: "1. Purpose of Data Collection",
     body: [
-      "GuruJal is a not-for-profit initiative committed to water conservation, pond rejuvenation and community-led eco-restoration. This Privacy Policy explains how we collect, use and safeguard information you share with us through this website, our contact and donation forms, our events, and any other interactions you have with GuruJal.",
-      "By using the GuruJal website you agree to the practices described in this policy. If you do not agree, please stop using the site and our services.",
+      "We collect personal information only for purposes directly related to our work on water management, environmental initiatives, community programmes, research, training, and events. These purposes may include:",
+      {
+        kind: "list",
+        items: [
+          "Registration for events, workshops, or volunteer activities",
+          "Implementation and monitoring of field projects",
+          "Research, surveys, and assessments",
+          "Communication and outreach",
+          "Reporting to donors or partners (in aggregated or anonymised form)",
+          "Compliance with legal or regulatory requirements",
+        ],
+      },
+      "We do not sell, trade, or misuse personal data under any circumstances.",
     ],
   },
   {
-    heading: "Information we collect",
+    heading: "2. Information We Collect",
     body: [
-      "Information you give us voluntarily — for example your name, email address, phone number, organisation, and message when you fill in a contact form, sign up for a newsletter, register for an event, or make a donation. Donor information additionally includes the amount and the channel (UPI, bank transfer, payment gateway, etc.) used for the contribution.",
-      "Information collected automatically — basic analytics about how visitors use the site, such as pages viewed, time on page, device type, browser, and approximate location (derived from IP). We collect this through standard logging and privacy-respecting analytics; we do not attempt to identify individual visitors.",
-      "Third-party content embedded on this site (for example LinkedIn post embeds, YouTube videos, or the Google Translate widget) may set cookies or collect their own analytics under their respective privacy policies.",
+      { kind: "subheading", text: "2.1 Personal Information" },
+      "Depending on the context, we may collect:",
+      {
+        kind: "list",
+        items: [
+          "Name, age, gender",
+          "Address or location (village / ward / city)",
+          "Phone number or email ID",
+          "Organisation or affiliation",
+          "Government-issued ID (only when required by law or for project verification)",
+          "Photographs, audio, or video recordings during events or field activities",
+        ],
+      },
+      {
+        kind: "subheading",
+        text: "2.2 Sensitive Personal Data (collected only with consent)",
+      },
+      {
+        kind: "list",
+        items: [
+          "Socio-economic details",
+          "Community or demographic information",
+          "Health or vulnerability-related information relevant to water projects",
+        ],
+      },
+      "We ensure strict safeguards for any sensitive data collected.",
+      { kind: "subheading", text: "2.3 Automatically Collected Data" },
+      "For website or digital platforms:",
+      {
+        kind: "list",
+        items: [
+          "IP address",
+          "Browser type, device information",
+          "Cookies and analytics data",
+        ],
+      },
     ],
   },
   {
-    heading: "How we use your information",
+    heading: "3. How We Use Personal Data",
     body: [
-      "To respond to your enquiry, send you the resource you requested, register you for an event, or process and acknowledge your donation.",
-      "To keep you informed — only with your consent — about GuruJal programs, impact updates, upcoming events, and ways to participate.",
-      "To improve the website and our programs through aggregated, non-identifying analytics.",
-      "To comply with applicable laws, including reporting requirements for donations under Indian tax and FCRA rules where relevant.",
+      "Your information may be used for:",
+      {
+        kind: "list",
+        items: [
+          "Delivering project activities and community services",
+          "Communication regarding programmes, updates, or opportunities",
+          "Sending event invitations, reports, newsletters, or outcomes",
+          "Research and publication (data is anonymised unless explicit consent is obtained)",
+          "Documentation, monitoring, and evaluation",
+          "Impact reporting to donors or partners (aggregated / non-identifiable form)",
+        ],
+      },
+      "We ensure that all uses are ethical, lawful, and purpose-specific.",
     ],
   },
   {
-    heading: "How we share your information",
+    heading: "4. Legal Basis for Processing",
     body: [
-      "We do not sell or rent your personal information to anyone. Personal information is shared only with GuruJal staff and verified partners on a need-to-know basis, with service providers (such as payment processors, email-sending platforms, or hosting providers) that help us run our programs and which are bound by confidentiality terms, and with government authorities where the law requires us to do so.",
+      "We collect and process personal data based on:",
+      {
+        kind: "list",
+        items: [
+          "Consent from individuals",
+          "Legitimate organisational interests (programme delivery, reporting, documentation)",
+          "Legal obligations where applicable",
+          "Contractual requirements for specific partnerships or donor agreements",
+        ],
+      },
+      "Individuals may withdraw their consent at any time by contacting us.",
     ],
   },
   {
-    heading: "Cookies and similar technologies",
+    heading: "5. Data Sharing and Disclosure",
     body: [
-      "Essential cookies keep the site functional (for example remembering your language preference when you switch to Hindi). Analytics cookies help us understand usage in aggregate. Third-party embeds (LinkedIn, YouTube, Google Translate) may set their own cookies — please see their policies for details.",
-      "You can block or delete cookies in your browser settings; the site will still work but some preferences will not persist between visits.",
+      "We may share information only when necessary, and only with:",
+      {
+        kind: "list",
+        items: [
+          "Donor organisations (in aggregated or anonymised formats)",
+          "Government authorities when required by law",
+          "Partner organisations involved in programme delivery (with confidentiality obligations)",
+          "Professional service providers such as auditors or IT service providers",
+        ],
+      },
+      "We never share personal data for marketing, commercial, or unrelated purposes.",
     ],
   },
   {
-    heading: "Data retention and security",
+    heading: "6. Data Storage and Security",
     body: [
-      "We retain personal information only as long as needed for the purpose it was collected, or as required by law. Donation records are kept for the period mandated under Indian financial regulations.",
-      "We take reasonable technical and organisational measures to protect personal information against loss, misuse, unauthorised access or disclosure. No method of transmission over the internet is fully secure; we encourage you to share sensitive information through secure channels only.",
+      "We use secure systems and protocols to protect personal data, including:",
+      {
+        kind: "list",
+        items: [
+          "Encrypted digital storage",
+          "Restricted access to authorised staff only",
+          "Secure handling of physical documents",
+          "Regular data backups",
+          "Password-protected systems and devices",
+        ],
+      },
+      "We store data only for as long as required for programme purposes or legal obligations.",
     ],
   },
   {
-    heading: "Your rights",
+    heading: "7. Rights of Individuals",
     body: [
-      "You can ask us at any time to confirm what personal information we hold about you, correct inaccuracies, withdraw consent to receive communications, or request deletion of your personal data — subject to any retention requirements imposed by law. To exercise these rights, write to us at the email address listed below.",
+      "Individuals whose data we collect have the right to:",
+      {
+        kind: "list",
+        items: [
+          "Access their personal data",
+          "Request correction or updating of inaccurate information",
+          "Withdraw consent at any time",
+          "Request deletion of their data (subject to legal or reporting requirements)",
+          "Ask how their data is being used",
+          "Request restrictions on certain uses of their data",
+        ],
+      },
+      "We respond to such requests within a reasonable timeline.",
     ],
   },
   {
-    heading: "Children's privacy",
+    heading: "8. Photographs, Video & Media Consent",
     body: [
-      "The GuruJal website is not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has provided us personal information, please contact us and we will take prompt steps to delete it.",
+      "During events, field visits, or documentation activities, photos or videos may be captured for reporting or communication purposes. We ensure:",
+      {
+        kind: "list",
+        items: [
+          "Prior verbal or written consent whenever required",
+          "An option to opt out",
+          "Sensitive communities or minors are photographed only with explicit permission from responsible guardians",
+        ],
+      },
     ],
   },
   {
-    heading: "Changes to this policy",
+    heading: "9. Data Breach Protocol",
     body: [
-      "We may update this Privacy Policy from time to time as our programs and the regulatory environment evolve. The 'Last updated' date at the top of this page indicates when the policy was most recently revised. Material changes will be notified through the website and, where appropriate, to subscribers by email.",
+      "In the unlikely event of a data breach, we will:",
+      {
+        kind: "list",
+        items: [
+          "Notify affected individuals promptly",
+          "Provide guidance on protective steps",
+          "Report the breach to authorities when legally required",
+          "Take corrective action to prevent future incidents",
+        ],
+      },
     ],
   },
   {
-    heading: "Contact us",
+    heading: "10. Children's Privacy",
     body: [
-      `For questions about this policy or to exercise your rights, write to ${contactInfo.email} or call ${contactInfo.phone}. Our registered address is ${contactInfo.location}.`,
+      "We do not knowingly collect personal data from children under 18 without parental or guardian consent. Programmes involving minors follow strict safeguarding protocols.",
+    ],
+  },
+  {
+    heading: "11. Third-Party Websites and Links",
+    body: [
+      "Our website or communications may contain links to external websites. We are not responsible for their privacy practices and encourage users to review their policies.",
+    ],
+  },
+  {
+    heading: "12. Updates to This Policy",
+    body: [
+      "We may update this Privacy Policy from time to time. The latest version will always be available on our website, and significant changes will be communicated where appropriate.",
+    ],
+  },
+  {
+    heading: "13. Contact Us",
+    body: [
+      "For questions, concerns, or requests related to your personal data, please contact our Data Protection Officer at Abhipsa Foundation:",
+      {
+        kind: "list",
+        items: [
+          "Email: management@gurujal.org",
+          "Website: www.gurujal.org",
+          "Phone: (+91) 931-141-1998",
+          "Address: F6/9, Block F, DLF Phase 1, Sector 26A, Gurugram, Haryana 122001",
+        ],
+      },
     ],
   },
 ];
@@ -83,7 +225,7 @@ export default function PrivacyPolicyPage() {
   return (
     <LegalPage
       title="Privacy Policy"
-      lead="GuruJal respects the privacy of every visitor, donor, volunteer and partner. This policy explains the information we collect and how it is used."
+      lead="Abhipsa Foundation, through its GuruJal initiative, is committed to protecting the privacy, security and confidentiality of every individual whose data we collect across our programmes, events, research, community engagement and digital channels."
       lastUpdated="June 2026"
       sections={sections}
     />

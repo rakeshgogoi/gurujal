@@ -2,17 +2,26 @@
  * Shared layout for /privacy-policy and /terms-and-conditions.
  *
  * Renders a brand-deep hero band with the page title + last-updated
- * line, then the body sections (each {heading, body[]}) as a single
- * narrow prose column on a brand-mist background. Editors can update
- * the copy by editing the section arrays passed in from the page
- * files — no MDX or CMS round-trip required.
+ * line, then the body sections as a single narrow prose column on a
+ * brand-mist background.
+ *
+ * Each section's body is an array of "blocks". A block can be:
+ *   - a plain string → rendered as a paragraph
+ *   - `{ kind: "subheading", text }` → rendered as an h3
+ *   - `{ kind: "list", items[] }` → rendered as a bullet list
+ *
+ * Editors update the copy by editing the section arrays passed in
+ * from the page files — no MDX or CMS round-trip required.
  */
+
+export type LegalBlock =
+  | string
+  | { kind: "subheading"; text: string }
+  | { kind: "list"; items: string[] };
 
 export type LegalSection = {
   heading: string;
-  /** Each paragraph rendered as its own <p>. Plain strings only —
-   *  use multiple entries for paragraph breaks. */
-  body: string[];
+  body: LegalBlock[];
 };
 
 export function LegalPage({
@@ -54,9 +63,31 @@ export function LegalPage({
                 {s.heading}
               </h2>
               <div className="mt-4 space-y-4 text-base leading-relaxed text-brand-ink/85 sm:text-lg">
-                {s.body.map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
+                {s.body.map((block, i) => {
+                  if (typeof block === "string") {
+                    return <p key={i}>{block}</p>;
+                  }
+                  if (block.kind === "subheading") {
+                    return (
+                      <h3
+                        key={i}
+                        className="pt-2 text-base font-semibold text-brand-ink sm:text-lg"
+                      >
+                        {block.text}
+                      </h3>
+                    );
+                  }
+                  if (block.kind === "list") {
+                    return (
+                      <ul key={i} className="list-disc space-y-2 pl-6">
+                        {block.items.map((item, j) => (
+                          <li key={j}>{item}</li>
+                        ))}
+                      </ul>
+                    );
+                  }
+                  return null;
+                })}
               </div>
             </div>
           ))}
