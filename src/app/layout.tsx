@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { AnnouncementBar } from "@/components/announcement-bar";
-import { FloatingTools } from "@/components/floating-tools";
+import { SiteChromeTop, SiteChromeBottom } from "@/components/site-chrome";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -55,14 +52,12 @@ export default function RootLayout({
       className={`${dmSans.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-brand-ink overflow-x-hidden">
-        {/* Stack: announcement bar (dark teal, normal flow) → sticky white
-            header → page content. Header takes flow space so the hero (and
-            every inner page) starts below it naturally. */}
-        <AnnouncementBar />
-        <SiteHeader />
+        {/* Stack: announcement bar → sticky header → page content →
+            footer + floating tools. Chrome is hidden on /studio so the
+            embedded Sanity editor gets a clean full-screen canvas. */}
+        <SiteChromeTop />
         <main className="flex-1">{children}</main>
-        <SiteFooter />
-        <FloatingTools />
+        <SiteChromeBottom />
       </body>
     </html>
   );
