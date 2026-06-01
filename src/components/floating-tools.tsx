@@ -383,6 +383,18 @@ function AiAssistant() {
   }, [q, miniSearch]);
 
   return (
+    <>
+      {/* Mobile-only blurred backdrop. Sits behind the panel so the
+          page underneath softly defocuses while the Assistant is open;
+          clicking it dismisses the panel. Skipped on sm+ where the
+          panel is small enough that a backdrop would feel heavy. */}
+      {open && (
+        <div
+          aria-hidden
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 z-30 bg-black/30 backdrop-blur-sm animate-fade-up sm:hidden"
+        />
+      )}
     <div className="fixed bottom-6 right-6 z-40">
       {/* Panel */}
       {open && (
@@ -510,6 +522,7 @@ function AiAssistant() {
         />
       </button>
     </div>
+    </>
   );
 }
 
