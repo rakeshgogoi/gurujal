@@ -63,7 +63,7 @@ const events: EventItem[] = [
     type: "Site Visit",
     blurb:
       "Site Visit & Experiential Learning Program hosted by GuruJal & Prana Earth under Delhi Climate Innovation Week 2026.",
-    href: "/real-nature-in-restored-landscapes",
+    href: "/events/real-nature-in-restored-landscapes",
     photo: "/uploads/2024/08/real-nature-event.jpeg",
     tone: "green",
   },
@@ -74,7 +74,7 @@ const events: EventItem[] = [
     type: "Innovation Convening",
     blurb:
       "Water innovation platform connecting startups, policymakers, CSR partners and researchers driving the next wave of water solutions.",
-    href: "/hydromingle-event",
+    href: "/events/hydromingle-event",
     photo: "/uploads/2024/08/hydromingle2025.jpg",
     tone: "teal",
   },
@@ -85,7 +85,7 @@ const events: EventItem[] = [
     type: "Symposium",
     blurb:
       "Reviving heritage water structures for groundwater resilience through policy dialogue, dug-well inventorisation data and community pilots.",
-    href: "/roots-and-recharge-symposium",
+    href: "/events/roots-and-recharge-symposium",
     photo: "/uploads/2024/08/Roots-recharge-symposium-2025.jpg",
     tone: "teal",
   },
@@ -96,7 +96,7 @@ const events: EventItem[] = [
     type: "Dialogue",
     blurb:
       "Co-creating sustainable and equitable cities through dialogue, film and collaboration across urban water and climate advocates.",
-    href: "/urban-adda-25",
+    href: "/events/urban-adda-25",
     photo: "/uploads/2026/03/Book-Launch-at-Urban-Adda.jpeg",
     tone: "orange",
   },

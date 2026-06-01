@@ -22,7 +22,7 @@ const events = [
     blurb:
       "Site Visit & Experiential Learning Program hosted by GuruJal & Prana Earth under Delhi Climate Innovation Week 2026 — BSF Bhondsi, Khandewla Well, Triveni Pond, Bhokarka.",
     image: "/uploads/2024/08/real-nature-event.jpeg",
-    href: "/real-nature-in-restored-landscapes",
+    href: "/events/real-nature-in-restored-landscapes",
     date: "21 Feb 2026",
     kind: "Site Visit",
   },
@@ -31,7 +31,7 @@ const events = [
     blurb:
       "Water innovation platform connecting startups, policymakers, CSR partners, and researchers driving the next wave of water solutions. Tamarind Hall, IHC.",
     image: "/uploads/2024/08/hydromingle2025.jpg",
-    href: "/hydromingle-event",
+    href: "/events/hydromingle-event",
     date: "10 Dec 2025",
     kind: "Innovation Convening",
   },
@@ -40,7 +40,7 @@ const events = [
     blurb:
       "GuruJal × Wipro Foundation symposium reviving traditional water wisdom — heritage dug-well inventorisation, policy dialogue, and community pilots. Juniper Hall, IHC.",
     image: "/uploads/2024/08/Roots-recharge-symposium-2025.jpg",
-    href: "/roots-and-recharge-symposium",
+    href: "/events/roots-and-recharge-symposium",
     date: "9 Dec 2025",
     kind: "Symposium",
   },

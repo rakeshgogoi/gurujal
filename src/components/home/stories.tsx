@@ -45,7 +45,7 @@ const stories = [
     excerpt:
       "GuruJal × Wipro Foundation, India Habitat Centre, 9 December 2025. Reviving traditional water wisdom — heritage dug wells and groundwater resilience in Gurugram.",
     image: "/uploads/2026/03/events-hero.jpg",
-    href: "/roots-and-recharge-symposium",
+    href: "/events/roots-and-recharge-symposium",
     meta: "9 Dec 2025 · IHC, New Delhi",
   },
 ];

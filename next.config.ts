@@ -29,6 +29,34 @@ const nextConfig: NextConfig = {
     // still get full optimisation since this flag is gated on NODE_ENV.
     unoptimized: process.env.NODE_ENV !== "production",
   },
+  async redirects() {
+    // The four event detail pages moved from bare-slug URLs to the
+    // Sanity-driven /events/<slug> dynamic route. Permanent (301)
+    // redirects keep any old external links / search-engine results
+    // pointing at the correct place.
+    return [
+      {
+        source: "/urban-adda-25",
+        destination: "/events/urban-adda-25",
+        permanent: true,
+      },
+      {
+        source: "/hydromingle-event",
+        destination: "/events/hydromingle-event",
+        permanent: true,
+      },
+      {
+        source: "/roots-and-recharge-symposium",
+        destination: "/events/roots-and-recharge-symposium",
+        permanent: true,
+      },
+      {
+        source: "/real-nature-in-restored-landscapes",
+        destination: "/events/real-nature-in-restored-landscapes",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withMDX(nextConfig);
