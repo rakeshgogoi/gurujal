@@ -221,8 +221,11 @@ export function Testimonials() {
               <Portrait t={t} />
 
               <div className="relative">
-                <QuoteMark className="absolute -top-2 left-0 h-8 w-8 text-white/15 sm:-top-4 sm:h-12 sm:w-12" />
-                <p className="relative line-clamp-5 pt-12 text-sm leading-relaxed text-white/95 sm:line-clamp-none sm:pt-6 sm:text-lg lg:text-xl">
+                <QuoteMark className="absolute -top-2 left-0 h-8 w-8 text-white/15 sm:-top-6 sm:h-12 sm:w-12" />
+                {/* pt-* is set so the quote-mark icon clears the top
+                    of the text (icon h-8/h-12 minus negative top
+                    offset = 24px / 24px, plus a comfortable gap). */}
+                <p className="relative line-clamp-5 pt-12 text-sm leading-relaxed text-white/95 sm:line-clamp-none sm:pt-10 sm:text-lg lg:text-xl">
                   {t.quote}
                 </p>
                 <div className="mt-4 flex items-center gap-3 sm:mt-6">
@@ -241,27 +244,6 @@ export function Testimonials() {
                 </div>
               </div>
             </div>
-
-            {/* In-card side arrows — sit on the card's left/right edges
-                on sm+. On phones the segmented progress bar at the bottom
-                of the card serves as touch navigation (arrows would
-                overlap the portrait at <375 px). */}
-            <button
-              type="button"
-              onClick={prev}
-              aria-label="Previous testimonial"
-              className="absolute left-4 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white hover:text-brand-deep sm:inline-flex"
-            >
-              <Arrow direction="left" />
-            </button>
-            <button
-              type="button"
-              onClick={next}
-              aria-label="Next testimonial"
-              className="absolute right-4 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white hover:text-brand-deep sm:inline-flex"
-            >
-              <Arrow direction="right" />
-            </button>
 
             {/* Segmented progress bar — one slim segment per testimonial,
                 hugs the card's bottom edge. Clickable. */}
@@ -292,6 +274,27 @@ export function Testimonials() {
               ))}
             </div>
           </div>
+
+          {/* Side arrows sit on the OUTER wrapper, outside the card's
+              overflow-hidden, with negative offsets so they don't crowd
+              the text. Hidden below sm — the segmented progress bar
+              and touch swipe handle navigation on phones. */}
+          <button
+            type="button"
+            onClick={prev}
+            aria-label="Previous testimonial"
+            className="absolute -left-3 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white hover:text-brand-deep sm:inline-flex sm:-left-6 lg:-left-16"
+          >
+            <Arrow direction="left" />
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            aria-label="Next testimonial"
+            className="absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur transition hover:bg-white hover:text-brand-deep sm:inline-flex sm:-right-6 lg:-right-16"
+          >
+            <Arrow direction="right" />
+          </button>
         </div>
       </div>
     </section>
