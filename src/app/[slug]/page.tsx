@@ -62,6 +62,9 @@ export async function generateStaticParams() {
     .filter((s) => s !== "publication-wells-of-gurugram")
     // Story / case-study pages with composed routes.
     .filter((s) => s !== "chandla-dungarwas-pond")
+    // Legal pages.
+    .filter((s) => s !== "privacy-policy")
+    .filter((s) => s !== "terms-and-conditions")
     .map((slug) => ({ slug }));
 }
 

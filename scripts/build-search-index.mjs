@@ -65,6 +65,9 @@ const ROUTES = [
   "/publication-pond-rejuvenation-sop",
   "/publication-sop-of-wells",
   "/publication-wells-of-gurugram",
+  // Legal
+  "/privacy-policy",
+  "/terms-and-conditions",
 ];
 
 /** Selectors for site chrome that must NOT appear in the index. */

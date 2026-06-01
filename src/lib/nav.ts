@@ -60,6 +60,8 @@ export const localRoutes = new Set<string>([
   "/chandla-dungarwas-pond",
   "/mojabad-pond",
   "/bhondsi-pond",
+  "/privacy-policy",
+  "/terms-and-conditions",
 ]);
 
 /** True when the given href is a path served by this Next.js app. */

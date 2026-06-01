@@ -73,6 +73,19 @@ export function SiteFooter() {
             ))}
           </ul>
         </div>
+
+        {/* Credit line — small, centered on every viewport. */}
+        <p className="mt-4 text-center text-[11px] text-white/45">
+          Designed and developed by{" "}
+          <a
+            href="https://codingryder.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-white/65 transition hover:text-white"
+          >
+            Coding Ryder
+          </a>
+        </p>
       </div>
     </footer>
   );
