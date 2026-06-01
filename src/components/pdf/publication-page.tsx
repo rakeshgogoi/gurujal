@@ -86,7 +86,10 @@ export function PublicationPage({
             Reports & Publications
           </Link>
 
-          <span className="mt-6 inline-flex rounded-full bg-brand-teal/20 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-teal-bright ring-1 ring-brand-teal/40">
+          {/* `flex w-fit` (block-level) forces the badge onto its own
+              line below the inline back-link instead of letting it
+              wrap inline next to "Reports & Publications". */}
+          <span className="mt-6 flex w-fit rounded-full bg-brand-teal/20 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-teal-bright ring-1 ring-brand-teal/40">
             {badge}
           </span>
           <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
