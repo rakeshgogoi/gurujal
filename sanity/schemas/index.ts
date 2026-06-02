@@ -2,5 +2,9 @@
  *  the Studio. Add new schemas (team member, report, news…) here. */
 import type { SchemaTypeDefinition } from "sanity";
 import { eventType } from "./event";
+import { publicationLeadType } from "./publication-lead";
 
-export const schemaTypes: SchemaTypeDefinition[] = [eventType];
+export const schemaTypes: SchemaTypeDefinition[] = [
+  eventType,
+  publicationLeadType,
+];

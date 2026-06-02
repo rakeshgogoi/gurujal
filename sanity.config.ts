@@ -7,8 +7,10 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { UsersIcon } from "@sanity/icons";
 import { schemaTypes } from "./sanity/schemas";
 import { apiVersion, dataset, projectId } from "./sanity/env";
+import { PublicationLeadsTool } from "./sanity/tools/publication-leads-tool";
 
 // defineConfig throws when projectId is empty (e.g. during the very
 // first `next build` before the user has wired up Sanity env vars).
@@ -31,4 +33,27 @@ export default defineConfig({
     // GROQ query playground at /studio/vision — handy for dev.
     visionTool({ defaultApiVersion: apiVersion }),
   ],
+  // Custom Studio tools (shown in the left-nav alongside Content/Vision).
+  // `publication-leads` is a flat table of gated-PDF form submissions
+  // with a one-click CSV download.
+  tools: (prev) => [
+    ...prev,
+    {
+      name: "publication-leads",
+      title: "Publication leads",
+      icon: UsersIcon,
+      component: PublicationLeadsTool,
+    },
+  ],
+  document: {
+    // Hide the "+ New" button for publicationLead in the global Create
+    // menu — these documents are only ever created by the public
+    // POST /api/publication-lead route, never by hand inside Studio.
+    newDocumentOptions: (prev, { creationContext }) => {
+      if (creationContext.type === "global") {
+        return prev.filter((t) => t.templateId !== "publicationLead");
+      }
+      return prev;
+    },
+  },
 });

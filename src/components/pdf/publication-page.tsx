@@ -159,6 +159,7 @@ export function PublicationPage({
               downloadName={downloadName}
               publicationTitle={title}
               storageKey={storageKey}
+              leadEndpoint="/api/publication-lead"
             />
           </div>
         </div>
