@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { StickyAnchorNav } from "@/components/sticky-anchor-nav";
 import { SolutionClosingCta } from "@/components/solution-detail/closing-cta";
+import { VisualVignettes } from "@/components/bhondsi/visual-vignettes";
 
 export const metadata: Metadata = {
   title: "BSF Bhondsi Pond — From Sewage Hazard to Community Sanctuary — GuruJal",
@@ -35,6 +36,7 @@ function BhondsiSectionNav() {
         { label: "Ecology", href: "#ecology" },
         { label: "Interventions", href: "#interventions" },
         { label: "Construction", href: "#construction" },
+        { label: "Vignettes", href: "#vignettes" },
         { label: "Community", href: "#community" },
         { label: "Impact", href: "#impact" },
       ]}
@@ -825,6 +827,7 @@ export default function BhondsiPondPage() {
       <EcologySection />
       <InterventionsSection />
       <ConstructionSection />
+      <VisualVignettes />
       <CommunitySection />
       <ImpactSection />
       <SolutionClosingCta
