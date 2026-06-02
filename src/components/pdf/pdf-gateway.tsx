@@ -80,18 +80,26 @@ export function PdfGateway({
       /* ignore */
     }
 
-    // 2. Fire-and-forget the optional backend hook. We don't block
-    //    the UX on it — the visitor's been waiting long enough.
+    // 2. Ping the optional backend hook. We `await` so the unlock
+    //    happens after the request resolves, but failures are
+    //    non-fatal — the visitor still sees the PDF. We deliberately
+    //    do NOT pass `keepalive: true` here: it's a footgun in Safari
+    //    (silent throws under some versions), and since we're awaiting
+    //    the response inside the same page lifecycle it adds nothing
+    //    for our flow.
     if (leadEndpoint) {
       try {
         await fetch(leadEndpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
-          keepalive: true,
         });
-      } catch {
-        /* network failures are non-fatal for the user */
+      } catch (err) {
+        // Surface in DevTools so future regressions are debuggable
+        // without re-reading source. Still non-fatal for the visitor.
+        if (typeof console !== "undefined") {
+          console.warn("[pdf-gateway] lead submission failed", err);
+        }
       }
     }
 
