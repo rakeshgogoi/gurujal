@@ -161,7 +161,9 @@ function BhondsiHero() {
           Support a Pond
         </Link>
 
-        <span className="mt-6 inline-flex rounded-full bg-brand-orange/20 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange ring-1 ring-brand-orange/40">
+        {/* `flex w-fit` (block-level) forces the badge onto its own line
+            below the inline back-link instead of wrapping next to it. */}
+        <span className="mt-6 flex w-fit rounded-full bg-brand-orange/20 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange ring-1 ring-brand-orange/40">
           Pond restoration story
         </span>
         <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
