@@ -316,13 +316,34 @@ function AiAssistant() {
     // English stopwords pulled from queries before searching so
     // conversational filler ("how can I…", "what is the…") doesn't
     // drag every page in the index up the ranking.
+    // Conversational filler that should not influence ranking. Keeping
+    // this list broader than a classic stopword set deliberately —
+    // visitors type queries like "I am looking for…" / "tell me about…"
+    // / "how do I get…", and every one of those words would otherwise
+    // need to literally appear on the destination page (AND combine).
     const STOPWORDS = new Set([
-      "a", "an", "and", "are", "as", "at", "be", "but", "by", "can",
-      "do", "does", "for", "from", "has", "have", "how", "i", "if",
-      "in", "into", "is", "it", "its", "me", "my", "of", "on", "or",
-      "our", "should", "so", "that", "the", "their", "there", "this",
-      "to", "us", "want", "was", "we", "were", "what", "when", "where",
-      "which", "who", "why", "will", "with", "would", "you", "your",
+      "a", "about", "after", "again", "all", "am", "an", "and", "any",
+      "anyone", "are", "as", "ask", "at", "be", "been", "before",
+      "being", "between", "both", "but", "by", "can", "could", "did",
+      "do", "does", "doing", "done", "each", "few", "find", "for",
+      "from", "get", "give", "go", "going", "got", "had", "has", "have",
+      "he", "help", "her", "here", "hers", "herself", "him", "himself",
+      "his", "how", "i", "id", "if", "ill", "im", "in", "info",
+      "information", "interested", "into", "is", "it", "its", "itself",
+      "ive", "just", "kindly", "know", "let", "like", "look", "looking",
+      "make", "many", "may", "me", "might", "more", "most", "much",
+      "must", "my", "myself", "need", "needed", "needs", "no", "not",
+      "now", "of", "off", "on", "once", "only", "or", "other", "our",
+      "ours", "ourselves", "out", "over", "own", "page", "pages",
+      "please", "really", "regarding", "same", "see", "seeking", "she",
+      "should", "site", "so", "some", "someone", "something", "such",
+      "tell", "thank", "thanks", "that", "the", "their", "theirs",
+      "them", "themselves", "then", "there", "these", "they", "this",
+      "those", "through", "to", "too", "under", "until", "up", "us",
+      "use", "very", "want", "was", "way", "we", "well", "were",
+      "what", "when", "where", "which", "while", "who", "whom", "why",
+      "will", "with", "would", "yes", "you", "your", "yours",
+      "yourself", "yourselves",
     ]);
     const processTerm = (term: string) => {
       const t = term.toLowerCase();
@@ -369,11 +390,16 @@ function AiAssistant() {
   const hits: Hit[] = useMemo(() => {
     if (!q) return [];
     if (!miniSearch) return [];
-    const raw = miniSearch.search(q).slice(0, 6) as (SearchResult & {
-      route: string;
-      title: string;
-      body: string;
-    })[];
+    type Raw = SearchResult & { route: string; title: string; body: string };
+    // Start strict (AND) for precise queries like "career" or
+    // "annual report". If that returns nothing — common with natural-
+    // language phrasing where some words simply don't appear on the
+    // destination page — fall back to OR so the highest-scoring page
+    // still wins on field boost (title/keywords).
+    let raw = miniSearch.search(q).slice(0, 6) as Raw[];
+    if (raw.length === 0) {
+      raw = miniSearch.search(q, { combineWith: "OR" }).slice(0, 6) as Raw[];
+    }
     return raw.map((r) => ({
       route: r.route,
       title: r.title,
