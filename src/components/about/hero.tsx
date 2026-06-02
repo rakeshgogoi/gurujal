@@ -21,8 +21,9 @@ export function AboutHero() {
     >
       {/* Aerial of a rejuvenated village pond ringed by homes and trees —
           a clear "water binds the community" image that fits the About
-          page's bridge-between-policy-and-people framing. Heavy brand-deep
-          overlay keeps it as ambient texture. */}
+          page's bridge-between-policy-and-people framing. The overlay
+          is anchored to the text column on desktop so the photo on the
+          right reads in its natural colour. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
         <Image
           src="/uploads/2024/08/DJI_0800.jpg"
@@ -30,9 +31,14 @@ export function AboutHero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover [filter:brightness(0.5)]"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/50 via-brand-deep/35 to-brand-deep/55" />
+        {/* Mobile / tablet: top-to-bottom gradient — the text wraps wide
+            here so the photo can only breathe in the middle band. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/85 via-brand-deep/45 to-brand-deep/85 lg:hidden" />
+        {/* Desktop: gradient anchored to the left text column — the
+            right half of the frame reveals the photo. */}
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-deep/90 via-brand-deep/55 to-transparent lg:block" />
       </div>
 
       {/* Soft brand glows */}
@@ -61,25 +67,6 @@ export function AboutHero() {
               autonomous force for groundwater restoration — building a
               water-secure India, one community at a time.
             </p>
-          </div>
-
-          <div className="lg:col-span-5">
-            {/* Aspect ratio shorter than 4:5 so the image never forces the
-                viewport over its budget on smaller laptops. */}
-            <div className="relative mx-auto aspect-[4/3] w-full max-w-sm overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10 sm:aspect-[5/4] sm:max-w-md lg:mx-0 lg:ml-auto lg:aspect-[4/5] lg:max-h-[60vh]">
-              <Image
-                src="/uploads/2026/05/about-pond.jpeg"
-                alt="A rejuvenated GuruJal pond — clear blue sky, water meeting grass banks."
-                fill
-                sizes="(min-width: 1024px) 420px, (min-width: 640px) 60vw, 100vw"
-                className="object-cover"
-                priority
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-gradient-to-tr from-brand-deep/40 via-transparent to-transparent"
-              />
-            </div>
           </div>
         </div>
       </div>

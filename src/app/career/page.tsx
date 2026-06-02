@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CareerHero } from "@/components/career/hero";
+import { CareerSectionNav } from "@/components/career/section-nav";
 import { WhyGrow } from "@/components/career/why-grow";
 import { OpenPositions } from "@/components/career/positions";
 
@@ -14,7 +15,7 @@ const APPLY_FORM = "https://forms.gle/obmREQzpeTe3dirg9";
 
 function DiversityStrip() {
   return (
-    <section className="bg-white">
+    <section id="diversity" className="bg-white scroll-mt-20">
       <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
@@ -59,7 +60,7 @@ function DiversityStrip() {
 
 function ClosingCta() {
   return (
-    <section className="bg-white pb-12 lg:pb-16">
+    <section id="apply" className="bg-white pb-12 scroll-mt-20 lg:pb-16">
       <div className="mx-auto max-w-7xl px-6 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-teal via-brand-accent to-brand-primary px-8 py-12 sm:px-12 sm:py-14 lg:px-16">
           <div
@@ -112,6 +113,7 @@ export default function CareerPage() {
   return (
     <>
       <CareerHero />
+      <CareerSectionNav />
       <WhyGrow />
       <OpenPositions />
       <DiversityStrip />
