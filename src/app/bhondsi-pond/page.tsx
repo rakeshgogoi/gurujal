@@ -3,7 +3,71 @@ import Image from "next/image";
 import Link from "next/link";
 import { StickyAnchorNav } from "@/components/sticky-anchor-nav";
 import { SolutionClosingCta } from "@/components/solution-detail/closing-cta";
-import { VisualVignettes } from "@/components/bhondsi/visual-vignettes";
+import { BeforeAfter } from "@/components/pond/before-after";
+import { KeyStatsStrip } from "@/components/pond/key-stats-strip";
+import { VisualVignettes, type Vignette } from "@/components/pond/visual-vignettes";
+
+/* ============================================================
+ * Visual Vignettes — four short clips imported from the ArcGIS
+ * Bhondsi StoryMap, played muted on scroll-into-view.
+ * ============================================================ */
+const bhondsiVignettes: Vignette[] = [
+  {
+    title: "Wastewater treatment plant & wetland",
+    poster: "/uploads/2026/06/bhondsi-vignette-1-treatment.jpg",
+    src: "/uploads/2026/06/bhondsi-vignette-1-treatment.mp4",
+    shortBody: <>A nature-based ABR purifies wastewater for the pond.</>,
+    body: (
+      <p>
+        At the heart of the system, an{" "}
+        <strong>Anaerobic Baffled Reactor (ABR)</strong> uses nature-based
+        microbial processes to purify wastewater from the surrounding
+        buildings before it feeds the pond — keeping the water clean and
+        the aquifer protected.
+      </p>
+    ),
+  },
+  {
+    title: "Plantation",
+    poster: "/uploads/2026/06/bhondsi-vignette-2-plantation.jpg",
+    src: "/uploads/2026/06/bhondsi-vignette-2-plantation.mp4",
+    shortBody: <>Native and new species enrich the pond&apos;s biodiversity.</>,
+    body: (
+      <p>
+        Native species at the site were preserved untouched, and joined
+        by new companions — Neem, Jamun, Amla, Sehtut, Tecoma, Jasmine,
+        Hibiscus and Ficus — weaving a long-term legacy of biodiversity
+        into the campus.
+      </p>
+    ),
+  },
+  {
+    title: "Landscaping",
+    poster: "/uploads/2026/06/bhondsi-vignette-3-landscaping.jpg",
+    src: "/uploads/2026/06/bhondsi-vignette-3-landscaping.mp4",
+    shortBody: <>Brick-and-red-sand paths, no concrete around the pond.</>,
+    body: (
+      <p>
+        Pathways built from bricks and red sand instead of concrete —
+        maximising rainwater retention and reducing the heat-island
+        effect, while creating a joyful environment around the pond.
+      </p>
+    ),
+  },
+  {
+    title: "Pond area",
+    poster: "/uploads/2026/06/bhondsi-vignette-4-pond.jpg",
+    src: "/uploads/2026/06/bhondsi-vignette-4-pond.mp4",
+    shortBody: <>A tranquil reservoir that recharges the aquifer.</>,
+    body: (
+      <p>
+        Placid waters that nurture diverse flora and fauna, a tranquil
+        retreat that invites the community in, and a natural reservoir
+        that collects rainwater and recharges the aquifer.
+      </p>
+    ),
+  },
+];
 
 export const metadata: Metadata = {
   title: "BSF Bhondsi Pond — From Sewage Hazard to Community Sanctuary — GuruJal",
@@ -57,9 +121,14 @@ function BhondsiHero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover opacity-45"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/75 via-brand-deep/70 to-brand-deep/85" />
+        {/* Mobile / tablet: top-to-bottom gradient — the text wraps wide
+            here so the photo can only breathe in the middle band. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/85 via-brand-deep/45 to-brand-deep/85 lg:hidden" />
+        {/* Desktop: gradient anchored to the left text column — the
+            right half of the frame reveals the photo. */}
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-deep/90 via-brand-deep/55 to-transparent lg:block" />
       </div>
 
       <div
@@ -113,29 +182,6 @@ function BhondsiHero() {
           <span aria-hidden className="hidden h-1 w-1 rounded-full bg-white/40 sm:inline-block" />
           <span>Bhondsi · Gurugram · Haryana</span>
         </div>
-
-        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:gap-4">
-          {keyStats.map((s) => (
-            <li
-              key={s.label}
-              className="rounded-2xl bg-white/10 px-4 py-4 ring-1 ring-white/15 backdrop-blur"
-            >
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                  {s.value}
-                </span>
-                {s.unit && (
-                  <span className="text-xs font-bold uppercase tracking-[0.12em] text-brand-teal-bright">
-                    {s.unit}
-                  </span>
-                )}
-              </div>
-              <div className="mt-1.5 text-[11px] font-semibold leading-snug text-white/80 sm:text-xs">
-                {s.label}
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );
@@ -612,35 +658,17 @@ function ConstructionSection() {
         </ol>
 
         <div className="mx-auto mt-14 max-w-5xl overflow-hidden rounded-3xl bg-brand-deep">
-          <div className="grid sm:grid-cols-2">
-            <div className="relative aspect-[4/3]">
-              <Image
-                src="/uploads/2026/05/bhondsi-pond-before.png"
-                alt="BSF Bhondsi Pond before restoration — sewage-waterlogged ground with defunct infrastructure"
-                fill
-                sizes="(min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-              />
-              <span className="absolute left-4 top-4 inline-flex rounded-full bg-brand-deep/80 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white ring-1 ring-white/15">
-                Before
-              </span>
-            </div>
-            <div className="relative aspect-[4/3]">
-              <Image
-                src="/uploads/2026/05/bhondsi-pond-after.jpg"
-                alt="BSF Bhondsi Pond after restoration — thriving community oasis with functional treatment system"
-                fill
-                sizes="(min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-              />
-              <span className="absolute left-4 top-4 inline-flex rounded-full bg-brand-green px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white">
-                After
-              </span>
-            </div>
-          </div>
+          <BeforeAfter
+            className="aspect-[4/3] sm:aspect-[16/10]"
+            beforeSrc="/uploads/2026/05/bhondsi-pond-before.png"
+            beforeAlt="BSF Bhondsi Pond before restoration — sewage-waterlogged ground with defunct infrastructure"
+            afterSrc="/uploads/2026/05/bhondsi-pond-after.jpg"
+            afterAlt="BSF Bhondsi Pond after restoration — thriving community oasis with functional treatment system"
+          />
           <div className="px-6 py-5 text-center text-sm font-medium text-white/80 sm:text-base">
-            From sewage-waterlogged ground with a defunct plant — to a
-            thriving community oasis with a working ABR treatment system.
+            Drag the slider to compare — from sewage-waterlogged ground
+            with a defunct plant to a thriving community oasis with a
+            working ABR treatment system.
           </div>
         </div>
       </div>
@@ -820,6 +848,7 @@ export default function BhondsiPondPage() {
   return (
     <>
       <BhondsiHero />
+      <KeyStatsStrip stats={keyStats} />
       <BhondsiSectionNav />
       <BackgroundSection />
       <SiteSection />
@@ -827,7 +856,18 @@ export default function BhondsiPondPage() {
       <EcologySection />
       <InterventionsSection />
       <ConstructionSection />
-      <VisualVignettes />
+      <VisualVignettes
+        items={bhondsiVignettes}
+        heading={<>See the restoration in motion</>}
+        intro={
+          <>
+            Four short clips from the BSF Bhondsi site — the ABR treatment
+            system in operation, the plantation, the landscaping, and the
+            restored pond. Each clip plays automatically when it scrolls
+            into view.
+          </>
+        }
+      />
       <CommunitySection />
       <ImpactSection />
       <SolutionClosingCta

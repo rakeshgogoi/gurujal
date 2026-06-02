@@ -3,6 +3,60 @@ import Image from "next/image";
 import Link from "next/link";
 import { StickyAnchorNav } from "@/components/sticky-anchor-nav";
 import { SolutionClosingCta } from "@/components/solution-detail/closing-cta";
+import { BeforeAfter } from "@/components/pond/before-after";
+import { KeyStatsStrip } from "@/components/pond/key-stats-strip";
+import { VisualVignettes, type Vignette } from "@/components/pond/visual-vignettes";
+
+/* ============================================================
+ * Visual Vignettes — three short clips imported from the ArcGIS
+ * Maujabad StoryMap (the three "VISUAL SPECTACLE" action-button
+ * videos), played muted on scroll-into-view.
+ * ============================================================ */
+const mojabadVignettes: Vignette[] = [
+  {
+    title: "Phytorid wastewater treatment",
+    poster: "/uploads/2026/06/mojabad-vignette-1-treatment.jpg",
+    src: "/uploads/2026/06/mojabad-vignette-1-treatment.mp4",
+    shortBody: <>A phytorid wetland treats sewage before it enters the pond.</>,
+    body: (
+      <p>
+        A 100 KLD <strong>phytorid plant</strong> intercepts sewage
+        before it reaches the pond — an engineered wetland populated
+        with plant species that absorb nutrients, break down organic
+        matter and biologically polish wastewater to a quality safe for
+        groundwater recharge.
+      </p>
+    ),
+  },
+  {
+    title: "Construction phase",
+    poster: "/uploads/2026/06/mojabad-vignette-2-construction.jpg",
+    src: "/uploads/2026/06/mojabad-vignette-2-construction.mp4",
+    shortBody: <>Dewatering, desilting and slope stabilisation prepare the bed.</>,
+    body: (
+      <p>
+        Complete water removal and silt elimination prepare the pond bed
+        for restoration, followed by reinforced slope stabilisation to
+        enhance water retention and prevent erosion — the engineering
+        foundation for the entire intervention.
+      </p>
+    ),
+  },
+  {
+    title: "Painting & plantation drive",
+    poster: "/uploads/2026/06/mojabad-vignette-3-plantation.jpg",
+    src: "/uploads/2026/06/mojabad-vignette-3-plantation.mp4",
+    shortBody: <>Murals and native species bring the perimeter back to life.</>,
+    body: (
+      <p>
+        Maujabad residents painted vibrant murals on the walls surrounding
+        the pond and joined hands-on plantation drives — turning the
+        perimeter into a public art space and a green ring around the
+        restored water body.
+      </p>
+    ),
+  },
+];
 
 export const metadata: Metadata = {
   title: "Maujabad Pond — A Village Reclaims Its Water — GuruJal",
@@ -35,6 +89,7 @@ function MojabadSectionNav() {
         { label: "Interventions", href: "#interventions" },
         { label: "Phytorid Tech", href: "#phytorid" },
         { label: "Community", href: "#community" },
+        { label: "Vignettes", href: "#vignettes" },
         { label: "Impact", href: "#impact" },
       ]}
     />
@@ -54,9 +109,14 @@ function MojabadHero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover opacity-45"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/75 via-brand-deep/70 to-brand-deep/85" />
+        {/* Mobile / tablet: top-to-bottom gradient — the text wraps wide
+            here so the photo can only breathe in the middle band. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/85 via-brand-deep/45 to-brand-deep/85 lg:hidden" />
+        {/* Desktop: gradient anchored to the left text column — the
+            right half of the frame reveals the photo. */}
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-deep/90 via-brand-deep/55 to-transparent lg:block" />
       </div>
 
       <div
@@ -109,29 +169,6 @@ function MojabadHero() {
           <span aria-hidden className="hidden h-1 w-1 rounded-full bg-white/40 sm:inline-block" />
           <span>Maujabad · Pataudi · Gurugram</span>
         </div>
-
-        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:gap-4">
-          {keyStats.map((s) => (
-            <li
-              key={s.label}
-              className="rounded-2xl bg-white/10 px-4 py-4 ring-1 ring-white/15 backdrop-blur"
-            >
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                  {s.value}
-                </span>
-                {s.unit && (
-                  <span className="text-xs font-bold uppercase tracking-[0.12em] text-brand-teal-bright">
-                    {s.unit}
-                  </span>
-                )}
-              </div>
-              <div className="mt-1.5 text-[11px] font-semibold leading-snug text-white/80 sm:text-xs">
-                {s.label}
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );
@@ -605,36 +642,17 @@ function BeforeAfterSection() {
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-6 pb-20 sm:px-6 lg:px-8 lg:pb-24">
         <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl bg-brand-deep">
-          <div className="grid sm:grid-cols-2">
-            <div className="relative aspect-[4/3]">
-              <Image
-                src="/uploads/2026/05/mojabad-pond-before.png"
-                alt="Maujabad Pond before restoration — degraded water body choked with waste and aquatic weeds"
-                fill
-                sizes="(min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-              />
-              <span className="absolute left-4 top-4 inline-flex rounded-full bg-brand-deep/80 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white ring-1 ring-white/15">
-                Before
-              </span>
-            </div>
-            <div className="relative aspect-[4/3]">
-              <Image
-                src="/uploads/2026/05/mojabad-pond-after.jpg"
-                alt="Maujabad Pond after restoration — clean embankment, landscaping and a thriving community asset"
-                fill
-                sizes="(min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-              />
-              <span className="absolute left-4 top-4 inline-flex rounded-full bg-brand-green px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white">
-                After
-              </span>
-            </div>
-          </div>
+          <BeforeAfter
+            className="aspect-[4/3] sm:aspect-[16/10]"
+            beforeSrc="/uploads/2026/05/mojabad-pond-before.png"
+            beforeAlt="Maujabad Pond before restoration — degraded water body choked with waste and aquatic weeds"
+            afterSrc="/uploads/2026/05/mojabad-pond-after.jpg"
+            afterAlt="Maujabad Pond after restoration — clean embankment, landscaping and a thriving community asset"
+          />
           <div className="px-6 py-5 text-center text-sm font-medium text-white/80 sm:text-base">
-            From a polluted waste sink to a thriving community asset — with
-            phytorid treatment, landscaping and a community that owns the
-            outcome.
+            Drag the slider to compare — from a polluted waste sink to a
+            thriving community asset, with phytorid treatment, landscaping
+            and a community that owns the outcome.
           </div>
         </div>
       </div>
@@ -725,6 +743,7 @@ export default function MojabadPondPage() {
   return (
     <>
       <MojabadHero />
+      <KeyStatsStrip stats={keyStats} />
       <MojabadSectionNav />
       <BackgroundSection />
       <SiteSection />
@@ -732,6 +751,19 @@ export default function MojabadPondPage() {
       <InterventionsSection />
       <PhytoridSection />
       <CommunitySection />
+      <VisualVignettes
+        items={mojabadVignettes}
+        heading={<>See the restoration in motion</>}
+        intro={
+          <>
+            Three short clips from the Maujabad site — the phytorid
+            treatment plant, the construction journey, and the painting
+            and plantation drive that brought the community into the
+            project. Each clip plays automatically when it scrolls into
+            view.
+          </>
+        }
+      />
       <BeforeAfterSection />
       <ImpactSection />
       <SolutionClosingCta
