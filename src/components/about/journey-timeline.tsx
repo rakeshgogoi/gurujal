@@ -137,10 +137,18 @@ export function JourneyTimeline() {
     let raf = 0;
     let last = performance.now();
     let pausedUntil = 0;
+    // Track the scrollLeft we last wrote, so we can detect when the
+    // *user* moves the track (drift > our own delta) versus a wheel
+    // event that fired only because their cursor happened to be over
+    // the timeline while page-scrolling. Only the former should pause.
+    let expectedLeft = el.scrollLeft;
 
     const tick = (now: number) => {
       const dt = now - last;
       last = now;
+      if (Math.abs(el.scrollLeft - expectedLeft) > 1) {
+        pausedUntil = now + 2500;
+      }
       if (now >= pausedUntil) {
         el.scrollLeft += (speedPxPerSec * dt) / 1000;
         // Seamless wrap: two copies of the list live in the track,
@@ -151,29 +159,13 @@ export function JourneyTimeline() {
           el.scrollLeft -= half;
         }
       }
+      expectedLeft = el.scrollLeft;
       raf = window.requestAnimationFrame(tick);
     };
     raf = window.requestAnimationFrame(tick);
 
-    // Any deliberate user-driven scroll (wheel, trackpad, touch) holds
-    // the auto-scroll back for a couple seconds so we never fight the
-    // user's intent. Hover alone does NOT pause — the timeline keeps
-    // animating regardless of cursor position.
-    const pauseFor = (ms: number) => {
-      pausedUntil = performance.now() + ms;
-    };
-    const onWheel = () => pauseFor(2500);
-    const onTouch = () => pauseFor(2500);
-
-    el.addEventListener("wheel", onWheel, { passive: true });
-    el.addEventListener("touchstart", onTouch, { passive: true });
-    el.addEventListener("touchmove", onTouch, { passive: true });
-
     return () => {
       window.cancelAnimationFrame(raf);
-      el.removeEventListener("wheel", onWheel);
-      el.removeEventListener("touchstart", onTouch);
-      el.removeEventListener("touchmove", onTouch);
     };
   }, []);
 
