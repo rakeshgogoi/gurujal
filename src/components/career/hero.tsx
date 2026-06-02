@@ -18,7 +18,7 @@ export function CareerHero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="origin-top scale-[1.3] object-cover object-[80%_50%] sm:object-center sm:scale-100 sm:origin-center"
         />
         {/* Mobile / tablet: top-to-bottom gradient — the text wraps wide
             here so the photo can only breathe in the middle band. */}
@@ -47,7 +47,7 @@ export function CareerHero() {
               Careers at{" "}
               <span className="text-brand-teal-bright">GuruJal</span>
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:mt-6 sm:text-lg lg:text-xl">
+            <p className="mt-4 max-w-2xl text-base leading-snug text-white/85 sm:mt-6 sm:text-lg lg:text-xl">
               Join us to build a career that is both{" "}
               <em className="not-italic font-semibold text-brand-green">
                 rewarding
