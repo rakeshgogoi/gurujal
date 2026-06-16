@@ -25,11 +25,7 @@
  */
 const EMBEDS: { url: string; natH: number }[] = [
   {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7468323000426151936?collapsed=1",
-    natH: 567,
-  },
-  {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7469865950851280896?collapsed=1",
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7471062952943706112?collapsed=1",
     natH: 567,
   },
   {
@@ -37,7 +33,11 @@ const EMBEDS: { url: string; natH: number }[] = [
     natH: 567,
   },
   {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7471062952943706112?collapsed=1",
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7469865950851280896?collapsed=1",
+    natH: 567,
+  },
+  {
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7468323000426151936?collapsed=1",
     natH: 567,
   },
 ];
