@@ -57,6 +57,14 @@ const positions: {
     jd: "/uploads/2024/08/Architect-Intern.pdf",
     tone: "green",
   },
+  {
+    title: "GIS and Hydrology Intern",
+    tags: ["Internship", "Gurugram", "Environmental Science"],
+    blurb:
+      "Bridge geospatial intelligence, research and documentation to support high-impact water and climate initiatives — building thematic maps, technical SOPs and knowledge products that strengthen GuruJal's ecosystem.",
+    jd: "/uploads/2024/08/GIS-and-Hydrology-Intern.pdf",
+    tone: "orange",
+  },
 ];
 
 const toneTag: Record<Tone, string> = {
