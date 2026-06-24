@@ -53,7 +53,7 @@ const events: EventItem[] = [
       "A screening of Miles Away — a sensory portrait of migrant women brick labourers — followed by post-film dialogue and refreshments. Part of ALT EFF Film Club Season 3, India's leading environmental film festival.",
     href: "https://urbanaut.app/spot/alteff-filmclub-gurugram",
     external: true,
-    photo: "/uploads/2026/05/alt-eff-film-club.webp",
+    photo: "/uploads/2026/05/film-club.webp",
     tone: "orange",
   },
   {
