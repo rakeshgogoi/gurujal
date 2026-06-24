@@ -22,8 +22,8 @@ function resolveHref(href: string): string {
  */
 const recentNews = [
   {
-    date: "Apr 2026",
-    title: "ALT EFF Film Club × GuruJal Gurugram — film screening & community dialogue",
+    date: "Jun 2026",
+    title: "ALT EFF Film Club × GuruJal Gurugram — screening of Miles Away & community dialogue",
     href: "/events",
   },
   {

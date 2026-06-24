@@ -46,11 +46,11 @@ type EventItem = {
 const events: EventItem[] = [
   {
     name: "ALT EFF Film Club × GuruJal Gurugram",
-    month: "Apr",
+    month: "Jun",
     year: "2026",
     type: "Film Club",
     blurb:
-      "A film screening and community dialogue bringing together water advocates, storytellers and change-makers — presented in collaboration with ALT EFF, India's leading environmental film festival.",
+      "A screening of Miles Away — a sensory portrait of migrant women brick labourers — followed by post-film dialogue and refreshments. Part of ALT EFF Film Club Season 3, India's leading environmental film festival.",
     href: "https://urbanaut.app/spot/alteff-filmclub-gurugram",
     external: true,
     photo: "/uploads/2026/05/alt-eff-film-club.webp",
