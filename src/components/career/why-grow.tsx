@@ -88,24 +88,24 @@ export function WhyGrow() {
           </p>
         </div>
 
-        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {benefits.map((b) => (
             <li
               key={b.eyebrow}
-              className="flex flex-col rounded-3xl bg-white p-7 shadow-sm ring-1 ring-brand-soft/80 transition hover:-translate-y-1 hover:shadow-xl"
+              className="flex flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-brand-soft/80 transition hover:-translate-y-1 hover:shadow-xl"
             >
               <span
-                className={`mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl ring-1 ${toneAccent[b.tone]}`}
+                className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl ring-1 ${toneAccent[b.tone]}`}
               >
-                <span className="h-6 w-6">{b.icon}</span>
+                <span className="h-5 w-5">{b.icon}</span>
               </span>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-muted">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-muted">
                 {b.eyebrow}
               </p>
-              <h3 className="mt-1 text-lg font-semibold leading-snug text-brand-ink">
+              <h3 className="mt-1 text-base font-semibold leading-snug text-brand-ink">
                 {b.title}
               </h3>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-muted">
+              <p className="mt-2 flex-1 text-[13px] leading-relaxed text-brand-muted">
                 {b.body}
               </p>
             </li>
