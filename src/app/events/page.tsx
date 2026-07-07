@@ -3,7 +3,7 @@ import { EventsHero } from "@/components/events/hero";
 import { EventsSectionNav } from "@/components/events/section-nav";
 import { EventsStats } from "@/components/events/stats";
 import { ImpactHighlights } from "@/components/events/impact-highlights";
-import { UpcomingEmpty } from "@/components/events/upcoming-empty";
+import { UpcomingEvent } from "@/components/events/upcoming-event";
 import { PastEvents } from "@/components/events/past-events";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function EventsPage() {
       <EventsSectionNav />
       <EventsStats />
       <ImpactHighlights />
-      <UpcomingEmpty />
+      <UpcomingEvent />
       <PastEvents />
     </>
   );
