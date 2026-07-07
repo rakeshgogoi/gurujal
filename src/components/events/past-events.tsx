@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { liveUrl } from "@/lib/live-url";
 import { isLocalRoute } from "@/lib/nav";
 
@@ -12,12 +9,10 @@ function resolveHref(href: string): string {
 }
 
 /**
- * Past Events — filterable grid.
+ * Past Events — grid of prior convenings.
  *
  * Each card: hero photo + month/year badge + category pill + name +
- * blurb + "View Event →" link. Filter tabs above the grid let visitors
- * narrow by event type — implemented as client-side useState because
- * filtering 6 items doesn't need a router round-trip.
+ * blurb + "View Event →" link.
  */
 
 type EventType =
@@ -113,16 +108,6 @@ const events: EventItem[] = [
   },
 ];
 
-const filters: { label: string; type: EventType | "All"; emoji: string }[] = [
-  { label: "All", type: "All", emoji: "🌊" },
-  { label: "Symposium", type: "Symposium", emoji: "🏛️" },
-  { label: "Site Visit", type: "Site Visit", emoji: "🌿" },
-  { label: "Innovation Convening", type: "Innovation Convening", emoji: "🚀" },
-  { label: "Dialogue", type: "Dialogue", emoji: "💬" },
-  { label: "Conference", type: "Conference", emoji: "🎯" },
-  { label: "Film Club", type: "Film Club", emoji: "🎬" },
-];
-
 const toneBadge: Record<Tone, string> = {
   teal: "bg-brand-teal/15 text-brand-teal-dark ring-brand-teal/30",
   green: "bg-brand-green/15 text-brand-green-dark ring-brand-green/30",
@@ -136,11 +121,6 @@ const toneLink: Record<Tone, string> = {
 };
 
 export function PastEvents() {
-  const [active, setActive] = useState<EventType | "All">("All");
-
-  const visible =
-    active === "All" ? events : events.filter((e) => e.type === active);
-
   return (
     <section id="past" className="bg-brand-mist scroll-mt-20">
       <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
@@ -157,47 +137,13 @@ export function PastEvents() {
           </p>
         </div>
 
-        {/* Filter tabs */}
-        <div className="mt-10 -mx-2 overflow-x-auto sm:overflow-x-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <ul className="flex w-max gap-2 px-2 sm:mx-auto sm:w-auto sm:max-w-4xl sm:flex-wrap sm:justify-center">
-            {filters.map((f) => {
-              const isActive = f.type === active;
-              return (
-                <li key={f.label} className="shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setActive(f.type)}
-                    className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                      isActive
-                        ? "border-brand-primary bg-brand-primary text-white shadow-sm"
-                        : "border-brand-soft bg-white text-brand-ink hover:border-brand-accent hover:text-brand-accent-dark"
-                    }`}
-                  >
-                    <span aria-hidden>{f.emoji}</span>
-                    {f.label}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-
-        {/* Event grid */}
-        {visible.length > 0 ? (
-          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {visible.map((e) => (
-              <li key={e.name}>
-                <EventCard event={e} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div className="mt-12 rounded-3xl bg-white p-10 text-center ring-1 ring-brand-soft/80">
-            <p className="text-sm text-brand-muted">
-              No past events in this category yet. Try another filter.
-            </p>
-          </div>
-        )}
+        <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {events.map((e) => (
+            <li key={e.name}>
+              <EventCard event={e} />
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
