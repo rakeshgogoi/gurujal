@@ -34,14 +34,6 @@ const positions: {
     tone: "green",
   },
   {
-    title: "GIS and Hydrology Associate",
-    tags: ["Technical", "Full-time", "Gurugram", "2–4 Years"],
-    blurb:
-      "Strengthen GuruJal's technical and knowledge ecosystem by combining geospatial intelligence, research and documentation to support high-impact water and climate initiatives.",
-    jd: "/uploads/2024/08/GIS-and-Hydrology-Associate.pdf",
-    tone: "orange",
-  },
-  {
     title: "Civil and Structural Design Engineer Intern",
     tags: ["Internship", "Gurugram", "Diploma / B.Tech / M.Tech"],
     blurb:
