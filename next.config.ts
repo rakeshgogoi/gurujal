@@ -29,6 +29,15 @@ const nextConfig: NextConfig = {
     // still get full optimisation since this flag is gated on NODE_ENV.
     unoptimized: process.env.NODE_ENV !== "production",
   },
+  async redirects() {
+    return [
+      {
+        source: "/home",
+        destination: "/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withMDX(nextConfig);
