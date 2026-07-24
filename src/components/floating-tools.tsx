@@ -215,7 +215,8 @@ type GuideItem = {
 const GUIDE_ITEMS: GuideItem[] = [
   // Get involved — the highest-intent destinations.
   { label: "Support a pond", href: "/support-a-pond", category: "Get involved", keywords: "donate adopt fund pond restoration give" },
-  { label: "Careers & jobs", href: "/career", category: "Get involved", keywords: "volunteer work hiring internship apply" },
+  { label: "Careers & jobs", href: "/career", category: "Get involved", keywords: "work hiring internship apply" },
+  { label: "Volunteer with us", href: "/volunteer", category: "Get involved", keywords: "volunteership college students tracks green champion water ambassador" },
   { label: "Contact us", href: "/contact", category: "Get involved", keywords: "email phone reach get in touch partner collaborate" },
   // About — who we are, what we do.
   { label: "About GuruJal", href: "/about", category: "About GuruJal", keywords: "mission vision story" },

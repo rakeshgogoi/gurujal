@@ -1,7 +1,8 @@
 /**
  * Site navigation — mirrors gurujal.org's primary menu exactly.
  *
- * Top-level: Home / About / Solutions / Resources / Events / Careers
+ * Top-level: Home / About / Solutions / Resources / Events / Work With Us
+ *   (Work With Us expands to Careers / Volunteership)
  * Plus a separate "Support Us" CTA button on the right.
  */
 
@@ -43,6 +44,7 @@ export const localRoutes = new Set<string>([
   "/urban-adda-25",
   "/real-nature-in-restored-landscapes",
   "/career",
+  "/volunteer",
   "/contact",
   "/support-a-pond",
   "/connect-the-drop",
@@ -120,7 +122,14 @@ export const primaryNav: NavItem[] = [
     ],
   },
   { label: "Events", href: "/events" },
-  { label: "Careers", href: "/career" },
+  {
+    label: "Work With Us",
+    href: "/career",
+    children: [
+      { label: "Careers", href: "/career" },
+      { label: "Volunteership", href: "/volunteer" },
+    ],
+  },
 ];
 
 /** Separate Support Us CTA, rendered as a button to the right of nav. */
@@ -140,6 +149,7 @@ export const footerLinks = {
     { label: "Our Team", href: "/team" },
     { label: "Events", href: "/events" },
     { label: "Careers", href: "/career" },
+    { label: "Volunteership", href: "/volunteer" },
     { label: "Contact", href: "/contact" },
   ],
   resources: [
