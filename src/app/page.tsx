@@ -8,6 +8,7 @@ import { Testimonials } from "@/components/home/testimonials";
 import { Partners } from "@/components/home/partners";
 import { Stories } from "@/components/home/stories";
 import { LinkedInFeed } from "@/components/home/linkedin-feed";
+import { UrbanAddaPromo } from "@/components/home/urban-adda-promo";
 import { Reveal } from "@/components/reveal";
 import Link from "next/link";
 import { liveUrl } from "@/lib/live-url";
@@ -22,6 +23,7 @@ import { liveUrl } from "@/lib/live-url";
 export default function Home() {
   return (
     <>
+      <UrbanAddaPromo />
       <Hero />
       <HomeSectionNav />
       <Reveal><WaterCrisisIntro /></Reveal>
