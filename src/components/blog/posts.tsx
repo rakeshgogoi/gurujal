@@ -6,15 +6,19 @@
  * its slug below. Substack's embed URL is always
  * https://gurujal.substack.com/embed/p/{slug}.
  */
-const POSTS: { slug: string; title: string }[] = [
+const POSTS: { slug: string; title: string; excerpt: string }[] = [
   {
     slug: "how-mankrola-village-got-its-gathering",
     title: "How Mankrola Village Got Its Gathering Space Back",
+    excerpt:
+      "In the heart of Mankrola village, near the Shiv Mandir, stood a pond that people had slowly stopped noticing. Once, it had been a part of everyday life — a place where rainwater gathered, birds descended at dawn, and villagers spent their evenings under open skies.",
   },
   {
     slug: "why-nature-based-solutions-remain",
     title:
       "Why Nature-Based Solutions Remain Peripheral in Indian Cities — And What We're Getting Wrong",
+    excerpt:
+      "Here's a strange little fact about Bengaluru: the city's lakes are quietly doing some of the hardest work in urban water management — and almost nobody planned it that way.",
   },
 ];
 
@@ -61,6 +65,9 @@ export function BlogPosts() {
                 title={post.title}
                 loading="lazy"
               />
+              <p className="line-clamp-3 border-t border-brand-soft px-5 py-4 text-sm leading-relaxed text-brand-muted">
+                {post.excerpt}
+              </p>
             </div>
           ))}
         </div>
