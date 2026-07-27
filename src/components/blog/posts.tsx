@@ -11,14 +11,14 @@ const POSTS: { slug: string; title: string; excerpt: string }[] = [
     slug: "how-mankrola-village-got-its-gathering",
     title: "How Mankrola Village Got Its Gathering Space Back",
     excerpt:
-      "In the heart of Mankrola village, near the Shiv Mandir, stood a pond that people had slowly stopped noticing.",
+      "In the heart of Mankrola village, near the Shiv Mandir, stood a pond that people had slowly stopped noticing. Once, it had been a part of everyday life — a place where rainwater gathered, birds descended at dawn, and villagers spent their evenings under open skies.",
   },
   {
     slug: "why-nature-based-solutions-remain",
     title:
       "Why Nature-Based Solutions Remain Peripheral in Indian Cities — And What We're Getting Wrong",
     excerpt:
-      "Here's a strange little fact about Bengaluru: the city's lakes are quietly doing some of the hardest work in urban water management — and almost nobody planned it that way.",
+      "Here's a strange little fact about Bengaluru: the city's lakes are quietly doing some of the hardest work in urban water management — and almost nobody planned it that way. Despite decades of sewage inflow, encroachment and fragmented oversight, many of these lakes still recharge groundwater, buffer floods and host biodiversity.",
   },
 ];
 
@@ -65,9 +65,33 @@ export function BlogPosts() {
                 title={post.title}
                 loading="lazy"
               />
-              <p className="line-clamp-3 min-h-[4rem] border-t border-brand-soft px-5 pt-4 pb-5 text-sm leading-relaxed text-brand-muted">
-                {post.excerpt}
-              </p>
+              <div className="border-t border-brand-soft px-5 pt-4 pb-5">
+                <p className="line-clamp-4 min-h-[5.5rem] text-sm leading-relaxed text-brand-muted">
+                  {post.excerpt}
+                </p>
+                <a
+                  href={`${SUBSTACK_URL}/p/${post.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[#FF6719] transition hover:text-[#e0540f]"
+                >
+                  Read More
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </a>
+              </div>
             </div>
           ))}
         </div>
