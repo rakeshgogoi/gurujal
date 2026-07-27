@@ -11,7 +11,7 @@ const POSTS: { slug: string; title: string; excerpt: string }[] = [
     slug: "how-mankrola-village-got-its-gathering",
     title: "How Mankrola Village Got Its Gathering Space Back",
     excerpt:
-      "In the heart of Mankrola village, near the Shiv Mandir, stood a pond that people had slowly stopped noticing. Once, it had been a part of everyday life — a place where rainwater gathered, birds descended at dawn, and villagers spent their evenings under open skies.",
+      "In the heart of Mankrola village, near the Shiv Mandir, stood a pond that people had slowly stopped noticing.",
   },
   {
     slug: "why-nature-based-solutions-remain",
@@ -65,7 +65,7 @@ export function BlogPosts() {
                 title={post.title}
                 loading="lazy"
               />
-              <p className="line-clamp-3 border-t border-brand-soft px-5 py-4 text-sm leading-relaxed text-brand-muted">
+              <p className="line-clamp-3 min-h-[4rem] border-t border-brand-soft px-5 pt-4 pb-5 text-sm leading-relaxed text-brand-muted">
                 {post.excerpt}
               </p>
             </div>
