@@ -38,6 +38,7 @@ export const localRoutes = new Set<string>([
   "/team",
   "/solutions",
   "/reports-and-publications",
+  "/blog",
   "/events",
   "/hydromingle-event",
   "/roots-and-recharge-symposium",
@@ -119,6 +120,7 @@ export const primaryNav: NavItem[] = [
           { label: "Wells of Gurugram", href: "/publication-wells-of-gurugram" },
         ],
       },
+      { label: "Blog", href: "/blog" },
     ],
   },
   { label: "Events", href: "/events" },
@@ -153,6 +155,7 @@ export const footerLinks = {
     { label: "Contact", href: "/contact" },
   ],
   resources: [
+    { label: "Blog", href: "/blog" },
     { label: "Reports & Publications", href: "/reports-and-publications" },
     { label: "Annual Report 2024–25", href: "/annual-report-2024-25" },
     { label: "Annual Report 2023–24", href: "/annual-report-2023-24" },
