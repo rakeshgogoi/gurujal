@@ -55,16 +55,25 @@ export function BlogPosts() {
               key={post.slug}
               className="overflow-hidden rounded-2xl ring-1 ring-brand-soft bg-white"
             >
-              <iframe
-                src={`${SUBSTACK_URL}/embed/p/${post.slug}`}
-                width="100%"
-                height="320"
-                style={{ border: "none", background: "white" }}
-                frameBorder={0}
-                scrolling="no"
-                title={post.title}
-                loading="lazy"
-              />
+              {/* Substack's embed is a fixed-height iframe (no auto-resize
+                  postMessage API), and narrower card widths wrap the title
+                  onto more lines. So the wrapper height must grow at
+                  narrower breakpoints to avoid clipping the title —
+                  tallest below lg (single-column mobile, then narrow
+                  2-column at sm/md), shortest at xl where each card is
+                  widest. */}
+              <div className="h-[480px] overflow-hidden lg:h-[340px] xl:h-[320px]">
+                <iframe
+                  src={`${SUBSTACK_URL}/embed/p/${post.slug}`}
+                  width="100%"
+                  height="100%"
+                  style={{ border: "none", background: "white" }}
+                  frameBorder={0}
+                  scrolling="no"
+                  title={post.title}
+                  loading="lazy"
+                />
+              </div>
               <div className="border-t border-brand-soft px-5 pt-4 pb-5">
                 <p className="line-clamp-4 min-h-[5.5rem] text-sm leading-relaxed text-brand-muted">
                   {post.excerpt}
