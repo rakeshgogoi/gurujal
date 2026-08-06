@@ -46,6 +46,7 @@ export const localRoutes = new Set<string>([
   "/real-nature-in-restored-landscapes",
   "/career",
   "/volunteer",
+  "/internship",
   "/contact",
   "/support-a-pond",
   "/connect-the-drop",
@@ -130,6 +131,7 @@ export const primaryNav: NavItem[] = [
     children: [
       { label: "Careers", href: "/career" },
       { label: "Volunteership", href: "/volunteer" },
+      { label: "Internships", href: "/internship" },
     ],
   },
 ];
@@ -152,6 +154,7 @@ export const footerLinks = {
     { label: "Events", href: "/events" },
     { label: "Careers", href: "/career" },
     { label: "Volunteership", href: "/volunteer" },
+    { label: "Internships", href: "/internship" },
     { label: "Contact", href: "/contact" },
   ],
   resources: [
