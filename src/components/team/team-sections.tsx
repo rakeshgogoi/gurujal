@@ -168,19 +168,9 @@ const executive: Person[] = [
     photo: "/uploads/2025/11/syed.jpg",
   },
   {
-    name: "Ms. Deepa Agarwal",
-    role: "Business Development Consultant",
-    photo: "/uploads/2025/11/Deepa.jpg",
-  },
-  {
     name: "Ms. Anisha Gupta",
     role: "Communication Consultant",
     photo: "/uploads/2025/11/Anisha.jpg",
-  },
-  {
-    name: "Mr. Faraz Ahmad",
-    role: "Assistant Manager — Governance",
-    photo: "/uploads/2024/08/Faraz.png",
   },
   {
     name: "Ms. Anjali Singh",
@@ -251,6 +241,16 @@ const executive: Person[] = [
     name: "Mr. Abhijeet Pratap Sen",
     role: "Associate",
     photo: "/uploads/2026/04/Abhijeet.png",
+  },
+  {
+    name: "Ms. Tonya Lollen",
+    role: "Deputy Manager — Partnerships",
+    photo: "/uploads/2026/08/Tonya.png",
+  },
+  {
+    name: "Mr. Raj Pratap Singh",
+    role: "Associate — Partnerships",
+    photo: "/uploads/2026/08/RajPratap.png",
   },
 ];
 
