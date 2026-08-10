@@ -10,7 +10,7 @@ import { useState } from "react";
  * -away breakdown so the page stays scannable without losing content.
  */
 
-const APPLY_FORM = "https://forms.gle/qNuTk2PFGuP1m7Eb9";
+const APPLY_FORM = "https://forms.gle/znTdPDCCXwmFGXgy5";
 
 type Tone = "teal" | "green" | "orange";
 

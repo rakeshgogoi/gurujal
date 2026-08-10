@@ -5,7 +5,7 @@
  * based on availability of the role").
  */
 
-const APPLY_FORM = "https://forms.gle/qNuTk2PFGuP1m7Eb9";
+const APPLY_FORM = "https://forms.gle/znTdPDCCXwmFGXgy5";
 
 export function InternshipClosingCta() {
   return (

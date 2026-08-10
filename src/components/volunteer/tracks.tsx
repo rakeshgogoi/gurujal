@@ -5,6 +5,8 @@
  * sequence reads cleanly on the site.
  */
 
+const APPLY_FORM = "https://forms.gle/znTdPDCCXwmFGXgy5";
+
 type Tone = "teal" | "green" | "orange";
 
 type Track = {
@@ -225,6 +227,25 @@ const toneDot: Record<Tone, string> = {
   orange: "bg-brand-orange",
 };
 
+function Arrow() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
+    </svg>
+  );
+}
+
 export function VolunteerTracks() {
   return (
     <section id="tracks" className="bg-white scroll-mt-20">
@@ -297,6 +318,16 @@ export function VolunteerTracks() {
                   {t.certificateNote}
                 </p>
               </div>
+
+              <a
+                href={APPLY_FORM}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center justify-center gap-2 self-start rounded-full bg-brand-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-primary-dark"
+              >
+                Apply
+                <Arrow />
+              </a>
             </li>
           ))}
         </ul>
