@@ -1,6 +1,6 @@
 /**
  * Volunteer closing CTA — contact details from the GuruJal_Volunteers
- * document (communications@gurujal.org · +91 9311411998).
+ * document (careers@gurujal.org · +91 9311411998).
  */
 export function VolunteerClosingCta() {
   return (
@@ -31,10 +31,10 @@ export function VolunteerClosingCta() {
             </div>
             <div className="flex flex-wrap items-center gap-3 lg:justify-end">
               <a
-                href="mailto:communications@gurujal.org"
+                href="mailto:careers@gurujal.org"
                 className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-brand-primary transition hover:bg-brand-orange hover:text-white"
               >
-                communications@gurujal.org
+                careers@gurujal.org
               </a>
               <a
                 href="tel:+919311411998"

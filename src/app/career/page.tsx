@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { CareerHero } from "@/components/career/hero";
 import { CareerSectionNav } from "@/components/career/section-nav";
 import { WhyGrow } from "@/components/career/why-grow";
@@ -83,7 +82,7 @@ function ClosingCta() {
                 Pick a role above, send us your application through the
                 form, and we&apos;ll be in touch. For general questions
                 about working at GuruJal, write to{" "}
-                <strong>communications@gurujal.org</strong>.
+                <strong>careers@gurujal.org</strong>.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3 lg:justify-end">
@@ -95,12 +94,6 @@ function ClosingCta() {
               >
                 Apply now
               </a>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-brand-primary"
-              >
-                Contact us
-              </Link>
             </div>
           </div>
         </div>

@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 /**
  * Internship closing CTA — apply form + contact, from the
  * GuruJal_Internship_JDs working document ("To Apply: Fill this form" /
@@ -35,7 +33,7 @@ export function InternshipClosingCta() {
                 selection is based on availability of the role. Pick a
                 track above and apply through the form — for general
                 questions, write to{" "}
-                <strong>communications@gurujal.org</strong>.
+                <strong>careers@gurujal.org</strong>.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3 lg:justify-end">
@@ -47,12 +45,6 @@ export function InternshipClosingCta() {
               >
                 Apply now
               </a>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-transparent px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-brand-primary"
-              >
-                Contact us
-              </Link>
             </div>
           </div>
         </div>

@@ -130,7 +130,7 @@ export const primaryNav: NavItem[] = [
     href: "/career",
     children: [
       { label: "Careers", href: "/career" },
-      { label: "Volunteership", href: "/volunteer" },
+      { label: "Volunteer with Us", href: "/volunteer" },
       { label: "Internships", href: "/internship" },
     ],
   },
