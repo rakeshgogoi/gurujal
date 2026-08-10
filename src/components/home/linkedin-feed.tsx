@@ -25,19 +25,19 @@
  */
 const EMBEDS: { url: string; natH: number }[] = [
   {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:share:7478773609079914496?collapsed=1",
-    natH: 588,
-  },
-  {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7478064675365199872?collapsed=1",
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7489940569616490496?collapsed=1",
     natH: 567,
   },
   {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7475239096253263874?collapsed=1",
-    natH: 567,
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7488130176375996417?collapsed=1",
+    natH: 895,
   },
   {
-    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7473696405979693056?collapsed=1",
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:share:7486050174515998720?collapsed=1",
+    natH: 670,
+  },
+  {
+    url: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7486048356021059584?collapsed=1",
     natH: 567,
   },
 ];
