@@ -64,6 +64,7 @@ export const localRoutes = new Set<string>([
   "/chandla-dungarwas-pond",
   "/mojabad-pond",
   "/bhondsi-pond",
+  "/triveni-pond",
   "/privacy-policy",
   "/terms-and-conditions",
 ]);
@@ -89,6 +90,7 @@ export const primaryNav: NavItem[] = [
         children: [
           { label: "Mojabad Pond", href: "/mojabad-pond" },
           { label: "Bhondsi Pond", href: "/bhondsi-pond" },
+          { label: "Triveni Pond", href: "/triveni-pond" },
         ],
       },
       { label: "Connect The Drop", href: "/connect-the-drop" },
