@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Open internship positions — seven tracks sourced from the
@@ -8,6 +8,10 @@ import { useState } from "react";
  * "About this role" blurb and an Apply CTA by default; "View full
  * details" expands the responsibilities / what-you-bring / what-you-take
  * -away breakdown so the page stays scannable without losing content.
+ *
+ * Each card also carries a stable id (role.id), so "View full details"
+ * doubles as a shareable deep link — e.g. /internship#water-access opens
+ * the page already scrolled to and expanded on that role.
  */
 
 const APPLY_FORM = "https://forms.gle/znTdPDCCXwmFGXgy5";
@@ -389,8 +393,50 @@ function RoleCard({ role }: { role: Role }) {
   const [open, setOpen] = useState(false);
   const detailId = `role-detail-${role.id}`;
 
+  // Deep-link support: if the page loads with #<role.id> already in the
+  // URL, expand this card and scroll it into view — so a shared/bookmarked
+  // link lands the reader straight on the right role, expanded.
+  useEffect(() => {
+    if (window.location.hash === `#${role.id}`) {
+      setOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!open || window.location.hash !== `#${role.id}`) return;
+    // A short delay lets the browser's own (sometimes late-firing) jump
+    // to the #hash fragment happen first, so ours lands last. We jump
+    // instantly rather than smoothly: this card's content just grew by
+    // 1000+px in this same render, and animating a scroll toward a
+    // target that size — under the site's global smooth-scroll CSS —
+    // proved unreliable (the animation silently stalls partway).
+    const timer = window.setTimeout(() => {
+      const el = document.getElementById(role.id);
+      if (!el) return;
+      const scrollMarginTop = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+      const top = el.getBoundingClientRect().top + window.scrollY - scrollMarginTop;
+      window.scrollTo({ top, behavior: "instant" });
+    }, 150);
+    return () => window.clearTimeout(timer);
+  }, [open, role.id]);
+
+  const toggle = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const next = !open;
+    setOpen(next);
+    if (next) {
+      window.history.pushState(null, "", `#${role.id}`);
+    } else if (window.location.hash === `#${role.id}`) {
+      window.history.pushState(null, "", window.location.pathname + window.location.search);
+    }
+  };
+
   return (
-    <li className="flex flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-brand-soft/80 transition hover:shadow-md sm:p-8">
+    <li
+      id={role.id}
+      className="flex scroll-mt-24 flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-brand-soft/80 transition hover:shadow-md sm:p-8"
+    >
       <ul className="flex flex-wrap gap-2">
         {role.tags.map((t) => (
           <li
@@ -409,16 +455,16 @@ function RoleCard({ role }: { role: Role }) {
       </p>
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={() => setOpen((o) => !o)}
+        <a
+          href={`#${role.id}`}
+          onClick={toggle}
           aria-expanded={open}
           aria-controls={detailId}
           className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-soft bg-white px-5 py-2.5 text-sm font-semibold text-brand-primary transition hover:border-brand-accent hover:text-brand-accent-dark"
         >
           {open ? "Hide full details" : "View full details"}
           <ChevronIcon open={open} />
-        </button>
+        </a>
         <a
           href={APPLY_FORM}
           target="_blank"
