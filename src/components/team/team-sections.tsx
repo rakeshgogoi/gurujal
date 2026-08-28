@@ -183,11 +183,6 @@ const executive: Person[] = [
     photo: "/uploads/2025/11/Shallu.jpg",
   },
   {
-    name: "Ms. Divyanshi",
-    role: "Project Associate",
-    photo: "/uploads/2025/11/Divyanshi.jpg",
-  },
-  {
     name: "Mr. Jitander Kumar",
     role: "Senior Project Associate",
     photo: "/uploads/2024/08/Jitander.png",
@@ -195,7 +190,12 @@ const executive: Person[] = [
   {
     name: "Mr. Aakash",
     role: "GIS Associate",
-    photo: "/uploads/2024/08/Akash.png",
+    photo: "/uploads/2026/08/Aakash.png",
+  },
+  {
+    name: "Mr. Daarwin G",
+    role: "GIS and Hydrology Associate",
+    photo: "/uploads/2026/08/DaarwinG.png",
   },
   {
     name: "Mr. Ismail Ahmad",
@@ -228,12 +228,7 @@ const executive: Person[] = [
     photo: "/uploads/2026/04/Khyati.png",
   },
   {
-    name: "Dr. Monika Sharma",
-    role: "Assistant Manager — Communications",
-    photo: "/uploads/2026/04/monika.png",
-  },
-  {
-    name: "Mr. Imran",
+    name: "Mr. Imran Ali",
     role: "Community Associate",
     photo: "/uploads/2026/04/Imran.png",
   },
