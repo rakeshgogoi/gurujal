@@ -13,7 +13,7 @@ const leaders: Person[] = [
     name: "Ms. Shubhi Kesarwani",
     role: "Co-Founder & CEO",
     photo: "/uploads/2024/08/shubhi.jpg",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/shubhi-kesarwani",
   },
   {
     name: "Dr. Fawzia Tarannum",
@@ -45,6 +45,7 @@ const trustees: Person[] = [
     name: "Mr. Ashish Dev Kapur",
     role: "Trustee & Vice-Chairman",
     photo: "/uploads/2024/08/ashish.jpg",
+    linkedin: "https://www.linkedin.com/in/ashish-dev-kapur-69b1241",
   },
   {
     name: "Ms. Elisha Suri",
@@ -60,6 +61,7 @@ const trustees: Person[] = [
     name: "Ms. Shubhi Kesarwani",
     role: "Co-Founder & CEO",
     photo: "/uploads/2024/08/shubhi.jpg",
+    linkedin: "https://www.linkedin.com/in/shubhi-kesarwani",
   },
 ];
 
