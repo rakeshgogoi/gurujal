@@ -44,21 +44,21 @@ const triveniVignettes: Vignette[] = [
 ];
 
 export const metadata: Metadata = {
-  title: "Triveni Pond — Let The Pond Breathe Again — GuruJal",
+  title: "Triveni Pond, Bhokarka — 2025 Annual Report — GuruJal",
   description:
-    "A 1.5-acre village pond in Bhokarka, Gurugram, restored with a Decentralized Wastewater Treatment System (DEWATS) with 200 KLD capacity. From an algae-choked wastewater sink to a biodiverse environmental park for the entire village.",
+    "A 200 KLD nature-based wastewater treatment plant, commissioned January 2025, has turned Triveni Pond in Bhokarka village from a polluted wastewater sink into a thriving ecological water body — an 88% cut in BOD, a 1.39m rise in groundwater, and 40 species of fauna recorded in 2025.",
 };
 
 /* ============================================================
  * Key stat tiles — hero strip
  * ============================================================ */
 const keyStats = [
-  { value: "1.5", unit: "acres", label: "Pond area restored" },
-  { value: "200", unit: "KLD", label: "DEWATS treatment capacity" },
-  { value: "7", unit: "", label: "DEWATS treatment components" },
-  { value: "12", unit: "species", label: "Native flora & fauna recorded" },
-  { value: "8", unit: "", label: "Restoration activities completed" },
-  { value: "Apr 2026", unit: "", label: "Project documentation" },
+  { value: "200", unit: "KLD", label: "Wastewater treatment capacity" },
+  { value: "88", unit: "%", label: "BOD reduction since 2023" },
+  { value: "1.39", unit: "m", label: "Groundwater level rise" },
+  { value: "40", unit: "species", label: "Fauna recorded in 2025" },
+  { value: "6.03", unit: "tons", label: "CO₂ sequestered in 2025" },
+  { value: "25K+", unit: "/yr", label: "Annual community footfall" },
 ];
 
 /* ============================================================
@@ -145,18 +145,19 @@ function TriveniHero() {
           <span className="text-brand-teal-bright">Let The Pond Breathe Again</span>
         </h1>
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
-          A 1.5-acre village pond in Bhokarka, choked by untreated
-          wastewater and algal bloom, revived with a 200 KLD
-          Decentralized Wastewater Treatment System and reborn as a
-          community environmental park.
+          A 200 KLD nature-based wastewater treatment plant, commissioned
+          in January 2025, has turned a wastewater-choked village pond
+          into a functioning ecological water body — an 88% cut in BOD,
+          a 1.39m rise in groundwater, and more than 40 species of fauna
+          recorded across 2025.
         </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/65 sm:text-[13px]">
           <span>GuruJal Research Team</span>
           <span aria-hidden className="hidden h-1 w-1 rounded-full bg-white/40 sm:inline-block" />
-          <span>9 April 2026</span>
+          <span>Annual Report 2025</span>
           <span aria-hidden className="hidden h-1 w-1 rounded-full bg-white/40 sm:inline-block" />
-          <span>Bhokarka · Gurugram · Haryana</span>
+          <span>Bhokarka · Pataudi Block · Gurugram</span>
         </div>
       </div>
     </section>
@@ -176,28 +177,33 @@ function BackgroundSection() {
               Background
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
-              A village pond gradually losing its ecological function
+              A community pond turned into Bhokarka&apos;s biggest pollution sink
             </h2>
             <div className="mt-6 space-y-4 text-base leading-relaxed text-brand-muted sm:text-lg">
               <p>
-                The pond at Bhokarka village has gradually lost its
-                ecological and hydrological functions due to untreated
-                domestic wastewater inflow, agricultural runoff, cattle
-                activity and continuous dumping of solid waste. Silt
-                accumulation, nutrient enrichment and algal growth
-                further reduced water quality and storage capacity.
+                Triveni Pond, in Bhokarka village (Pataudi Block,
+                Gurugram District), is a community-owned water body
+                that historically served as a traditional pond for
+                water security, livestock needs and ecological balance.
+                For several years it faced acute degradation from
+                continuous untreated wastewater inflow and poor local
+                drainage.
               </p>
               <p>
-                The degradation limited the pond&apos;s ability to
-                recharge groundwater and serve as a healthy ecological
-                space — reducing what was once a centrally positioned
-                community asset to a stagnant wastewater sink.
+                The pond had become a major sink for pollution,
+                receiving approximately 40% of the village&apos;s
+                wastewater — around 200 KLD. The untreated inflows
+                included domestic sewage and other effluent loads,
+                leading to accumulation of organic sludge, foul smell
+                and a decline in ecological health.
               </p>
               <p>
-                GuruJal, together with the Gram Panchayat and the
-                residents of Bhokarka, undertook a restoration
-                programme built around a decentralised treatment system
-                and a community-driven environmental park.
+                The village&apos;s groundwater level was also
+                critically low, at roughly 118 feet below ground level.
+                The polluted pond risked contaminating the water table
+                further, while solid waste dumping around the edges
+                weakened the pond ecosystem and degraded the public
+                environment around it.
               </p>
             </div>
           </div>
@@ -236,10 +242,10 @@ function BackgroundSection() {
  * ============================================================ */
 const siteFacts = [
   { label: "Village", value: "Bhokarka" },
-  { label: "Type of pond", value: "Natural village pond" },
-  { label: "Ownership", value: "Gram Panchayat" },
+  { label: "Block", value: "Pataudi" },
   { label: "District", value: "Gurugram" },
   { label: "State", value: "Haryana" },
+  { label: "Ownership", value: "Gram Panchayat" },
   { label: "Coordinates", value: "28.277031°N, 76.793343°E" },
 ];
 
@@ -253,22 +259,25 @@ function SiteSection() {
               The site
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
-              A 1.5-acre natural pond at the heart of Bhokarka
+              A natural pond at the heart of Bhokarka
             </h2>
             <div className="mt-6 space-y-4 text-base leading-relaxed text-brand-muted sm:text-lg">
               <p>
-                The project is located in Bhokarka village, Haryana, at
-                28.277031°N latitude and 76.793343°E longitude. The
-                pond is a natural village water body of roughly 1.5
-                acres, owned by the Gram Panchayat, with a catchment of
-                residential and agricultural land feeding it through
-                rainwater runoff and domestic wastewater.
+                The project sits in Bhokarka village, Pataudi Block,
+                Gurugram District, Haryana, at 28.277031°N latitude and
+                76.793343°E longitude. Triveni Pond is a natural,
+                community-owned water body of roughly 1.5 acres, owned
+                by the Gram Panchayat, with a catchment of residential
+                and agricultural land feeding it through rainwater
+                runoff and domestic wastewater.
               </p>
               <p>
                 The pond is centrally positioned within the settlement,
                 making it strategically important for groundwater
                 recharge and community development — with the entire
-                village population counted among its beneficiaries.
+                village population, plus the neighbouring villages of
+                Turkapur and Bas Paddamka, counted among its
+                beneficiaries.
               </p>
             </div>
           </div>
@@ -310,7 +319,7 @@ function NeedSection() {
             The need
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
-            Six concerns demanding timely intervention
+            Six challenges identified at the site
           </h2>
         </div>
 
@@ -318,12 +327,12 @@ function NeedSection() {
           <div className="space-y-4 text-base leading-relaxed text-brand-muted sm:text-lg">
             <ul className="space-y-3">
               {[
-                "Continuous discharge of untreated grey water into the pond.",
-                "Accumulation of silt, sludge and solid waste reducing pond depth.",
-                "Eutrophication and algal bloom due to high nutrient load.",
-                "Declining groundwater levels in the surrounding area.",
-                "Loss of biodiversity and habitat degradation.",
-                "Absence of structured community space around the pond.",
+                "Continuous inflow of untreated wastewater (~200 KLD).",
+                "High risk of groundwater contamination.",
+                "Poor drainage, leading to stagnation and flooding issues.",
+                "Solid waste dumping around pond edges.",
+                "Declining ecological value and reduced community connection.",
+                "Limited ownership and governance systems for long-term protection.",
               ].map((b) => (
                 <li key={b} className="flex gap-3">
                   <span
@@ -343,19 +352,16 @@ function NeedSection() {
 
           <div className="rounded-3xl bg-brand-mist p-7 ring-1 ring-brand-soft/70 sm:p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
-              Aims & objectives
+              Project vision
             </p>
             <h3 className="mt-3 text-xl font-semibold text-brand-ink">
-              Restore ecological integrity, water quality and utility
+              A nature-based treatment system, and a pond people want to visit
             </h3>
             <ul className="mt-5 space-y-3 text-sm leading-relaxed text-brand-ink sm:text-base">
               {[
-                "Divert and treat wastewater before discharge into the pond.",
-                "Desilt and increase effective water holding capacity.",
-                "Improve water quality using natural treatment systems.",
-                "Develop biodiversity zones using native plant species.",
-                "Create a safe and aesthetically improved public space.",
-                "Ensure long-term sustainability through community engagement and O&M planning.",
+                "Develop a wastewater treatment plant using a nature-based solution (200 KLD WWTP).",
+                "Develop a community space with landscape elements to re-establish the community's relationship with the pond.",
+                "Plant for healthy pond ecology — promoting flora and fauna to improve soil quality and groundwater recharge.",
               ].map((b) => (
                 <li key={b} className="flex gap-3">
                   <span
@@ -374,36 +380,29 @@ function NeedSection() {
 }
 
 /* ============================================================
- * Technical Interventions — DEWATS treatment train, 7 stages
+ * Technical Interventions — the nature-based WWTP, commissioned
+ * January 2025, and the components kept it running through the year.
  * ============================================================ */
-const dewatsStages = [
+const wwtpComponents = [
   {
-    title: "Wastewater Diversion System",
-    body: "Channelization of domestic wastewater to a treatment unit before it reaches the pond.",
+    title: "Nature-based WWTP (200 KLD)",
+    body: "Commissioned in January 2025. Continuously treats domestic wastewater and other effluent before it reaches the pond.",
   },
   {
-    title: "Screening Chamber",
-    body: "Removal of floating and coarse solids to prevent clogging further down the treatment train.",
+    title: "Screen Chamber",
+    body: "Cleaned regularly to remove floating and coarse solids, preventing blockages and reducing overflow risk.",
   },
   {
-    title: "Settler Tank (Primary Treatment)",
-    body: "Reduction of suspended solids and partial BOD removal before biological treatment.",
+    title: "Constructed Wetland",
+    body: "Wetland plants trimmed regularly for airflow, sunlight penetration and nutrient uptake — the biological core of the treatment system.",
   },
   {
-    title: "Root Zone / Constructed Wetland (Secondary Treatment)",
-    body: "Wetland plants and filtration media biologically degrade organic pollutants, reducing BOD, COD, nutrients and odour.",
+    title: "Overflow Drain",
+    body: "Built from the screen chamber to the pond to safely carry excess flow during monsoon and prevent erosion around the treatment units.",
   },
   {
-    title: "Discharge of Treated Water into Pond",
-    body: "Polished effluent released into the pond, ensuring compliance with environmental standards.",
-  },
-  {
-    title: "Desilting and Dewatering",
-    body: "Removal of accumulated sludge and restoration of the pond's original depth and storage capacity.",
-  },
-  {
-    title: "Embankment Strengthening and Fencing",
-    body: "Reinforced embankments and perimeter fencing prevent encroachment and further waste dumping.",
+    title: "Bio-dozing",
+    body: "Reduces accumulated organic sludge, improves dissolved oxygen and strengthens the pond's own self-purification.",
   },
 ];
 
@@ -416,18 +415,21 @@ function InterventionsSection() {
             Technical interventions
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
-            A Decentralized Wastewater Treatment System, built for rural conditions
+            A nature-based WWTP, commissioned and running since January 2025
           </h2>
           <p className="mt-4 text-base leading-relaxed text-brand-muted sm:text-lg">
-            The project proposes a <strong>Decentralized Wastewater
-            Treatment System (DEWATS)</strong> with a 200 KLD capacity —
-            seven components in sequence, cost-effective, environmentally
-            sustainable and suited to village-level operation.
+            The <strong>200 KLD wastewater treatment plant</strong>{" "}
+            started functioning in January 2025 — treating wastewater
+            continuously before it reaches the pond, and shifting
+            Triveni Pond from a polluted sink to a functional
+            ecological water body. Regular operation and maintenance
+            through 2025 kept the system performing and the pond
+            improving.
           </p>
         </div>
 
         <ol className="mx-auto mt-14 grid max-w-6xl gap-4 sm:grid-cols-2 lg:gap-5">
-          {dewatsStages.map((s, i) => (
+          {wwtpComponents.map((s, i) => (
             <li
               key={s.title}
               className="group flex gap-5 rounded-2xl bg-white p-5 ring-1 ring-brand-soft/70 transition hover:-translate-y-0.5 hover:shadow-md sm:p-6"
@@ -452,29 +454,53 @@ function InterventionsSection() {
 }
 
 /* ============================================================
- * Ecological Profile
+ * Ecological Profile — 2025 survey results: successional flora,
+ * plantation growth, and 40 species of fauna recorded on site.
  * ============================================================ */
-const nativeFlora = ["Neem", "Bargad", "Keekar", "Peepal"];
-const plantedSpecies = [
+const successionalFlora = [
+  "Acacia senegal",
+  "Cordia myxa",
+  "Albizia odoratissima",
+  "Ficus virens",
+];
+const plantationGrowth = [
   "Moringa",
   "Amla",
   "Jamun",
-  "Sehtut",
-  "Tecoma",
+  "Pilkhan",
+  "Kadam",
+  "Lesua",
+  "Dhak",
+  "Kachnar",
+  "Alstonia",
+  "Nimbu",
+  "Phalsa",
   "Jasmine",
   "Hibiscus",
-  "Anarmi",
-  "Ficus",
+  "Kaner",
+  "Jatropa",
+  "Chandni",
 ];
-const indicatorFauna = [
-  "Plain Prinia",
-  "Cattle Egret",
-  "Rock Pigeon",
-  "Common Myna",
-  "Pond Heron",
-  "Babbler",
-  "White-throated Kingfisher",
-  "Crow",
+const highlightFauna = [
+  "Scaly-breasted Munia",
+  "Knob-billed Duck",
+  "Pied Bushchat",
+  "Common Tailorbird",
+  "Indian Flapshell Turtle",
+  "Scarlet Skimmer",
+  "Common Hoopoe",
+  "Red-wattled Lapwing",
+  "Lime Butterfly",
+];
+const faunaGroups = [
+  { count: "27", label: "Bird species" },
+  { count: "9", label: "Reptile species" },
+  { count: "4", label: "Butterfly species" },
+];
+const carbonBreakdown = [
+  { value: "397.46", unit: "kg CO₂", label: "Trees" },
+  { value: "65.02", unit: "kg CO₂", label: "Shrubs" },
+  { value: "5,569.49", unit: "kg CO₂", label: "Grass (0.5 acre)" },
 ];
 
 function EcologySection() {
@@ -486,26 +512,27 @@ function EcologySection() {
             Ecological profile
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
-            A tapestry of native flora and fauna shaped the design
+            40 species recorded in the 2025 survey
           </h2>
           <p className="mt-4 text-base leading-relaxed text-brand-muted sm:text-lg">
-            A pre-restoration survey catalogued native flora and
-            resident fauna at the site — informing the decision to turn
-            the open expanse encircling the pond into a working
-            environmental park, not just an engineered water body.
+            The Bhokarka site is in its early-to-mid successional
+            stage, gradually shifting into a multi-layered habitat — a
+            2025 ecological survey recorded 27 bird species, 9 reptile
+            species and 4 butterfly species alongside a structured
+            plantation programme now in its second growing season.
           </p>
         </div>
 
         <div className="mx-auto mt-12 grid max-w-5xl gap-8 lg:grid-cols-2">
           <div className="rounded-3xl bg-brand-mist p-7 ring-1 ring-brand-soft/70 sm:p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
-              Native flora recorded
+              Successional flora
             </p>
             <h3 className="mt-3 text-xl font-semibold text-brand-ink">
-              Established trees at the site
+              A tree canopy forming naturally
             </h3>
             <ul className="mt-5 flex flex-wrap gap-2">
-              {nativeFlora.map((p) => (
+              {successionalFlora.map((p) => (
                 <li
                   key={p}
                   className="inline-flex rounded-full bg-brand-green/10 px-3 py-1.5 text-sm font-semibold text-brand-green ring-1 ring-brand-green/20"
@@ -515,10 +542,10 @@ function EcologySection() {
               ))}
             </ul>
             <p className="mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
-              Structured plantation, proposed
+              2025 plantation growth
             </p>
             <ul className="mt-3 flex flex-wrap gap-2">
-              {plantedSpecies.map((p) => (
+              {plantationGrowth.map((p) => (
                 <li
                   key={p}
                   className="inline-flex rounded-full bg-brand-teal/10 px-3 py-1.5 text-sm font-semibold text-brand-teal-dark ring-1 ring-brand-teal/20"
@@ -527,17 +554,43 @@ function EcologySection() {
                 </li>
               ))}
             </ul>
+            <p className="mt-6 text-sm leading-relaxed text-brand-muted">
+              Highest growth this year came from Moringa (6 feet across
+              30 individuals) and Amla (2 feet across 24 individuals).
+              Grasses stabilising soil — Cenchrus ciliaris, Eragrostis,
+              Dactyloctenium aegyptium — and regenerating herbs —
+              Leucas, Trianthema, Boerhavia diffusa — round out the
+              site&apos;s natural regeneration.
+            </p>
           </div>
 
           <div className="rounded-3xl bg-brand-mist p-7 ring-1 ring-brand-soft/70 sm:p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
-              8 fauna species recorded
+              40 species recorded
             </p>
             <h3 className="mt-3 text-xl font-semibold text-brand-ink">
-              Indicator birds already resident at the pond
+              Birds, reptiles and butterflies returning to the pond
             </h3>
-            <ul className="mt-5 flex flex-wrap gap-2">
-              {indicatorFauna.map((p) => (
+            <ul className="mt-5 grid grid-cols-3 gap-3">
+              {faunaGroups.map((g) => (
+                <li
+                  key={g.label}
+                  className="rounded-2xl bg-white p-4 text-center ring-1 ring-brand-soft/70"
+                >
+                  <div className="text-2xl font-extrabold tracking-tight text-brand-ink">
+                    {g.count}
+                  </div>
+                  <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-muted">
+                    {g.label}
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
+              Highlight sightings
+            </p>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {highlightFauna.map((p) => (
                 <li
                   key={p}
                   className="inline-flex rounded-full bg-brand-orange/10 px-3 py-1.5 text-sm font-semibold text-brand-orange ring-1 ring-brand-orange/20"
@@ -547,14 +600,39 @@ function EcologySection() {
               ))}
             </ul>
             <p className="mt-6 text-sm leading-relaxed text-brand-muted">
-              Key measures include introducing aquatic macrophytes for
-              water purification, developing green buffer zones,
-              controlling invasive aquatic weeds, and creating habitat
-              for birds, butterflies and small aquatic organisms —
-              enhancing oxygen levels, carbon sequestration and
-              micro-climatic conditions around the pond.
+              Seasonal water retention now supports wetland birds
+              (lapwings, ducks, egrets), semi-aquatic reptiles
+              (flapshell turtles, keelbacks) and amphibians (Indus
+              Valley bullfrog, skittering frog) — micro-habitats that
+              strengthen nutrient cycling and biodiversity.
             </p>
           </div>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-5xl rounded-3xl bg-brand-deep p-7 sm:p-8">
+          <div className="flex flex-wrap items-baseline justify-between gap-3">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal-bright">
+              Carbon sequestration, 2025
+            </p>
+            <p className="text-2xl font-extrabold tracking-tight text-white">
+              6.03 <span className="text-sm font-bold uppercase tracking-[0.1em] text-brand-teal-bright">tons CO₂</span>
+            </p>
+          </div>
+          <ul className="mt-5 grid grid-cols-3 gap-4">
+            {carbonBreakdown.map((c) => (
+              <li key={c.label} className="text-center">
+                <div className="text-lg font-bold text-white sm:text-xl">
+                  {c.value}
+                </div>
+                <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-white/60">
+                  {c.unit}
+                </div>
+                <div className="mt-1 text-xs font-medium text-white/75">
+                  {c.label}
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
@@ -562,17 +640,18 @@ function EcologySection() {
 }
 
 /* ============================================================
- * Work Undertaken — checklist of completed activities
+ * Work Undertaken — 2025 project updates: O&M, infrastructure and
+ * horticulture that kept the site improving through the year.
  * ============================================================ */
 const workUndertaken = [
-  "Baseline survey and water quality testing.",
-  "Demarcation of pond boundary.",
-  "Partial civil works for wastewater treatment infrastructure.",
-  "Planning of landscaping and peripheral development.",
-  "Completion of treatment plant installation.",
-  "Laying of filter media and wetland plantation.",
-  "Full-scale desilting and cleaning operations.",
-  "Landscaping, fencing, and installation of public amenities.",
+  "Stable operation of the 200 KLD WWTP through 2025, with regular O&M.",
+  "Screen chamber cleaned regularly to prevent blockages.",
+  "Constructed wetland plants trimmed for airflow, light and nutrient uptake.",
+  "Water sampling and testing carried out through the year (latest results: 17 December 2025).",
+  "Overflow drain built from the screen chamber to the pond.",
+  "Bio-dozing carried out to reduce sludge and improve dissolved oxygen.",
+  "Benches installed, and fencing and the cattle ramp repainted for community use.",
+  "Nursery prepared, with regular watering, manuring, grass-cutting and sapling replacement.",
 ];
 
 function WorkUndertakenSection() {
@@ -581,10 +660,10 @@ function WorkUndertakenSection() {
       <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
-            Work undertaken
+            2025 project updates
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
-            Eight activities, initiated or completed on site
+            Eight activities, carried through the 2025 operating year
           </h2>
         </div>
 
@@ -620,32 +699,33 @@ function WorkUndertakenSection() {
 }
 
 /* ============================================================
- * Community / IEC + EVP
+ * Community / IEC + EVP — 2025 engagement, real activities from the
+ * annual report, plus the July 2025 Suntory Global Spirits EVP day.
  * ============================================================ */
 const iecActivities = [
   {
-    title: "IEC Campaigns",
-    body: "Information, Education and Communication campaigns on water conservation and waste management for the wider village.",
+    title: "Jal Pe Charcha",
+    body: "Community meetings on water conservation held with residents, including a dedicated session with the women of Bhokarka.",
   },
   {
-    title: "Jal Pe Charcha & Health Camp",
-    body: "A dedicated water-conversation event paired with a community health camp, tying water quality directly to public health.",
+    title: "Composting Workshop",
+    body: "A hands-on session teaching households practical composting and solid-waste management.",
   },
   {
-    title: "Amit Sewa Samooh Meeting",
-    body: "Engagement session with the local Amit Sewa Samooh — bringing an established community service group into the project.",
+    title: "Interactive Activity with Children",
+    body: "Engaging local children in play-based water and environment awareness.",
   },
   {
-    title: "Film Screening & Art Activity",
-    body: "A film screening and hands-on art activity with primary school kids — building water awareness from an early age.",
+    title: "Plantation & De-weeding Drive",
+    body: "Community members joined hands to improve green cover, ensure sapling survival and clear invasive weeds around the pond.",
   },
   {
-    title: "Monitoring Committee",
-    body: "A monitoring committee comprising representatives from all stakeholder groups oversees the water resource management project.",
+    title: "Women's Awareness Workshop",
+    body: "A behaviour-change workshop on household toxins, their impact on water and health, and practical lifestyle changes to reduce contamination.",
   },
   {
     title: "Employee Volunteer Program",
-    body: "Stakeholder meetings with Panchayat representatives, awareness sessions in village schools, and cleanliness and plantation drives.",
+    body: "45+ Suntory Global Spirits employees and 15+ community members ran a guided pond walk, painted 3 water-conservation awareness boards, and planted 45 saplings from 150 prepared grow bags.",
   },
 ];
 
@@ -655,16 +735,17 @@ function CommunitySection() {
       <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
-            Information, education & communication
+            Community engagement & governance
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
             Mobilising Bhokarka around its own pond
           </h2>
           <p className="mt-4 text-base leading-relaxed text-brand-muted sm:text-lg">
-            IEC campaigns and an Employee Volunteer Program ran in
-            parallel — from health camps and school film screenings to
-            panchayat stakeholder meetings and hands-on plantation
-            drives.
+            Our team works closely with the Panchayat, forms Amrit
+            Sewa Samoohs, and holds regular engagements with youth
+            clubs, sports groups and the Mahila Mandal to build
+            ownership and awareness of water conservation and local
+            water bodies.
           </p>
         </div>
 
@@ -699,9 +780,13 @@ function CommunitySection() {
             <path d="M9 7H5a2 2 0 0 0-2 2v6h6V9H7a0 0 0 0 1 0 0 2 2 0 0 1 2-2zm10 0h-4a2 2 0 0 0-2 2v6h6V9h-2a0 0 0 0 1 0 0 2 2 0 0 1 2-2z" />
           </svg>
           <p className="mt-4 text-lg font-medium leading-relaxed text-white sm:text-xl">
-            Upon completion, the rejuvenated pond will be formally
-            inaugurated and handed over to the Gram Panchayat and
-            community for long-term maintenance and management.
+            &ldquo;We are grateful to GuruJal and Suntory Global Spirits
+            for transforming our degraded land into a beautiful pond.
+            It has revived the area and created a space that connects
+            people with nature and community pride.&rdquo;
+          </p>
+          <p className="mt-4 text-sm font-semibold uppercase tracking-[0.14em] text-brand-teal-bright">
+            Mr. Ajay Yadav — Amrit Sewa Samooh Member, Bhokarka
           </p>
         </div>
       </div>
@@ -736,51 +821,80 @@ function BeforeAfterSection() {
 }
 
 /* ============================================================
- * Impact
+ * Impact — the report's 7.2 Impact Assessment categories, plus the
+ * before/after water quality lab results (2023 vs 2025).
  * ============================================================ */
+const impactCards = [
+  {
+    value: "1.39",
+    unit: "m rise",
+    label: "Groundwater recharge",
+    body: "A 4.56 ft (1.39 m) rise in groundwater level over two years, plus 25.6 million litres recharged since January 2025 (WRI Volumetric Water Benefit Accounting).",
+    tone: "bg-brand-teal text-white",
+  },
+  {
+    value: "88",
+    unit: "% BOD cut",
+    label: "Water quality",
+    body: "BOD reduced from 43 mg/L to 5.2 mg/L — moving the pond from a polluted to a mildly polluted category.",
+    tone: "bg-brand-orange text-white",
+  },
+  {
+    value: "40",
+    unit: "species",
+    label: "Enhanced biodiversity",
+    body: "27 bird species, 9 reptiles and 4 butterfly species recorded across the site in 2025.",
+    tone: "bg-brand-green text-white",
+  },
+  {
+    value: "2–3",
+    unit: "°C cooler",
+    label: "Climate regulation",
+    body: "A localised reduction in ambient temperature of 2.0°C to 3.0°C around the restored site.",
+    tone: "bg-brand-teal text-white",
+  },
+  {
+    value: "25–29K",
+    unit: "visitors/yr",
+    label: "Community ownership",
+    body: "25,000–29,000 people visit annually from three neighbouring villages — Bhokarka, Turkapur and Bas Paddamka.",
+    tone: "bg-brand-orange text-white",
+  },
+];
+
+const waterQualityRows = [
+  { parameter: "pH", before: "7.43", after: "8.54", note: "Slightly more alkaline, still within acceptable range" },
+  { parameter: "Total Suspended Solids (TSS)", before: "103.8 mg/L", after: "6.0 mg/L", note: "Major improvement — turbidity and sediment sharply reduced" },
+  { parameter: "Total Dissolved Solids (TDS)", before: "598 mg/L", after: "680 mg/L", note: "Slight increase; still moderate for pond water" },
+  { parameter: "COD", before: "162 mg/L", after: "20 mg/L", note: "Very large improvement — organic pollution drastically reduced" },
+  { parameter: "BOD", before: "43 mg/L", after: "5.2 mg/L", note: "Excellent improvement — polluted to mildly polluted" },
+  { parameter: "Total Nitrogen / Ammoniacal N", before: "21.6 mg/L", after: "BLQ", note: "Strong reduction — nutrient pollution significantly reduced" },
+  { parameter: "Total Phosphorus", before: "2.96 mg/L", after: "2.2 mg/L", note: "Slight improvement" },
+  { parameter: "Hardness (as CaCO₃)", before: "205.8 mg/L", after: "165 mg/L", note: "Slight improvement" },
+  { parameter: "E. coli", before: "60 MPN/100ml", after: "<5 cfu/100ml", note: "Major biological improvement" },
+  { parameter: "Faecal Coliform", before: "90 MPN/100ml", after: "<5", note: "Major biological improvement" },
+];
+
 function ImpactSection() {
   return (
     <section id="impact" className="bg-white scroll-mt-20">
       <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
-            Potential impact
+            Impact assessment
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
-            Treatment capacity, groundwater recharge and biodiversity
+            Groundwater, water quality and biodiversity — measured
           </h2>
           <p className="mt-4 text-base leading-relaxed text-brand-muted sm:text-lg">
-            The restored pond is projected to deliver measurable
-            hydrological and ecological benefits — treating wastewater
-            at source, replenishing the water table beneath Bhokarka,
-            and enhancing biodiversity across the site.
+            A year of operation gives Triveni Pond something most
+            restoration stories don&apos;t have yet — measured,
+            year-on-year results, not just projections.
           </p>
         </div>
 
         <ul className="mx-auto mt-14 grid max-w-6xl gap-6 sm:grid-cols-3">
-          {[
-            {
-              value: "200",
-              unit: "KLD",
-              label: "Wastewater treated daily",
-              body: "The DEWATS system diverts and treats domestic wastewater before it can reach the pond, protecting both the water body and the aquifer.",
-              tone: "bg-brand-teal text-white",
-            },
-            {
-              value: "1.5",
-              unit: "acres",
-              label: "Pond surface restored",
-              body: "Full pond area desilted, dewatered and re-engineered — with strengthened embankments and fencing for long-term resilience.",
-              tone: "bg-brand-orange text-white",
-            },
-            {
-              value: "12",
-              unit: "species",
-              label: "Native flora & fauna supported",
-              body: "Four native tree species and eight resident bird species recorded at the site, with structured plantation planned to enhance biodiversity further.",
-              tone: "bg-brand-green text-white",
-            },
-          ].map((s) => (
+          {impactCards.map((s) => (
             <li
               key={s.label}
               className="flex flex-col rounded-3xl bg-brand-mist p-8 ring-1 ring-brand-soft/70"
@@ -808,12 +922,54 @@ function ImpactSection() {
         </ul>
 
         <p className="mx-auto mt-10 max-w-3xl text-center text-sm leading-relaxed text-brand-muted sm:text-base">
-          Ground water recharge potential: treated, polished effluent
-          feeds the pond rather than polluting it — supporting the
-          unsaturated zone above and the unconfined aquifer below, the
-          same recharge pathway every GuruJal pond restoration is built
-          around.
+          Since the WWTP began operating in January 2025, GuruJal has
+          treated <strong>73 million litres</strong> of wastewater and
+          recharged <strong>25.6 million litres</strong> of groundwater
+          at Triveni Pond — calculated using the WRI Volumetric Water
+          Benefit Accounting (VWBA) framework.
         </p>
+
+        <div className="mx-auto mt-14 max-w-5xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
+            Lab results
+          </p>
+          <h3 className="mt-3 text-xl font-semibold text-brand-ink sm:text-2xl">
+            Water quality, 2023 vs 2025
+          </h3>
+          <div className="mt-6 overflow-x-auto rounded-2xl ring-1 ring-brand-soft/70">
+            <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+              <thead>
+                <tr className="bg-brand-mist text-[11px] font-bold uppercase tracking-[0.1em] text-brand-muted">
+                  <th className="px-4 py-3">Parameter</th>
+                  <th className="px-4 py-3">2023</th>
+                  <th className="px-4 py-3">2025</th>
+                  <th className="px-4 py-3">Change &amp; interpretation</th>
+                </tr>
+              </thead>
+              <tbody>
+                {waterQualityRows.map((r, i) => (
+                  <tr
+                    key={r.parameter}
+                    className={i % 2 === 0 ? "bg-white" : "bg-brand-mist/50"}
+                  >
+                    <td className="px-4 py-3 font-semibold text-brand-ink">
+                      {r.parameter}
+                    </td>
+                    <td className="px-4 py-3 text-brand-muted">{r.before}</td>
+                    <td className="px-4 py-3 font-semibold text-brand-teal-dark">
+                      {r.after}
+                    </td>
+                    <td className="px-4 py-3 text-brand-muted">{r.note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-xs text-brand-muted">
+            Sample dates: 23 September 2023 (before) and 17 December
+            2025 (after).
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -839,8 +995,9 @@ function FundedBySection() {
           />
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-base font-medium italic leading-relaxed text-brand-ink sm:text-lg">
-          &ldquo;We at GuruJal are committed to avert Day Zero while
-          ensuring India&apos;s water security.&rdquo;
+          Support a Pond · Recharge the aquifers · Offset the carbon ·
+          Bring biodiversity back · Enhance green jobs · Make India
+          water-secure.
         </p>
       </div>
     </section>
