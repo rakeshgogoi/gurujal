@@ -65,6 +65,7 @@ export const localRoutes = new Set<string>([
   "/mojabad-pond",
   "/bhondsi-pond",
   "/triveni-pond",
+  "/green-belt-rajiv-chowk",
   "/privacy-policy",
   "/terms-and-conditions",
 ]);
@@ -95,7 +96,13 @@ export const primaryNav: NavItem[] = [
       },
       { label: "Connect The Drop", href: "/connect-the-drop" },
       { label: "Water Proofing", href: "/water-proofing" },
-      { label: "Eco Restoration", href: "/eco-restoration" },
+      {
+        label: "Eco Restoration",
+        href: "/eco-restoration",
+        children: [
+          { label: "Green Belt, Rajiv Chowk", href: "/green-belt-rajiv-chowk" },
+        ],
+      },
       { label: "WeForWater Fellowship", href: "/we-for-water" },
       { label: "ESG Advisory", href: "/esg-advisory" },
     ],
