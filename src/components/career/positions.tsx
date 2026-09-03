@@ -50,12 +50,20 @@ const positions: {
     tone: "green",
   },
   {
-    title: "GIS and Hydrology Intern",
-    tags: ["Internship", "Gurugram", "Environmental Science"],
+    title: "Architect Associate",
+    tags: ["Full-time", "Gurugram", "2–5 Years"],
     blurb:
-      "Bridge geospatial intelligence, research and documentation to support high-impact water and climate initiatives — building thematic maps, technical SOPs and knowledge products that strengthen GuruJal's ecosystem.",
-    jd: "/uploads/2024/08/GIS-and-Hydrology-Intern.pdf",
+      "Design nature-based water infrastructure and landscape solutions — from Rainwater Harvesting systems and wastewater planning to biodiversity parks and eco-restoration — translating architectural planning into on-ground, water-sensitive execution.",
+    jd: "/uploads/2026/09/Architect-Associate_GuruJal.pdf",
     tone: "orange",
+  },
+  {
+    title: "Project Manager – Water Governance",
+    tags: ["Full-time", "Gurugram + Nuh field travel", "3–7 Years"],
+    blurb:
+      "Lead planning, implementation, monitoring and reporting for GuruJal's Nuh water governance project across water accessibility, water quality, source sustainability and community governance — coordinating field teams, government departments and Gram Panchayats.",
+    jd: "/uploads/2026/09/Project-Manager-Water-Governance_GuruJal.pdf",
+    tone: "teal",
   },
 ];
 
