@@ -76,6 +76,7 @@ function TriveniSectionNav() {
         { label: "Work Undertaken", href: "#work" },
         { label: "Vignettes", href: "#vignettes" },
         { label: "Community", href: "#community" },
+        { label: "Site Images", href: "#site-images" },
         { label: "Impact", href: "#impact" },
       ]}
     />
@@ -821,6 +822,122 @@ function BeforeAfterSection() {
 }
 
 /* ============================================================
+ * Site Images — the "Site Images" gallery from the ArcGIS Triveni
+ * Pond StoryMap, carried over with its original category tags.
+ * ============================================================ */
+const siteImages = [
+  {
+    src: "/uploads/2026/09/triveni-site-visit-gateway.jpg",
+    tag: "Site Visit",
+    alt: "GuruJal and Suntory Global Spirits team with community members at the Triveni Pond gateway",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-landscaping-1.jpg",
+    tag: "Landscaping",
+    alt: "The landscaped pond edge with reed beds and play equipment",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-landscaping-2.jpg",
+    tag: "Landscaping",
+    alt: "Aerial view of the pond's green buffer zone and looped pathway",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-evp-plantation.jpg",
+    tag: "EVP",
+    alt: "An Employee Volunteer Program participant planting a sapling at the site",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-tree-planting.jpg",
+    tag: "IEC & EVP",
+    alt: "Community members and officials planting a tree at Triveni Pond",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-student-visit.jpg",
+    tag: "IEC",
+    alt: "A student group visiting the restored Triveni Pond for a water-awareness session",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-ducks.jpg",
+    tag: "Biodiversity",
+    alt: "Knob-billed ducks in the shallow wetland margin of the pond",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-dragonfly.jpg",
+    tag: "Biodiversity",
+    alt: "A scarlet skimmer dragonfly perched on a reed at the pond",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-zen-garden.jpg",
+    tag: "Green Zone",
+    alt: "The 'Zen Garden' area within the pond's green zone",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-natures-nook.jpg",
+    tag: "Green Zone",
+    alt: "'The Nature's Nook' signage in the landscaped green zone",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-planted-bed.jpg",
+    tag: "Landscaping",
+    alt: "A circular planted bed with a stone border along the pathway",
+  },
+  {
+    src: "/uploads/2026/09/triveni-site-awlr.jpg",
+    tag: "AWLR",
+    alt: "The Automatic Water Level Recorder installed to monitor groundwater near the pond",
+  },
+];
+
+function SiteImagesSection() {
+  return (
+    <section id="site-images" className="bg-white scroll-mt-20">
+      <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
+            Site images
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
+            The restored site, in photographs
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-brand-muted sm:text-lg">
+            Field documentation from Bhokarka — site visits, plantation
+            and volunteer drives, the green zones and named corners, the
+            biodiversity returning to the water, and the monitoring
+            equipment now tracking groundwater.
+          </p>
+        </div>
+
+        <ul className="mx-auto mt-12 grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {siteImages.map((img) => (
+            <li
+              key={img.src}
+              className="group relative overflow-hidden rounded-2xl ring-1 ring-brand-soft/70"
+            >
+              <div className="relative aspect-[4/3]">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition duration-500 group-hover:scale-105"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-t from-brand-deep/45 via-transparent to-transparent"
+                />
+              </div>
+              <span className="absolute left-3 top-3 inline-flex rounded-full bg-brand-deep/80 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white ring-1 ring-white/15">
+                {img.tag}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
  * Impact — the report's 7.2 Impact Assessment categories, plus the
  * before/after water quality lab results (2023 vs 2025).
  * ============================================================ */
@@ -1033,6 +1150,7 @@ export default function TriveniPondPage() {
       />
       <CommunitySection />
       <BeforeAfterSection />
+      <SiteImagesSection />
       <ImpactSection />
       <FundedBySection />
       <SolutionClosingCta
