@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { primaryNav, ctaNav, isLocalRoute, type NavItem } from "@/lib/nav";
 import { liveUrl } from "@/lib/live-url";
@@ -8,6 +9,24 @@ import { liveUrl } from "@/lib/live-url";
 /** Resolve a NavItem href to either an internal path or the live site. */
 function resolveHref(href: string): string {
   return isLocalRoute(href) ? href : liveUrl(href);
+}
+
+/** Every internal path a nav item covers — its own href plus every
+ *  descendant's (routes here are flat, e.g. /mojabad-pond, not nested
+ *  under /solutions, so each one has to be listed explicitly). Hashes
+ *  are stripped so /reports-and-publications#reports still matches. */
+function navPaths(item: NavItem): string[] {
+  const self = item.href.split("#")[0];
+  const kids = (item.children ?? []).flatMap(navPaths);
+  return [self, ...kids];
+}
+
+/** True when the current pathname belongs to this nav item's section. */
+function isNavItemActive(item: NavItem, pathname: string): boolean {
+  if (item.href === "/") return pathname === "/";
+  return navPaths(item).some(
+    (p) => p.startsWith("/") && p !== "/" && (pathname === p || pathname.startsWith(`${p}/`)),
+  );
 }
 
 /**
@@ -20,6 +39,7 @@ function resolveHref(href: string): string {
  *    right. Mobile drawer collapses everything into a column.
  */
 export function SiteHeader() {
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
@@ -55,7 +75,7 @@ export function SiteHeader() {
             <DesktopNavItem
               key={item.href + item.label}
               item={item}
-              isHome={item.href === "/"}
+              active={isNavItemActive(item, pathname)}
             />
           ))}
         </nav>
@@ -106,6 +126,7 @@ export function SiteHeader() {
                 const hasChildren = !!item.children?.length;
                 const isOpen = !!expanded[item.label];
                 const itemHref = resolveHref(item.href);
+                const active = isNavItemActive(item, pathname);
 
                 return (
                   <li key={item.href + item.label}>
@@ -115,7 +136,9 @@ export function SiteHeader() {
                         onClick={() => toggleSection(item.label)}
                         aria-expanded={isOpen}
                         aria-controls={`mobile-submenu-${item.label}`}
-                        className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-base font-semibold text-brand-ink hover:bg-brand-mist"
+                        className={`flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-base font-semibold hover:bg-brand-mist ${
+                          active ? "text-brand-orange" : "text-brand-ink"
+                        }`}
                       >
                         <span>{item.label}</span>
                         <svg
@@ -139,8 +162,9 @@ export function SiteHeader() {
                       <a
                         href={itemHref}
                         onClick={closeMobile}
+                        aria-current={active ? "page" : undefined}
                         className={`block rounded-md px-3 py-2 text-base font-semibold hover:bg-brand-mist ${
-                          item.href === "/" ? "text-brand-orange" : "text-brand-ink"
+                          active ? "text-brand-orange" : "text-brand-ink"
                         }`}
                       >
                         {item.label}
@@ -266,15 +290,16 @@ export function SiteHeader() {
   );
 }
 
-function DesktopNavItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
+function DesktopNavItem({ item, active }: { item: NavItem; active: boolean }) {
   const hasChildren = item.children && item.children.length > 0;
   const itemHref = resolveHref(item.href);
   return (
     <div className="group relative">
       <a
         href={itemHref}
+        aria-current={active ? "page" : undefined}
         className={`inline-flex items-center gap-1 px-3 py-2 text-[17px] font-semibold transition ${
-          isHome ? "text-brand-orange" : "text-brand-ink hover:text-brand-orange"
+          active ? "text-brand-orange" : "text-brand-ink hover:text-brand-orange"
         }`}
       >
         {item.label}
