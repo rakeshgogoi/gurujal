@@ -170,9 +170,9 @@ const executive: Person[] = [
     photo: "/uploads/2025/11/syed.jpg",
   },
   {
-    name: "Ms. Anisha Gupta",
-    role: "Communication Consultant",
-    photo: "/uploads/2025/11/Anisha.jpg",
+    name: "Ms. Tonya Lollen",
+    role: "Deputy Manager — Partnerships",
+    photo: "/uploads/2026/08/Tonya.png",
   },
   {
     name: "Ms. Anjali Singh",
@@ -180,9 +180,29 @@ const executive: Person[] = [
     photo: "/uploads/2024/08/Anjali.png",
   },
   {
+    name: "Ms. Anisha Gupta",
+    role: "Communication Consultant",
+    photo: "/uploads/2025/11/Anisha.jpg",
+  },
+  {
     name: "Ms. Shallu Chauhan",
     role: "Assistant Manager — CEO's Office",
     photo: "/uploads/2025/11/Shallu.jpg",
+  },
+  {
+    name: "Ms. Khyati Rastogi",
+    role: "Partnerships Associate",
+    photo: "/uploads/2026/04/Khyati.png",
+  },
+  {
+    name: "Mr. Raj Pratap Singh",
+    role: "Associate — Partnerships",
+    photo: "/uploads/2026/08/RajPratap.png",
+  },
+  {
+    name: "Mr. Daarwin G",
+    role: "GIS and Hydrology Associate",
+    photo: "/uploads/2026/08/DaarwinG.png",
   },
   {
     name: "Mr. Jitander Kumar",
@@ -195,14 +215,24 @@ const executive: Person[] = [
     photo: "/uploads/2026/08/Aakash.png",
   },
   {
-    name: "Mr. Daarwin G",
-    role: "GIS and Hydrology Associate",
-    photo: "/uploads/2026/08/DaarwinG.png",
-  },
-  {
     name: "Mr. Ismail Ahmad",
     role: "Senior Project Associate",
     photo: "/uploads/2024/08/Ismail.png",
+  },
+  {
+    name: "Ms. Deepshikha Sharma",
+    role: "Accountant",
+    photo: "/uploads/2026/09/Deepshikha.jpg",
+  },
+  {
+    name: "Mr. Imran Ali",
+    role: "Community Associate",
+    photo: "/uploads/2026/04/Imran.png",
+  },
+  {
+    name: "Mr. Abhijeet Pratap Sen",
+    role: "Associate",
+    photo: "/uploads/2026/04/Abhijeet.png",
   },
   {
     name: "Mr. Sachin Bhuker",
@@ -225,29 +255,9 @@ const executive: Person[] = [
     photo: "/uploads/2025/11/Ajay.jpg",
   },
   {
-    name: "Ms. Khyati Rastogi",
-    role: "Partnerships Associate",
-    photo: "/uploads/2026/04/Khyati.png",
-  },
-  {
-    name: "Mr. Imran Ali",
-    role: "Community Associate",
-    photo: "/uploads/2026/04/Imran.png",
-  },
-  {
-    name: "Mr. Abhijeet Pratap Sen",
-    role: "Associate",
-    photo: "/uploads/2026/04/Abhijeet.png",
-  },
-  {
-    name: "Ms. Tonya Lollen",
-    role: "Deputy Manager — Partnerships",
-    photo: "/uploads/2026/08/Tonya.png",
-  },
-  {
-    name: "Mr. Raj Pratap Singh",
-    role: "Associate — Partnerships",
-    photo: "/uploads/2026/08/RajPratap.png",
+    name: "Mr. Aalm",
+    role: "Field Associate",
+    photo: "/uploads/2026/09/Aalm.jpg",
   },
 ];
 
