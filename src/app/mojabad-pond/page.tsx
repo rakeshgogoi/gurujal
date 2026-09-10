@@ -104,7 +104,7 @@ function MojabadHero() {
     <section className="relative isolate overflow-hidden bg-brand-deep">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
         <Image
-          src="/uploads/2024/08/DJI_0793.jpg"
+          src="/uploads/2026/09/mojabad-pond-hero.jpg"
           alt=""
           fill
           priority
