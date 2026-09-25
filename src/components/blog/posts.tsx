@@ -8,6 +8,12 @@
  */
 const POSTS: { slug: string; title: string; excerpt: string }[] = [
   {
+    slug: "from-a-distressed-pond-pond-to-a",
+    title: "From a Distressed Pond to a Living Aquifer: The Bhokarka Story",
+    excerpt:
+      "There is a pond on the edge of a small Haryana village that people once crossed the road to avoid. Choked with algae, fed only by untreated household wastewater, it had stopped being water and become a wound on the landscape. Today, the same pond draws over a hundred villagers every evening.",
+  },
+  {
     slug: "how-mankrola-village-got-its-gathering",
     title: "How Mankrola Village Got Its Gathering Space Back",
     excerpt:
