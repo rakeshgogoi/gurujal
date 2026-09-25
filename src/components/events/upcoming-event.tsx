@@ -156,10 +156,33 @@ export function UpcomingEvent() {
                 </ul>
               </div>
 
-              <p className="text-sm italic text-brand-muted">
-                Programme details, speakers and registration will be
-                shared closer to the dates. Stay tuned for updates.
-              </p>
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href="https://www.urbanadda.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-orange-dark"
+                >
+                  Details &amp; Tickets
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </a>
+                <p className="text-sm italic text-brand-muted">
+                  Full programme and speakers to be announced.
+                </p>
+              </div>
             </div>
           </article>
         </div>
