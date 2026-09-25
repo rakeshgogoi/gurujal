@@ -164,6 +164,26 @@ html { scroll-behavior: smooth; }
   .gj-sixr-marquee { animation: none; }
 }
 
+/* ----- Top announcement bar ticker -----
+ * Track holds two consecutive copies of the announcement items.
+ * translateX(-50%) lands us at the start of the second copy so the
+ * loop is seamless. Pauses on hover so the links are easy to read
+ * and click.
+ */
+@keyframes gj-announcement-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.gj-announcement-marquee {
+  animation: gj-announcement-marquee 36s linear infinite;
+}
+.gj-announcement-paused:hover .gj-announcement-marquee {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gj-announcement-marquee { animation: none; }
+}
+
 /* ----- Floating tools (FAB + language picker) -----
  * Soft pulse halo on the AI assistant trigger, fade-in for the popovers.
  */
