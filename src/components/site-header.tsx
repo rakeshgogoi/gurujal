@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { primaryNav, ctaNav, isLocalRoute, type NavItem } from "@/lib/nav";
+import { primaryNav, ctaNav, isLocalRoute, isFileHref, type NavItem } from "@/lib/nav";
 import { liveUrl } from "@/lib/live-url";
 
 /** Resolve a NavItem href to either an internal path or the live site. */
@@ -27,6 +27,13 @@ function isNavItemActive(item: NavItem, pathname: string): boolean {
   return navPaths(item).some(
     (p) => p.startsWith("/") && p !== "/" && (pathname === p || pathname.startsWith(`${p}/`)),
   );
+}
+
+/** Direct file links (publication PDFs) open in a new tab. */
+function fileLinkProps(href: string) {
+  return isFileHref(href)
+    ? ({ target: "_blank", rel: "noopener noreferrer" } as const)
+    : {};
 }
 
 /**
@@ -208,6 +215,7 @@ export function SiteHeader() {
                                 <div className="flex items-center gap-1">
                                   <a
                                     href={resolveHref(c.href)}
+                                    {...fileLinkProps(c.href)}
                                     onClick={closeMobile}
                                     className="flex-1 rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
                                   >
@@ -244,6 +252,7 @@ export function SiteHeader() {
                                       <li key={gc.href + gc.label}>
                                         <a
                                           href={resolveHref(gc.href)}
+                                          {...fileLinkProps(gc.href)}
                                           onClick={closeMobile}
                                           className="block rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
                                         >
@@ -260,6 +269,7 @@ export function SiteHeader() {
                             <li key={c.href + c.label}>
                               <a
                                 href={resolveHref(c.href)}
+                                {...fileLinkProps(c.href)}
                                 onClick={closeMobile}
                                 className="block rounded-md px-3 py-1.5 text-sm text-brand-muted hover:bg-brand-mist hover:text-brand-ink"
                               >
@@ -328,6 +338,7 @@ function DesktopNavItem({ item, active }: { item: NavItem; active: boolean }) {
                 <a
                   key={c.href + c.label}
                   href={resolveHref(c.href)}
+                  {...fileLinkProps(c.href)}
                   className="block rounded-md px-3 py-2 text-sm text-brand-ink hover:bg-brand-mist hover:text-brand-orange transition"
                 >
                   {c.label}
@@ -375,6 +386,7 @@ function DesktopNestedItem({ item }: { item: NavItem }) {
             <a
               key={c.href + c.label}
               href={resolveHref(c.href)}
+              {...fileLinkProps(c.href)}
               className="block rounded-md px-3 py-2 text-sm text-brand-ink hover:bg-brand-mist hover:text-brand-orange transition"
             >
               {c.label}

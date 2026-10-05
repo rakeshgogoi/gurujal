@@ -1,8 +1,15 @@
 import Image from "next/image";
-import { footerLinks, contactInfo, isLocalRoute } from "@/lib/nav";
+import { footerLinks, contactInfo, isLocalRoute, isFileHref } from "@/lib/nav";
 import { liveUrl } from "@/lib/live-url";
 
 /** Resolve a footer href to either an internal path or the live site. */
+/** Direct file links (publication PDFs) open in a new tab. */
+function fileLinkProps(href: string) {
+  return isFileHref(href)
+    ? ({ target: "_blank", rel: "noopener noreferrer" } as const)
+    : {};
+}
+
 function resolveHref(href: string): string {
   return isLocalRoute(href) ? href : liveUrl(href);
 }
@@ -72,7 +79,9 @@ export function SiteFooter() {
           <ul className="flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs text-white/60 sm:order-3 sm:flex-1 sm:justify-end">
             {footerLinks.legal.map((l) => (
               <li key={l.href}>
-                <a href={resolveHref(l.href)} className="hover:text-white">
+                <a href={resolveHref(l.href)}
+                {...fileLinkProps(l.href)}
+                className="hover:text-white">
                   {l.label}
                 </a>
               </li>
@@ -114,6 +123,7 @@ function FooterColumn({
           <li key={l.href + l.label}>
             <a
               href={resolveHref(l.href)}
+              {...fileLinkProps(l.href)}
               className="text-sm text-white/80 transition hover:text-white"
             >
               {l.label}

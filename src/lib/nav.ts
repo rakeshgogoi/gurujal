@@ -71,9 +71,16 @@ export const localRoutes = new Set<string>([
   "/terms-and-conditions",
 ]);
 
+/** True for hrefs that point straight at a hosted file (PDF) rather than a page. */
+export function isFileHref(href: string): boolean {
+  return href.startsWith("/uploads/") && /\.pdf$/i.test(href.split("#")[0]);
+}
+
 /** True when the given href is a path served by this Next.js app. */
 export function isLocalRoute(href: string): boolean {
   if (!href.startsWith("/")) return false;
+  // Files hosted by this app (e.g. publication PDFs) are always local.
+  if (isFileHref(href)) return true;
   // Strip any hash before matching so /about#vision still resolves locally.
   const path = href.split("#")[0];
   return localRoutes.has(path);
@@ -130,6 +137,8 @@ export const primaryNav: NavItem[] = [
           { label: "Green Wall of Aravalli", href: "/publication-green-wall-of-aravalli" },
           { label: "SoP of Wells", href: "/publication-sop-of-wells" },
           { label: "Wells of Gurugram", href: "/publication-wells-of-gurugram" },
+          { label: "Coffee Table Book", href: "/uploads/2026/10/GuruJal-Coffee-Table-Book.pdf" },
+          { label: "Case Study", href: "/uploads/2026/10/GuruJal-Case-Study-Water-Neutral-Campus.pdf" },
         ],
       },
       { label: "Blog", href: "/blog" },
@@ -178,6 +187,8 @@ export const footerLinks = {
     { label: "Green Wall of Aravalli", href: "/publication-green-wall-of-aravalli" },
     { label: "SoP of Wells", href: "/publication-sop-of-wells" },
     { label: "Wells of Gurugram", href: "/publication-wells-of-gurugram" },
+    { label: "Coffee Table Book", href: "/uploads/2026/10/GuruJal-Coffee-Table-Book.pdf" },
+    { label: "Case Study", href: "/uploads/2026/10/GuruJal-Case-Study-Water-Neutral-Campus.pdf" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy-policy" },
