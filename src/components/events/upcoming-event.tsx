@@ -191,99 +191,175 @@ export function UpcomingEvent() {
             <p className="text-center text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
               Sessions at Urban Adda 26
             </p>
-
-            <article className="mx-auto mt-6 max-w-5xl overflow-hidden rounded-3xl bg-brand-mist ring-1 ring-brand-soft/80 md:grid md:grid-cols-12 md:items-center">
-              <div className="relative aspect-[4/5] w-full bg-brand-soft/40 md:col-span-4">
-                <Image
-                  src="/uploads/2026/10/water-citizens-council-poster.jpg"
-                  alt="Water Citizens' Council, Delhi-NCR Chapter — Expression of Interest poster"
-                  fill
-                  sizes="(min-width: 768px) 340px, 90vw"
-                  className="object-cover"
-                />
-              </div>
-
-              <div className="flex flex-col gap-5 p-7 sm:p-9 md:col-span-8">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center rounded-full bg-brand-orange/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-orange-dark ring-1 ring-brand-orange/30">
-                    Session
-                  </span>
-                  <span className="inline-flex items-center rounded-full bg-brand-teal/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-teal-dark ring-1 ring-brand-teal/30">
-                    Expression of interest
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-tight text-brand-ink sm:text-3xl">
-                    Water Citizens&apos; Council
-                  </h3>
-                  <p className="mt-1 text-sm font-bold uppercase tracking-[0.14em] text-brand-teal-dark">
-                    Delhi-NCR Chapter · Be a Voice for Water
-                  </p>
-                </div>
-
-                <p className="text-sm font-semibold text-brand-ink sm:text-base">
-                  7 October 2026 · 11:30 AM – 1:00 PM · NIUA Office, India
-                  Habitat Centre, New Delhi
-                </p>
-
-                <p className="text-base leading-relaxed text-brand-muted">
-                  GuruJal, in collaboration with the National Institute of
-                  Urban Affairs (NIUA), is bringing together passionate
-                  citizens — active citizens, educators, researchers, media
-                  professionals, environmental practitioners, influencers and
-                  changemakers — who can contribute their knowledge, voice,
-                  network, ideas or time for at least 10 days in a year
-                  towards:
-                </p>
-
-                <ul className="grid gap-2 text-sm text-brand-ink sm:grid-cols-2">
-                  {[
-                    "Water security & conservation",
-                    "Stronger citizen participation",
-                    "Knowledge and experience sharing",
-                    "Community-led action",
-                    "Better water governance in Delhi-NCR",
-                  ].map((t) => (
-                    <li key={t} className="flex gap-2.5">
-                      <span
-                        aria-hidden
-                        className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange"
-                      />
-                      <span>{t}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div>
-                  <a
-                    href="https://luma.com/0c8jn3c1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-orange-dark"
-                  >
-                    Express your interest
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden
-                    >
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                      <polyline points="12 5 19 12 12 19" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </article>
+            <div className="mx-auto mt-6 max-w-5xl space-y-8">
+              {SESSIONS.map((session) => (
+                <SessionCard key={session.title} session={session} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+type Session = {
+  title: string;
+  subtitle: string;
+  tags: string[];
+  when: string;
+  intro: string;
+  /** Optional bold lead-in before the text, e.g. "Siting & Water Risk". */
+  bullets: { lead?: string; text: string }[];
+  outro?: string;
+  poster: string;
+  posterAlt: string;
+  ctaLabel: string;
+  ctaHref: string;
+};
+
+/** Sessions run in date order. */
+const SESSIONS: Session[] = [
+  {
+    title: "Data Centers & Water",
+    subtitle: "People, Policy and Planning",
+    tags: ["Session", "Conversation"],
+    when: "Tuesday, 6 October 2026 · 12:00 – 1:00 PM · India Habitat Centre, New Delhi",
+    intro:
+      "As India's digital infrastructure grows, how do we scale data centers without putting additional pressure on local water resources? The Alliance for Responsible Data Centers and GuruJal host a focused conversation on balancing digital growth with water security, exploring three questions:",
+    bullets: [
+      {
+        lead: "Siting & water risk",
+        text: "How should basin stress, water availability and local demand influence where data centers are built?",
+      },
+      {
+        lead: "Cooling & resource trade-offs",
+        text: "How can we balance water and energy use across different cooling technologies?",
+      },
+      {
+        lead: "Measurement & disclosure",
+        text: "What should credible water-use reporting capture — from consumption and sources to reuse and local impact?",
+      },
+    ],
+    outro:
+      "Bringing together industry, utilities, regulators, investors and communities to ask what responsible data-center growth should look like in a water-stressed future.",
+    poster: "/uploads/2026/10/data-centers-water-poster.jpg",
+    posterAlt:
+      "Data Centers & Water: People, Policy and Planning — Urban Adda 26 session poster",
+    ctaLabel: "RSVP for the session",
+    ctaHref: "https://luma.com/ir4jl3li",
+  },
+  {
+    title: "Water Citizens' Council",
+    subtitle: "Delhi-NCR Chapter · Be a Voice for Water",
+    tags: ["Session", "Expression of interest"],
+    when: "7 October 2026 · 11:30 AM – 1:00 PM · NIUA Office, India Habitat Centre, New Delhi",
+    intro:
+      "GuruJal, in collaboration with the National Institute of Urban Affairs (NIUA), is bringing together passionate citizens — active citizens, educators, researchers, media professionals, environmental practitioners, influencers and changemakers — who can contribute their knowledge, voice, network, ideas or time for at least 10 days in a year towards:",
+    bullets: [
+      { text: "Water security & conservation" },
+      { text: "Stronger citizen participation" },
+      { text: "Knowledge and experience sharing" },
+      { text: "Community-led action" },
+      { text: "Better water governance in Delhi-NCR" },
+    ],
+    poster: "/uploads/2026/10/water-citizens-council-poster.jpg",
+    posterAlt:
+      "Water Citizens' Council, Delhi-NCR Chapter — Expression of Interest poster",
+    ctaLabel: "Express your interest",
+    ctaHref: "https://luma.com/0c8jn3c1",
+  },
+];
+
+function SessionCard({ session: s }: { session: Session }) {
+  const hasLeads = s.bullets.some((b) => b.lead);
+  return (
+    <article className="overflow-hidden rounded-3xl bg-brand-mist ring-1 ring-brand-soft/80 md:grid md:grid-cols-12 md:items-center">
+      <div className="relative aspect-[4/5] w-full bg-brand-soft/40 md:col-span-4">
+        <Image
+          src={s.poster}
+          alt={s.posterAlt}
+          fill
+          sizes="(min-width: 768px) 340px, 90vw"
+          className="object-cover"
+        />
+      </div>
+
+      <div className="flex flex-col gap-5 p-7 sm:p-9 md:col-span-8">
+        <div className="flex flex-wrap items-center gap-2">
+          {s.tags.map((t, i) => (
+            <span
+              key={t}
+              className={`inline-flex items-center rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider ring-1 ${
+                i === 0
+                  ? "bg-brand-orange/15 text-brand-orange-dark ring-brand-orange/30"
+                  : "bg-brand-teal/15 text-brand-teal-dark ring-brand-teal/30"
+              }`}
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div>
+          <h3 className="text-2xl font-semibold tracking-tight text-brand-ink sm:text-3xl">
+            {s.title}
+          </h3>
+          <p className="mt-1 text-sm font-bold uppercase tracking-[0.14em] text-brand-teal-dark">
+            {s.subtitle}
+          </p>
+        </div>
+
+        <p className="text-sm font-semibold text-brand-ink sm:text-base">
+          {s.when}
+        </p>
+
+        <p className="text-base leading-relaxed text-brand-muted">{s.intro}</p>
+
+        <ul className={hasLeads ? "space-y-2.5 text-sm text-brand-ink" : "grid gap-2 text-sm text-brand-ink sm:grid-cols-2"}>
+          {s.bullets.map((b) => (
+            <li key={b.text} className="flex gap-2.5">
+              <span
+                aria-hidden
+                className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange"
+              />
+              <span>
+                {b.lead && <strong className="font-semibold">{b.lead} — </strong>}
+                {b.text}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        {s.outro && (
+          <p className="text-sm leading-relaxed text-brand-muted">{s.outro}</p>
+        )}
+
+        <div>
+          <a
+            href={s.ctaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-orange-dark"
+          >
+            {s.ctaLabel}
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </article>
   );
 }
