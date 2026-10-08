@@ -41,12 +41,12 @@ const stories = [
   },
   {
     category: "Event",
-    title: "Roots & Recharge Symposium 2025",
+    title: "HydroMingle Delhi 2025",
     excerpt:
-      "GuruJal × Wipro Foundation, India Habitat Centre, 9 December 2025. Reviving traditional water wisdom — heritage dug wells and groundwater resilience in Gurugram.",
-    image: "/uploads/2026/03/events-hero.jpg",
-    href: "/roots-and-recharge-symposium",
-    meta: "9 Dec 2025 · IHC, New Delhi",
+      "A one-day live innovation lab at India Habitat Centre, 10 December 2025, convening policymakers, technologists, researchers, entrepreneurs and CSR partners to drive the next wave of water solutions.",
+    image: "/uploads/2024/08/hydromingle2025.jpg",
+    href: "/hydromingle-event",
+    meta: "10 Dec 2025 · IHC, New Delhi",
   },
 ];
 
