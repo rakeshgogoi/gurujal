@@ -185,6 +185,103 @@ export function UpcomingEvent() {
               </div>
             </div>
           </article>
+
+          {/* Sessions within Urban Adda 26 */}
+          <div className="mt-12">
+            <p className="text-center text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
+              Sessions at Urban Adda 26
+            </p>
+
+            <article className="mx-auto mt-6 max-w-5xl overflow-hidden rounded-3xl bg-brand-mist ring-1 ring-brand-soft/80 md:grid md:grid-cols-12 md:items-center">
+              <div className="relative aspect-[4/5] w-full bg-brand-soft/40 md:col-span-4">
+                <Image
+                  src="/uploads/2026/10/water-citizens-council-poster.jpg"
+                  alt="Water Citizens' Council, Delhi-NCR Chapter — Expression of Interest poster"
+                  fill
+                  sizes="(min-width: 768px) 340px, 90vw"
+                  className="object-cover"
+                />
+              </div>
+
+              <div className="flex flex-col gap-5 p-7 sm:p-9 md:col-span-8">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center rounded-full bg-brand-orange/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-orange-dark ring-1 ring-brand-orange/30">
+                    Session
+                  </span>
+                  <span className="inline-flex items-center rounded-full bg-brand-teal/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-teal-dark ring-1 ring-brand-teal/30">
+                    Expression of interest
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-semibold tracking-tight text-brand-ink sm:text-3xl">
+                    Water Citizens&apos; Council
+                  </h3>
+                  <p className="mt-1 text-sm font-bold uppercase tracking-[0.14em] text-brand-teal-dark">
+                    Delhi-NCR Chapter · Be a Voice for Water
+                  </p>
+                </div>
+
+                <p className="text-sm font-semibold text-brand-ink sm:text-base">
+                  7 October 2026 · 11:30 AM – 1:00 PM · NIUA Office, India
+                  Habitat Centre, New Delhi
+                </p>
+
+                <p className="text-base leading-relaxed text-brand-muted">
+                  GuruJal, in collaboration with the National Institute of
+                  Urban Affairs (NIUA), is bringing together passionate
+                  citizens — active citizens, educators, researchers, media
+                  professionals, environmental practitioners, influencers and
+                  changemakers — who can contribute their knowledge, voice,
+                  network, ideas or time for at least 10 days in a year
+                  towards:
+                </p>
+
+                <ul className="grid gap-2 text-sm text-brand-ink sm:grid-cols-2">
+                  {[
+                    "Water security & conservation",
+                    "Stronger citizen participation",
+                    "Knowledge and experience sharing",
+                    "Community-led action",
+                    "Better water governance in Delhi-NCR",
+                  ].map((t) => (
+                    <li key={t} className="flex gap-2.5">
+                      <span
+                        aria-hidden
+                        className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange"
+                      />
+                      <span>{t}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div>
+                  <a
+                    href="https://luma.com/0c8jn3c1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-orange-dark"
+                  >
+                    Express your interest
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
