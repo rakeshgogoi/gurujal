@@ -26,7 +26,7 @@ const stories = [
     title: "Maujabad — a village reclaims its water",
     excerpt:
       "Pataudi Block, Gurugram. 1.2-acre pond restored with a 100 KLD phytorid wastewater treatment plant. ₹31.33 lakhs of government investment matched by ₹6 lakhs of community crowdfunding — a pond Maujabad paid to save.",
-    image: "/uploads/2024/08/DJI_0793.jpg",
+    image: "/uploads/2026/09/mojabad-pond-hero.jpg",
     href: "/mojabad-pond",
     meta: "May 2024 · Pond restoration story",
   },

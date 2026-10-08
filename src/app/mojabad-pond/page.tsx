@@ -79,7 +79,7 @@ const keyStats = [
 /* ============================================================
  * Sticky section anchor nav
  * ============================================================ */
-function MojabadSectionNav() {
+function MaujabadSectionNav() {
   return (
     <StickyAnchorNav
       sections={[
@@ -99,7 +99,7 @@ function MojabadSectionNav() {
 /* ============================================================
  * Hero
  * ============================================================ */
-function MojabadHero() {
+function MaujabadHero() {
   return (
     <section className="relative isolate overflow-hidden bg-brand-deep">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
@@ -741,12 +741,12 @@ function ImpactSection() {
 /* ============================================================
  * Page
  * ============================================================ */
-export default function MojabadPondPage() {
+export default function MaujabadPondPage() {
   return (
     <>
-      <MojabadHero />
+      <MaujabadHero />
       <KeyStatsStrip stats={keyStats} />
-      <MojabadSectionNav />
+      <MaujabadSectionNav />
       <BackgroundSection />
       <SiteSection />
       <NeedSection />
