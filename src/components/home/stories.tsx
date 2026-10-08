@@ -45,6 +45,8 @@ const stories = [
     excerpt:
       "A one-day live innovation lab at India Habitat Centre, 10 December 2025, convening policymakers, technologists, researchers, entrepreneurs and CSR partners to drive the next wave of water solutions.",
     image: "/uploads/2024/08/hydromingle2025.jpg",
+    // Square poster with text near the edges — show it whole, don't crop.
+    fit: "contain" as const,
     href: "/hydromingle-event",
     meta: "10 Dec 2025 · IHC, New Delhi",
   },
@@ -133,12 +135,14 @@ export function Stories() {
                 href={resolveHref(s.href)}
                 className="group flex flex-1 flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-brand-soft transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-brand-accent sm:flex-row"
               >
-                <div className="relative h-44 w-full shrink-0 overflow-hidden sm:h-auto sm:w-48">
+                <div className="relative h-44 w-full shrink-0 overflow-hidden bg-white sm:h-auto sm:w-48">
                   <Image
                     src={s.image}
                     alt=""
                     fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
+                    className={`transition duration-500 group-hover:scale-105 ${
+                      "fit" in s && s.fit === "contain" ? "object-contain" : "object-cover"
+                    }`}
                     sizes="(min-width: 640px) 12rem, 100vw"
                   />
                 </div>
