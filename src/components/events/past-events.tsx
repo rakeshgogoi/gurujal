@@ -35,10 +35,25 @@ type EventItem = {
   /** True when href is an off-site URL — opens in a new tab. */
   external?: boolean;
   photo: string;
+  /** "contain" letterboxes a portrait poster instead of cropping it. */
+  fit?: "cover" | "contain";
   tone: Tone;
 };
 
 const events: EventItem[] = [
+  {
+    name: "ALT EFF Film Club × Climate Week India × GuruJal",
+    month: "Oct",
+    year: "2026",
+    type: "Film Club",
+    blurb:
+      "A Climate Week India evening of cinema and conversation — screenings of Amu Darya: River to the Missing Sea (28 min) and Stubble: The Farmer's Bane (35 min), followed by a post-film discussion at the GuruJal office.",
+    href: "https://luma.com/AltEFF_FilmClub_Gurujal_1Oct26",
+    external: true,
+    photo: "/uploads/2026/10/alteff-climate-week-poster.jpg",
+    fit: "contain",
+    tone: "orange",
+  },
   {
     name: "ALT EFF Film Club × GuruJal Gurugram",
     month: "Jun",
@@ -152,13 +167,19 @@ export function PastEvents() {
 function EventCard({ event: e }: { event: EventItem }) {
   const inner = (
     <>
-      <div className="relative aspect-[5/3] w-full overflow-hidden bg-brand-soft/60">
+      <div
+        className={`relative aspect-[5/3] w-full overflow-hidden ${
+          e.fit === "contain" ? "bg-black" : "bg-brand-soft/60"
+        }`}
+      >
         <Image
           src={e.photo}
           alt={e.name}
           fill
           sizes="(min-width: 1024px) 400px, (min-width: 640px) 45vw, 90vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          className={`transition-transform duration-700 group-hover:scale-105 ${
+            e.fit === "contain" ? "object-contain" : "object-cover"
+          }`}
         />
         {/* Date badge */}
         <span className="absolute left-4 top-4 flex flex-col items-center rounded-xl bg-white/95 px-3 py-2 text-center shadow-sm">
