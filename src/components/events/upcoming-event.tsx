@@ -26,12 +26,12 @@ export function UpcomingEvent() {
         </div>
 
         <div className="mt-12">
-          <article className="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-brand-soft/80 lg:grid lg:grid-cols-12">
+          <article className="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-brand-soft/80 lg:grid lg:grid-cols-12 lg:items-center">
             {/* Poster */}
-            <div className="relative aspect-[4/5] w-full bg-brand-soft/40 lg:col-span-5 lg:aspect-auto">
+            <div className="relative aspect-[4/5] w-full bg-brand-soft/40 lg:col-span-5">
               <Image
-                src="/uploads/2026/07/urban-adda-2026.jpg"
-                alt="Urban Adda 26 — Save the Date poster"
+                src="/uploads/2026/10/urban-adda-26-poster.jpg"
+                alt="Urban Adda 26 poster — 5th–7th October 2026, India Habitat Centre, New Delhi"
                 fill
                 sizes="(min-width: 1024px) 480px, 90vw"
                 className="object-cover"
