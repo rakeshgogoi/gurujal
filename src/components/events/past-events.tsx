@@ -20,6 +20,7 @@ type EventType =
   | "Site Visit"
   | "Innovation Convening"
   | "Dialogue"
+  | "Session"
   | "Conference"
   | "Film Club";
 
@@ -35,12 +36,52 @@ type EventItem = {
   /** True when href is an off-site URL — opens in a new tab. */
   external?: boolean;
   photo: string;
-  /** "contain" letterboxes a portrait poster instead of cropping it. */
-  fit?: "cover" | "contain";
+  /** "contain" letterboxes a portrait poster; "top" crops to its top
+   *  (logos + title) instead of the centre. Default is a centre crop. */
+  fit?: "cover" | "contain" | "top";
   tone: Tone;
 };
 
 const events: EventItem[] = [
+  {
+    name: "Urban Adda 26",
+    month: "Oct",
+    year: "2026",
+    type: "Dialogue",
+    blurb:
+      "Creating Sustainable & Equitable Cities Together — three days at India Habitat Centre (5–7 October) where doers, thinkers, policymakers, artists, youth and communities reimagined the future of our cities. Co-hosted by GuruJal & ICCT India; lead organiser Raahgiri Foundation.",
+    href: "https://www.urbanadda.org/",
+    external: true,
+    photo: "/uploads/2026/10/urban-adda-26-poster.jpg",
+    fit: "top",
+    tone: "orange",
+  },
+  {
+    name: "Water Citizens' Council — Urban Adda 26",
+    month: "Oct",
+    year: "2026",
+    type: "Session",
+    blurb:
+      "Delhi-NCR Chapter, with NIUA: a call to active citizens, educators, researchers, media professionals and changemakers to contribute their knowledge, voice and time for water security and better water governance.",
+    href: "https://luma.com/0c8jn3c1",
+    external: true,
+    photo: "/uploads/2026/10/water-citizens-council-poster.jpg",
+    fit: "top",
+    tone: "teal",
+  },
+  {
+    name: "Data Centers & Water — Urban Adda 26",
+    month: "Oct",
+    year: "2026",
+    type: "Session",
+    blurb:
+      "People, Policy and Planning: with the Alliance for Responsible Data Centers, a conversation on siting and water risk, cooling trade-offs, and credible water-use disclosure as digital infrastructure grows.",
+    href: "https://luma.com/ir4jl3li",
+    external: true,
+    photo: "/uploads/2026/10/data-centers-water-poster.jpg",
+    fit: "top",
+    tone: "green",
+  },
   {
     name: "ALT EFF Film Club × Climate Week India × GuruJal",
     month: "Oct",
@@ -178,7 +219,11 @@ function EventCard({ event: e }: { event: EventItem }) {
           fill
           sizes="(min-width: 1024px) 400px, (min-width: 640px) 45vw, 90vw"
           className={`transition-transform duration-700 group-hover:scale-105 ${
-            e.fit === "contain" ? "object-contain" : "object-cover"
+            e.fit === "contain"
+              ? "object-contain"
+              : e.fit === "top"
+                ? "object-cover object-top"
+                : "object-cover"
           }`}
         />
         {/* Date badge */}

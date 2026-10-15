@@ -20,6 +20,12 @@ type Announcement = {
   external?: boolean;
 };
 
+/** Sets rendered in the track (split evenly across the two loop halves).
+ *  Few announcements means each set is short, so repeat it enough that
+ *  one half is always wider than the viewport — otherwise the loop would
+ *  show a gap at the right edge. */
+const SET_COUNT = 8;
+
 const ANNOUNCEMENTS: Announcement[] = [
   {
     key: "hiring",
@@ -28,17 +34,16 @@ const ANNOUNCEMENTS: Announcement[] = [
     cta: "CLICK TO APPLY",
     href: "/career",
   },
-  {
-    key: "urban-adda",
-    emoji: "🎉",
-    text: "Urban Adda 26 — 5–7 October 2026, India Habitat Centre, New Delhi.",
-    cta: "DETAILS & TICKETS",
-    href: "https://www.urbanadda.org/",
-    external: true,
-  },
 ];
 
-function AnnouncementLink({ item }: { item: Announcement }) {
+function AnnouncementLink({
+  item,
+  decorative,
+}: {
+  item: Announcement;
+  /** Repeated copy: skipped by the keyboard and screen readers. */
+  decorative?: boolean;
+}) {
   const content = (
     <>
       <span aria-hidden>{item.emoji}</span>
@@ -48,15 +53,16 @@ function AnnouncementLink({ item }: { item: Announcement }) {
       </span>
     </>
   );
+  const tab = decorative ? { tabIndex: -1 } : {};
   const className =
     "inline-flex shrink-0 items-center gap-2 text-sm font-medium tracking-wide transition hover:text-brand-orange";
 
   return item.external ? (
-    <a href={item.href} target="_blank" rel="noopener noreferrer" className={className}>
+    <a href={item.href} target="_blank" rel="noopener noreferrer" className={className} {...tab}>
       {content}
     </a>
   ) : (
-    <Link href={item.href} className={className}>
+    <Link href={item.href} className={className} {...tab}>
       {content}
     </Link>
   );
@@ -72,7 +78,7 @@ function AnnouncementSet({ hidden }: { hidden?: boolean }) {
     >
       {ANNOUNCEMENTS.map((item) => (
         <div key={item.key} className="flex shrink-0 items-center gap-8">
-          <AnnouncementLink item={item} />
+          <AnnouncementLink item={item} decorative={hidden} />
           <span aria-hidden className="h-1 w-1 shrink-0 rounded-full bg-white/40" />
         </div>
       ))}
@@ -83,10 +89,11 @@ function AnnouncementSet({ hidden }: { hidden?: boolean }) {
 export function AnnouncementBar() {
   return (
     <div className="gj-announcement-paused w-full overflow-hidden bg-brand-deep text-white">
-      <div className="flex h-[50px] items-center">
-        <div className="flex w-max gj-announcement-marquee pl-4 sm:pl-6 lg:pl-8">
-          <AnnouncementSet />
-          <AnnouncementSet hidden />
+      <div className="flex h-[50px] items-center pl-4 sm:pl-6 lg:pl-8">
+        <div className="flex w-max shrink-0 gj-announcement-marquee">
+          {Array.from({ length: SET_COUNT }, (_, i) => (
+            <AnnouncementSet key={i} hidden={i > 0} />
+          ))}
         </div>
       </div>
     </div>

@@ -175,7 +175,7 @@ html { scroll-behavior: smooth; }
   to   { transform: translateX(-50%); }
 }
 .gj-announcement-marquee {
-  animation: gj-announcement-marquee 36s linear infinite;
+  animation: gj-announcement-marquee 74s linear infinite;
 }
 .gj-announcement-paused:hover .gj-announcement-marquee {
   animation-play-state: paused;
