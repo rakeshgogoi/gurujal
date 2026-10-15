@@ -64,9 +64,10 @@ export function EventSessions({
                   {s.subtitle}
                 </p>
               )}
-              <p className="mt-3 text-sm leading-relaxed text-brand-muted sm:text-base">
+              {/* div, not p: bodies may contain paragraphs and lists. */}
+              <div className="mt-3 text-sm leading-relaxed text-brand-muted sm:text-base">
                 {s.body}
-              </p>
+              </div>
             </li>
           ))}
         </ol>

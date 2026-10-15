@@ -50,8 +50,7 @@ const events: EventItem[] = [
     type: "Dialogue",
     blurb:
       "Creating Sustainable & Equitable Cities Together — three days at India Habitat Centre (5–7 October) where doers, thinkers, policymakers, artists, youth and communities reimagined the future of our cities. Co-hosted by GuruJal & ICCT India; lead organiser Raahgiri Foundation.",
-    href: "https://www.urbanadda.org/",
-    external: true,
+    href: "/urban-adda-26",
     photo: "/uploads/2026/10/urban-adda-26-poster.jpg",
     fit: "top",
     tone: "orange",

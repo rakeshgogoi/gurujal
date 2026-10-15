@@ -43,6 +43,7 @@ export const localRoutes = new Set<string>([
   "/hydromingle-event",
   "/roots-and-recharge-symposium",
   "/urban-adda-25",
+  "/urban-adda-26",
   "/real-nature-in-restored-landscapes",
   "/career",
   "/volunteer",
