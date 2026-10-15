@@ -26,6 +26,7 @@ export function EventDetailHero({
   secondaryCta,
   facts,
   backdrop,
+  darkOverlay = false,
 }: {
   eyebrow: string;
   dateLine: string;
@@ -37,6 +38,8 @@ export function EventDetailHero({
   secondaryCta: { label: string; href: string };
   facts: FactChip[];
   backdrop: string;
+  /** Heavier scrim for bright photographs so the text stays legible. */
+  darkOverlay?: boolean;
 }) {
   return (
     <section className="relative isolate overflow-hidden bg-brand-deep">
@@ -47,9 +50,17 @@ export function EventDetailHero({
           fill
           priority
           sizes="100vw"
-          className="object-cover [filter:brightness(0.5)]"
+          className={`object-cover ${
+            darkOverlay ? "[filter:brightness(0.45)]" : "[filter:brightness(0.5)]"
+          }`}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-deep/50 via-brand-deep/35 to-brand-deep/55" />
+        <div
+          className={`absolute inset-0 bg-gradient-to-b ${
+            darkOverlay
+              ? "from-brand-deep/80 via-brand-deep/70 to-brand-deep/85"
+              : "from-brand-deep/50 via-brand-deep/35 to-brand-deep/55"
+          }`}
+        />
       </div>
 
       <div

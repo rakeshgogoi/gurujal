@@ -99,6 +99,7 @@ export default function UrbanAdda26Page() {
           { label: "Theme", value: "One Adda for Change" },
         ]}
         backdrop="/uploads/2026/10/urban-adda-26-hero.jpg"
+        darkOverlay
       />
 
       <EventOverview
