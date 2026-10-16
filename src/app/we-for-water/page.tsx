@@ -242,7 +242,7 @@ function Alumni() {
       background: "ITI in Plumbing",
       role: "On-site Water Project Supervisor",
       from: "₹14k",
-      to: "₹30k",
+      to: "₹40k",
     },
     {
       name: "Aakash",
@@ -250,7 +250,7 @@ function Alumni() {
       background: "Data entry operator",
       role: "Drone operator & GIS associate",
       from: "₹13k",
-      to: "₹30k",
+      to: "₹40k",
     },
     {
       name: "Ismail",
@@ -258,7 +258,7 @@ function Alumni() {
       background: "Sales executive",
       role: "AutoCAD & forestry expert",
       from: "₹20k",
-      to: "₹28k",
+      to: "₹40k",
     },
   ];
 
