@@ -177,12 +177,14 @@ html { scroll-behavior: smooth; }
 .gj-announcement-marquee {
   animation: gj-announcement-marquee 74s linear infinite;
 }
-.gj-announcement-paused:hover .gj-announcement-marquee {
+/* Pause on hover (desktop) or while a finger is held on the bar (touch). */
+.gj-announcement-paused:hover .gj-announcement-marquee,
+.gj-announcement-paused:active .gj-announcement-marquee {
   animation-play-state: paused;
 }
-@media (prefers-reduced-motion: reduce) {
-  .gj-announcement-marquee { animation: none; }
-}
+/* Deliberately NOT disabled under prefers-reduced-motion: it is one slow,
+ * single-line scroll, and phones with Reduce Motion / Low Power Mode on
+ * would otherwise show a frozen, cut-off message. */
 
 /* ----- Floating tools (FAB + language picker) -----
  * Soft pulse halo on the AI assistant trigger, fade-in for the popovers.
