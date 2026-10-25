@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { SiteChromeTop, SiteChromeBottom } from "@/components/site-chrome";
 
@@ -58,6 +59,7 @@ export default function RootLayout({
         <SiteChromeTop />
         <main className="flex-1">{children}</main>
         <SiteChromeBottom />
+        <Analytics />
       </body>
     </html>
   );
