@@ -38,6 +38,7 @@ function GreenBeltSectionNav() {
         { label: "Plantation", href: "#plantation" },
         { label: "Before & After", href: "#before-after" },
         { label: "Community", href: "#community" },
+        { label: "Gallery", href: "#gallery" },
         { label: "Impact", href: "#impact" },
       ]}
     />
@@ -673,6 +674,105 @@ function CommunitySection() {
 }
 
 /* ============================================================
+ * Photo gallery — drone photographs of the finished green belt,
+ * taken on 9 April 2026.
+ * ============================================================ */
+const galleryPhotos = [
+  {
+    src: "/uploads/2026/10/greenbelt-gallery-aerial-overview.jpg",
+    tag: "Aerial",
+    alt: "Top-down aerial of the green belt at Rajiv Chowk, with its looped stone pathway and circular hedge beds around the central pylon",
+  },
+  {
+    src: "/uploads/2026/10/greenbelt-gallery-aerial-sculpture-path.jpg",
+    tag: "Aerial",
+    alt: "Aerial view of the green belt showing the hands sculpture and the stone path running along the lawn",
+  },
+  {
+    src: "/uploads/2026/10/greenbelt-gallery-sculpture-road.jpg",
+    tag: "Sculpture",
+    alt: "The green belt seen from the road, with the sculpture, lawns and pathway beside the carriageway",
+  },
+  {
+    src: "/uploads/2026/10/greenbelt-gallery-sculpture-closeup.jpg",
+    tag: "Sculpture",
+    alt: "A sculpture of two hands cradling a sapling on a red plinth branded GMDA and Pearl Global",
+  },
+  {
+    src: "/uploads/2026/10/greenbelt-gallery-pathway-solar.jpg",
+    tag: "Pathway",
+    alt: "The stone-slab pathway through the lawn, with a solar light and a bench",
+  },
+  {
+    src: "/uploads/2026/10/greenbelt-gallery-hedge-bed-pylon.jpg",
+    tag: "Landscaping",
+    alt: "A circular hedge bed with purple foliage around a tree, with the pylon in the background",
+  },
+  {
+    src: "/uploads/2026/10/greenbelt-gallery-hedge-bed-purple.jpg",
+    tag: "Landscaping",
+    alt: "Close view of the circular hedge bed ringed with stone slabs and purple-leaved plants",
+  },
+  {
+    src: "/uploads/2026/10/greenbelt-gallery-mural-wall.jpg",
+    tag: "Community mural",
+    alt: "The boundary-wall mural of trees, children and butterflies behind a trimmed hedge and lawn",
+  },
+  {
+    src: "/uploads/2026/10/greenbelt-gallery-signboard.jpg",
+    tag: "Signage",
+    alt: "The GMDA and Pearl Global 'Green Belt' signboard beside the pathway and the painted wall",
+  },
+];
+
+function GallerySection() {
+  return (
+    <section id="gallery" className="bg-brand-mist scroll-mt-20">
+      <div className="mx-auto max-w-7xl px-6 py-20 sm:px-6 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
+            Photo gallery
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-brand-ink sm:text-4xl">
+            The green belt, in photographs
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-brand-muted sm:text-lg">
+            Drone photographs of the finished green belt at Rajiv Chowk,
+            taken on 9 April 2026.
+          </p>
+        </div>
+
+        <ul className="mx-auto mt-12 grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {galleryPhotos.map((img) => (
+            <li
+              key={img.src}
+              className="group relative overflow-hidden rounded-2xl ring-1 ring-brand-soft/70"
+            >
+              <div className="relative aspect-[4/3]">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition duration-500 group-hover:scale-105"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-t from-brand-deep/45 via-transparent to-transparent"
+                />
+              </div>
+              <span className="absolute left-3 top-3 inline-flex rounded-full bg-brand-deep/80 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white ring-1 ring-white/15">
+                {img.tag}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
  * Impact
  * ============================================================ */
 const impactCards = [
@@ -775,6 +875,7 @@ export default function GreenBeltRajivChowkPage() {
       <PlantationSection />
       <BeforeAfterSection />
       <CommunitySection />
+      <GallerySection />
       <ImpactSection />
       <SolutionClosingCta
         eyebrow="Restore a landscape with us"
