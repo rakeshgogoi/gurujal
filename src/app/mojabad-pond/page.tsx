@@ -224,7 +224,7 @@ function BackgroundSection() {
           <div className="lg:col-span-5">
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl ring-1 ring-brand-soft/70">
               <Image
-                src="/uploads/2024/08/DJI_0801.jpg"
+                src="/uploads/2026/10/mojabad-pond-background.jpg"
                 alt="Aerial view of Maujabad pond and the village surrounding it"
                 fill
                 sizes="(min-width: 1024px) 40vw, 100vw"
