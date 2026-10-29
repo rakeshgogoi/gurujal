@@ -103,13 +103,17 @@ function MaujabadHero() {
   return (
     <section className="relative isolate overflow-hidden bg-brand-deep">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
-        <Image
-          src="/uploads/2026/09/mojabad-pond-hero.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
+        {/* Looping muted aerial footage; the poster shows while it loads
+            and where autoplay is blocked. */}
+        <video
+          src="/uploads/2026/10/mojabad-pond-hero.mp4"
+          poster="/uploads/2026/10/mojabad-pond-hero-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 h-full w-full object-cover"
         />
         {/* Mobile / tablet: top-to-bottom gradient — the text wraps wide
             here so the photo can only breathe in the middle band. */}
