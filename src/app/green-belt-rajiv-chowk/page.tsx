@@ -52,7 +52,7 @@ function GreenBeltHero() {
     <section className="relative isolate overflow-hidden bg-brand-deep">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
         <Image
-          src="/uploads/2024/08/eco-res.jpg"
+          src="/uploads/2026/10/greenbelt-hero.jpg"
           alt=""
           fill
           priority
@@ -564,7 +564,7 @@ function BeforeAfterSection() {
             className="aspect-[4/3] sm:aspect-[16/10]"
             beforeSrc="/uploads/2026/09/greenbelt-before-aerial.jpg"
             beforeAlt="The Rajiv Chowk traffic island before restoration — an aerial view of the garbage-strewn, undulating plot"
-            afterSrc="/uploads/2026/09/greenbelt-after-aerial.jpg"
+            afterSrc="/uploads/2026/10/greenbelt-after-aerial.jpg"
             afterAlt="The Rajiv Chowk traffic island after restoration — an aerial view of the landscaped green belt with pathways"
           />
           <div className="px-6 py-5 text-center text-sm font-medium text-white/80 sm:text-base">
