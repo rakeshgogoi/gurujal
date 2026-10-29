@@ -424,6 +424,55 @@ const keyBenefits = [
   "Biodiversity conservation",
 ];
 
+/* Wildlife photographed at the pond (biodiversity survey photos). */
+const wildlifePhotos = [
+  {
+    src: "/uploads/2026/10/mankrola-bio-kingfisher.jpg",
+    tag: "Birds",
+    alt: "A kingfisher perched on a branch beside the pond",
+  },
+  {
+    src: "/uploads/2026/10/mankrola-bio-moorhens-stilts.jpg",
+    tag: "Waterbirds",
+    alt: "Moorhens and black-winged stilts gathered at the pond's edge",
+  },
+  {
+    src: "/uploads/2026/10/mankrola-bio-cormorants.jpg",
+    tag: "Waterbirds",
+    alt: "A group of cormorants swimming on the pond",
+  },
+  {
+    src: "/uploads/2026/10/mankrola-bio-purple-swamphen.jpg",
+    tag: "Waterbirds",
+    alt: "A swamphen wading through duckweed at the pond margin",
+  },
+  {
+    src: "/uploads/2026/10/mankrola-bio-lapwing.jpg",
+    tag: "Birds",
+    alt: "A red-wattled lapwing standing on the pond's concrete edge",
+  },
+  {
+    src: "/uploads/2026/10/mankrola-bio-pond-heron.jpg",
+    tag: "Waterbirds",
+    alt: "A pond heron watching from the reeds",
+  },
+  {
+    src: "/uploads/2026/10/mankrola-bio-hoopoe.jpg",
+    tag: "Birds",
+    alt: "A hoopoe perched on a bare branch",
+  },
+  {
+    src: "/uploads/2026/10/mankrola-bio-snake-raft.jpg",
+    tag: "Reptiles",
+    alt: "A water snake resting on a floating treatment wetland raft",
+  },
+  {
+    src: "/uploads/2026/10/mankrola-bio-water-birds.jpg",
+    tag: "Waterbirds",
+    alt: "Dark water birds skimming across the surface of the pond",
+  },
+];
+
 function EcologySection() {
   return (
     <section id="ecology" className="bg-white scroll-mt-20">
@@ -470,6 +519,42 @@ function EcologySection() {
               </ul>
             </div>
           </div>
+        </div>
+
+        <div className="mx-auto mt-16 max-w-6xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
+              Photo gallery
+            </p>
+            <h3 className="mt-3 text-2xl font-semibold tracking-tight text-brand-ink sm:text-3xl">
+              Wildlife returning to Mankrola Pond
+            </h3>
+          </div>
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {wildlifePhotos.map((img) => (
+              <li
+                key={img.src}
+                className="group relative overflow-hidden rounded-2xl ring-1 ring-brand-soft/70"
+              >
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 bg-gradient-to-t from-brand-deep/45 via-transparent to-transparent"
+                  />
+                </div>
+                <span className="absolute left-3 top-3 inline-flex rounded-full bg-brand-deep/80 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white ring-1 ring-white/15">
+                  {img.tag}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
