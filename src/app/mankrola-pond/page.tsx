@@ -164,12 +164,18 @@ function BackgroundSection() {
 
           <div className="lg:col-span-5">
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl ring-1 ring-brand-soft/70">
-              <Image
-                src="/uploads/2026/09/mankrola-ftw-rafts.jpg"
-                alt="Floating treatment wetland rafts on Mankrola Pond, planted with phytoremediation species"
-                fill
-                sizes="(min-width: 1024px) 40vw, 100vw"
-                className="object-cover"
+              {/* Muted looping clip of a floating treatment wetland raft; the
+                  poster shows while it loads or if autoplay is blocked. */}
+              <video
+                src="/uploads/2026/10/mankrola-insitu-treatment.mp4"
+                poster="/uploads/2026/10/mankrola-insitu-treatment-poster.jpg"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                aria-label="Floating treatment wetland raft on Mankrola Pond, planted with phytoremediation species"
+                className="absolute inset-0 h-full w-full object-cover"
               />
               <div
                 aria-hidden
