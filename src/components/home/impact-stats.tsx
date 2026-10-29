@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { isLocalRoute } from "@/lib/nav";
@@ -71,12 +70,18 @@ export function ImpactStats() {
         <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-6 md:auto-rows-[180px]">
           {/* Feature tile: hero image + flagship stat overlay */}
           <div className="relative overflow-hidden rounded-3xl md:col-span-4 md:row-span-2">
-            <Image
-              src="/uploads/2026/03/eco-hero.jpg"
-              alt=""
-              fill
-              className="object-cover"
-              sizes="(min-width: 768px) 66vw, 100vw"
+            {/* Looping muted lake footage; the poster frame shows while it
+                loads and for browsers that block autoplay. */}
+            <video
+              src="/uploads/2026/10/home-impact-lake.mp4"
+              poster="/uploads/2026/10/home-impact-lake-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden
+              className="absolute inset-0 h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-tr from-brand-deep/85 via-brand-deep/35 to-transparent" />
             <div className="absolute inset-0 flex flex-col justify-end p-8 sm:p-10">
