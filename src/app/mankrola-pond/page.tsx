@@ -497,12 +497,12 @@ function BeforeAfterSection() {
             className="aspect-[4/3] sm:aspect-[16/10]"
             beforeSrc="/uploads/2026/09/mankrola-pond-before.jpg"
             beforeAlt="Aerial view of Mankrola Pond before interventions, 27 January 2025 — bare, dusty edges and murky water"
-            afterSrc="/uploads/2026/09/mankrola-pond-after.jpg"
-            afterAlt="Aerial view of Mankrola Pond after interventions, 23 September 2025 — landscaped waterfront with seating and floating wetlands"
+            afterSrc="/uploads/2026/10/mankrola-pond-after.jpg"
+            afterAlt="Aerial view of Mankrola Pond after interventions, 5 August 2025 — the full pond ringed by a paved walking path and green edges"
           />
           <div className="px-6 py-5 text-center text-sm font-medium text-white/80 sm:text-base">
             Drag the slider to compare — aerial views from 27 January
-            2025 (before) and 23 September 2025 (after).
+            2025 (before) and 5 August 2025 (after).
           </div>
         </div>
       </div>
