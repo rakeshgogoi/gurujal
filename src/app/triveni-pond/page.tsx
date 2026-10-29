@@ -502,6 +502,54 @@ const faunaGroups = [
   { count: "9", label: "Reptile species" },
   { count: "4", label: "Butterfly species" },
 ];
+/* Biodiversity photographs recorded at the site (2025 survey). */
+const biodiversityPhotos = [
+  {
+    src: "/uploads/2026/10/triveni-bio-lapwing.jpg",
+    tag: "Wetland birds",
+    alt: "A red-wattled lapwing wading on a vegetated islet in the pond",
+  },
+  {
+    src: "/uploads/2026/10/triveni-bio-butterfly.jpg",
+    tag: "Butterflies",
+    alt: "A blue butterfly resting on dry ground beneath the shrubs",
+  },
+  {
+    src: "/uploads/2026/10/triveni-bio-pipit.jpg",
+    tag: "Birds",
+    alt: "A small streaked bird perched on a rail beside the pond",
+  },
+  {
+    src: "/uploads/2026/10/triveni-bio-black-bird-rail.jpg",
+    tag: "Birds",
+    alt: "A dark bird with wings flared, perched on a railing at the site",
+  },
+  {
+    src: "/uploads/2026/10/triveni-bio-black-bird-stick.jpg",
+    tag: "Birds",
+    alt: "A small black bird perched on a thin stick",
+  },
+  {
+    src: "/uploads/2026/10/triveni-bio-dragonfly.jpg",
+    tag: "Insects",
+    alt: "A scarlet skimmer dragonfly perched on a bamboo pole over the water",
+  },
+  {
+    src: "/uploads/2026/10/triveni-bio-weaver-nest.jpg",
+    tag: "Nesting",
+    alt: "A woven weaver-bird nest hanging among the reeds",
+  },
+  {
+    src: "/uploads/2026/10/triveni-bio-knob-billed-ducks.jpg",
+    tag: "Wetland birds",
+    alt: "Knob-billed ducks wading in the shallow wetland",
+  },
+  {
+    src: "/uploads/2026/10/triveni-bio-munias.jpg",
+    tag: "Birds",
+    alt: "A flock of small munias perched on a reed",
+  },
+];
 const carbonBreakdown = [
   { value: "397.46", unit: "kg CO₂", label: "Trees" },
   { value: "65.02", unit: "kg CO₂", label: "Shrubs" },
@@ -635,6 +683,42 @@ function EcologySection() {
                 <div className="mt-1 text-xs font-medium text-white/75">
                   {c.label}
                 </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mx-auto mt-16 max-w-6xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-teal">
+              Photo gallery
+            </p>
+            <h3 className="mt-3 text-2xl font-semibold tracking-tight text-brand-ink sm:text-3xl">
+              Life returning to the pond
+            </h3>
+          </div>
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {biodiversityPhotos.map((img) => (
+              <li
+                key={img.src}
+                className="group relative overflow-hidden rounded-2xl ring-1 ring-brand-soft/70"
+              >
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 bg-gradient-to-t from-brand-deep/45 via-transparent to-transparent"
+                  />
+                </div>
+                <span className="absolute left-3 top-3 inline-flex rounded-full bg-brand-deep/80 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white ring-1 ring-white/15">
+                  {img.tag}
+                </span>
               </li>
             ))}
           </ul>
