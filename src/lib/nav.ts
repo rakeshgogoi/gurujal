@@ -142,6 +142,7 @@ export const primaryNav: NavItem[] = [
           { label: "Case Study", href: "/uploads/2026/10/GuruJal-Case-Study-Water-Neutral-Campus.pdf" },
         ],
       },
+      { label: "Tools", href: "/reports-and-publications#tools" },
       { label: "Blog", href: "/blog" },
     ],
   },
