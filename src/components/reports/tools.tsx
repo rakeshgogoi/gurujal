@@ -12,6 +12,10 @@ type Tool = {
   chapters: string[];
   cover: string;
   coverAlt: string;
+  /** Tailwind aspect class matching the cover image. */
+  coverAspect: string;
+  /** Stickers are transparent artwork, so they sit on a white tile. */
+  coverTile?: boolean;
   href: string;
   cta: string;
 };
@@ -32,8 +36,30 @@ const tools: Tool[] = [
     ],
     cover: "/uploads/2026/11/green-quest-booklet-cover.jpg",
     coverAlt: "Cover of The Green Quest: Uniting Nature and Self, a GuruJal booklet",
+    coverAspect: "aspect-[988/1500]",
     href: "/uploads/2026/11/GuruJal-Green-Quest-Booklet.pdf",
     cta: "Download the booklet (PDF)",
+  },
+  {
+    title: "GuruJal Sticker Set",
+    subtitle: "Stickers — print and share",
+    blurb:
+      "Fifteen GuruJal stickers on one A4 sheet, in English and Hindi — from saving water and going native to the Aravalli, village ponds and Earth Day. Print them, share them, stick them up.",
+    chapters: [
+      "15 stickers",
+      "English & Hindi",
+      "Water",
+      "Aravalli",
+      "Native plants",
+      "Reduce, reuse, recycle",
+    ],
+    cover: "/uploads/2026/11/gurujal-stickers-preview.webp",
+    coverAlt:
+      "A sheet of fifteen GuruJal stickers with messages such as Save Water, Say No to Plastic, Aravalli is our Shield and Earth Day Everyday",
+    coverAspect: "aspect-[1240/1754]",
+    coverTile: true,
+    href: "/uploads/2026/11/GuruJal-Stickers.pdf",
+    cta: "Download the stickers (PDF)",
   },
 ];
 
@@ -60,13 +86,17 @@ export function Tools() {
               key={t.title}
               className="grid items-center gap-8 overflow-hidden rounded-3xl bg-brand-mist p-6 ring-1 ring-brand-soft/80 sm:p-8 md:grid-cols-[minmax(0,260px)_1fr] md:gap-10"
             >
-              <div className="relative mx-auto aspect-[988/1500] w-full max-w-[260px] overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5">
+              <div
+                className={`relative mx-auto w-full max-w-[260px] overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 ${t.coverAspect} ${
+                  t.coverTile ? "bg-white" : ""
+                }`}
+              >
                 <Image
                   src={t.cover}
                   alt={t.coverAlt}
                   fill
                   sizes="260px"
-                  className="object-cover"
+                  className={t.coverTile ? "object-contain p-2" : "object-cover"}
                 />
               </div>
 
