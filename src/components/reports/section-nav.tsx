@@ -9,6 +9,7 @@ import { StickyAnchorNav } from "@/components/sticky-anchor-nav";
 const sections = [
   { label: "Annual Reports", href: "#reports" },
   { label: "Publications", href: "#publications" },
+  { label: "Tools", href: "#tools" },
 ];
 
 export function ReportsSectionNav() {

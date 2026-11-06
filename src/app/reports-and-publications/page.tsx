@@ -4,6 +4,7 @@ import { ReportsHero } from "@/components/reports/hero";
 import { ReportsSectionNav } from "@/components/reports/section-nav";
 import { AnnualReports } from "@/components/reports/annual-reports";
 import { Publications } from "@/components/reports/publications";
+import { Tools } from "@/components/reports/tools";
 import { Reveal } from "@/components/reveal";
 import { liveUrl } from "@/lib/live-url";
 
@@ -27,6 +28,7 @@ export default function ReportsAndPublicationsPage() {
       <ReportsSectionNav />
       <Reveal><AnnualReports /></Reveal>
       <Reveal><Publications /></Reveal>
+      <Reveal><Tools /></Reveal>
 
       {/* Closing CTA — invites partnerships around new research. */}
       <Reveal as="section" className="bg-white pb-12 lg:pb-16">
