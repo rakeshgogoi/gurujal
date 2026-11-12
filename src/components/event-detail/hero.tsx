@@ -18,6 +18,7 @@ export type FactChip = { label: string; value: string };
 export function EventDetailHero({
   eyebrow,
   dateLine,
+  hostLine,
   headlineBefore,
   headlineAccent,
   headlineAfter,
@@ -30,6 +31,8 @@ export function EventDetailHero({
 }: {
   eyebrow: string;
   dateLine: string;
+  /** Optional line under the date — e.g. host / co-host credits. */
+  hostLine?: string;
   headlineBefore: string;
   headlineAccent: string;
   headlineAfter: string;
@@ -77,6 +80,9 @@ export function EventDetailHero({
           {eyebrow}
         </p>
         <p className="mt-2 text-sm text-white/75 sm:text-base">{dateLine}</p>
+        {hostLine && (
+          <p className="mt-1 text-sm text-white/75 sm:text-base">{hostLine}</p>
+        )}
 
         <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
           {headlineBefore}{" "}

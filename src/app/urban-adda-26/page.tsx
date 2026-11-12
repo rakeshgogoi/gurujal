@@ -87,6 +87,7 @@ export default function UrbanAdda26Page() {
       <EventDetailHero
         eyebrow="Urban Adda 2026"
         dateLine="5th–7th October 2026 · India Habitat Centre, New Delhi"
+        hostLine="Hosted by Raahgiri Foundation · Co-hosted by GuruJal, ICCT India and Nagarro Foundation"
         headlineBefore="One Adda for"
         headlineAccent="Change"
         headlineAfter=""
@@ -124,8 +125,8 @@ export default function UrbanAdda26Page() {
             action under the theme{" "}
             <strong>&ldquo;One Adda for Change.&rdquo;</strong> Through
             panel discussions, workshops, exhibitions, interactive
-            experiences and networking, the event explored interconnected
-            urban challenges — water security, climate resilience,
+            experiences and networking opportunities, the event explored
+            interconnected urban challenges, including water security, climate resilience,
             sustainable mobility, air quality, inclusive infrastructure,
             ecological restoration and citizen participation.
           </>,
@@ -137,11 +138,11 @@ export default function UrbanAdda26Page() {
             sustainable urban development — highlighting how
             nature-based solutions, circular water management,
             responsible infrastructure planning and citizen-led governance
-            can strengthen urban resilience. Urban Adda demonstrated the
-            value of collaboration: bringing diverse stakeholders
-            together to share experiences, question conventional
-            approaches and chart pathways towards more liveable,
-            equitable and water-secure cities.
+            can strengthen urban resilience. Beyond individual sessions,
+            Urban Adda demonstrated the value of collaboration — bringing
+            diverse stakeholders together to share experiences, question
+            conventional approaches and develop pathways towards more
+            liveable, equitable and water-secure cities.
           </>,
         ]}
       />
@@ -192,7 +193,7 @@ export default function UrbanAdda26Page() {
               <SessionBody
                 paragraphs={[
                   "India has no shortage of research, technologies or successful water conservation initiatives. The challenge lies in translating these solutions into widespread, long-term action.",
-                  "Moderated by Dr. Fawzia Tarannum, Co-Founder and Strategic Advisor, GuruJal, the discussion brought together experts from the National Institute of Urban Affairs (NIUA), INTACH, the Council on Energy, Environment and Water (CEEW), S M Sehgal Foundation and Development Alternatives. The panel examined how natural hydrology, urban planning, community ownership and institutional collaboration can work together to strengthen water security.",
+                  "Moderated by Dr. Fawzia Tarannum, Co-Founder and Strategic Advisor, GuruJal, the discussion brought together experts from the National Institute of Urban Affairs (NIUA), INTACH, Council on Energy, Environment and Water (CEEW), S M Sehgal Foundation and Development Alternatives. The panel examined how natural hydrology, urban planning, community ownership and institutional collaboration can work together to strengthen water security.",
                 ]}
                 takeaways={[
                   "Integrate natural drainage patterns and hydrological systems into urban planning.",
@@ -395,10 +396,39 @@ export default function UrbanAdda26Page() {
         </div>
       </section>
 
+      <EventGallery
+        eyebrow="Event Gallery"
+        heading={<>Moments from Urban Adda 2026</>}
+        photos={[
+          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-stall.jpg", alt: "The Know Your Water stall in the exhibition area, with its 'What is inside your bottle?' display" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-test.jpg", alt: "Visitors learning about water quality at the Know Your Water stall" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-visitors.jpg", alt: "Visitors gathered around the water-testing table at the Know Your Water stall" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-demo.jpg", alt: "A hands-on water-quality demonstration at the Know Your Water stall" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-publication-launch.jpg", alt: "On stage at Urban Adda 2026 with GuruJal's newly launched publications" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-circularity-panel.jpg", alt: "Panellists at the Circularity for Water Security session in front of the Urban Adda 26 backdrop" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-panellist-speaking.jpg", alt: "A panellist speaking during the Circularity for Water Security session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-panel-discussion.jpg", alt: "Panellists in discussion on stage at Urban Adda 2026" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-panellist-remarks.jpg", alt: "A panellist sharing remarks during the session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-qa-session.jpg", alt: "A moderator and audience member during the question-and-answer round" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-stage-placards.jpg", alt: "Speakers on stage holding water-conservation placards such as #CatchTheRain and #SaveWaterSaveLife" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-roundtable.jpg", alt: "Participants around the table at the Data Centres and Water session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-speaker.jpg", alt: "A speaker addressing the Data Centres and Water session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-panel.jpg", alt: "Speakers at the Data Centres and Water session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-discussion.jpg", alt: "Panel discussion during the Data Centres and Water session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-conversation.jpg", alt: "Speakers in conversation at the Data Centres and Water session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-placards.jpg", alt: "Speakers of the Data Centres and Water session posing with placards" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-listening.jpg", alt: "Participants listening during the Water Citizens' Council founding meeting" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-meeting.jpg", alt: "Participants at the founding meeting of the Water Citizens' Council, Delhi NCR Chapter, at NIUA" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-discussion.jpg", alt: "Group discussion during the Water Citizens' Council founding meeting" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-council-speaker.jpg", alt: "A participant speaking during the Water Citizens' Council meeting" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-group.jpg", alt: "Group photo of the Water Citizens' Council founding meeting" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-group-placards.jpg", alt: "Participants with water-awareness placards at Urban Adda 2026" },
+        ]}
+      />
+
       <EventInsights
         eyebrow="Key learnings"
         heading={<>What the Conversations Taught Us</>}
-        bg="bg-white"
         insights={[
           {
             title: "Work with natural hydrology",
@@ -442,36 +472,6 @@ export default function UrbanAdda26Page() {
         ]}
       />
 
-      <EventGallery
-        eyebrow="Event Gallery"
-        heading={<>Moments from Urban Adda 2026</>}
-        photos={[
-          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-stall.jpg", alt: "The Know Your Water stall in the exhibition area, with its 'What is inside your bottle?' display" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-test.jpg", alt: "Visitors learning about water quality at the Know Your Water stall" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-visitors.jpg", alt: "Visitors gathered around the water-testing table at the Know Your Water stall" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-demo.jpg", alt: "A hands-on water-quality demonstration at the Know Your Water stall" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-publication-launch.jpg", alt: "On stage at Urban Adda 2026 with GuruJal's newly launched publications" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-circularity-panel.jpg", alt: "Panellists at the Circularity for Water Security session in front of the Urban Adda 26 backdrop" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-panellist-speaking.jpg", alt: "A panellist speaking during the Circularity for Water Security session" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-panel-discussion.jpg", alt: "Panellists in discussion on stage at Urban Adda 2026" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-panellist-remarks.jpg", alt: "A panellist sharing remarks during the session" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-qa-session.jpg", alt: "A moderator and audience member during the question-and-answer round" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-stage-placards.jpg", alt: "Speakers on stage holding water-conservation placards such as #CatchTheRain and #SaveWaterSaveLife" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-roundtable.jpg", alt: "Participants around the table at the Data Centres and Water session" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-speaker.jpg", alt: "A speaker addressing the Data Centres and Water session" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-panel.jpg", alt: "Speakers at the Data Centres and Water session" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-discussion.jpg", alt: "Panel discussion during the Data Centres and Water session" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-conversation.jpg", alt: "Speakers in conversation at the Data Centres and Water session" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-placards.jpg", alt: "Speakers of the Data Centres and Water session posing with placards" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-listening.jpg", alt: "Participants listening during the Water Citizens' Council founding meeting" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-meeting.jpg", alt: "Participants at the founding meeting of the Water Citizens' Council, Delhi NCR Chapter, at NIUA" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-discussion.jpg", alt: "Group discussion during the Water Citizens' Council founding meeting" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-council-speaker.jpg", alt: "A participant speaking during the Water Citizens' Council meeting" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-group.jpg", alt: "Group photo of the Water Citizens' Council founding meeting" },
-          { src: "/uploads/2026/10/urban-adda-26-gallery-group-placards.jpg", alt: "Participants with water-awareness placards at Urban Adda 2026" },
-        ]}
-      />
-
       <EventPartners
         eyebrow="Collaboration & partnership"
         heading="Hosts & Partners"
@@ -511,16 +511,19 @@ export default function UrbanAdda26Page() {
 
       <EventClosingCta
         eyebrow="What's next"
-        heading={<>The event may have concluded — the conversations continue</>}
+        heading={<>The event may have concluded, but the conversations and collaborations continue</>}
         body={
           <>
+            The conclusion of Urban Adda 2026 marks the continuation of
+            new conversations, partnerships and opportunities for action.
             An Adda is a place where people come together — not only to
             discuss challenges, but to collaborate, support one another
             and collectively build the cities they hope to see. GuruJal
-            remains committed to integrated water management, ecological
-            restoration, community stewardship and collaborative
-            governance. Together, towards sustainable cities and a
-            water-secure future.
+            remains committed to advancing integrated water management,
+            ecological restoration, community stewardship and
+            collaborative governance to build a water-secure India.
+            Together, towards sustainable cities and a water-secure
+            future.
           </>
         }
         primaryCta={{ label: "Get in touch", href: "/contact" }}
