@@ -6,6 +6,7 @@ import { EventEngage } from "@/components/event-detail/engage";
 import { EventSessions } from "@/components/event-detail/sessions";
 import { EventInsights } from "@/components/event-detail/insights";
 import { EventOutcomes } from "@/components/event-detail/outcomes";
+import { EventGallery } from "@/components/event-detail/gallery";
 import { EventPartners } from "@/components/event-detail/partners";
 import { EventClosingCta } from "@/components/event-detail/closing-cta";
 
@@ -438,6 +439,36 @@ export default function UrbanAdda26Page() {
             title: "Relationships built",
             body: "Organisations, researchers, policymakers, industry representatives and citizens exchanged knowledge and explored collaborative solutions.",
           },
+        ]}
+      />
+
+      <EventGallery
+        eyebrow="Event Gallery"
+        heading={<>Moments from Urban Adda 2026</>}
+        photos={[
+          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-stall.jpg", alt: "The Know Your Water stall in the exhibition area, with its 'What is inside your bottle?' display" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-test.jpg", alt: "Visitors learning about water quality at the Know Your Water stall" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-visitors.jpg", alt: "Visitors gathered around the water-testing table at the Know Your Water stall" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-know-your-water-demo.jpg", alt: "A hands-on water-quality demonstration at the Know Your Water stall" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-publication-launch.jpg", alt: "On stage at Urban Adda 2026 with GuruJal's newly launched publications" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-circularity-panel.jpg", alt: "Panellists at the Circularity for Water Security session in front of the Urban Adda 26 backdrop" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-panellist-speaking.jpg", alt: "A panellist speaking during the Circularity for Water Security session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-panel-discussion.jpg", alt: "Panellists in discussion on stage at Urban Adda 2026" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-panellist-remarks.jpg", alt: "A panellist sharing remarks during the session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-qa-session.jpg", alt: "A moderator and audience member during the question-and-answer round" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-stage-placards.jpg", alt: "Speakers on stage holding water-conservation placards such as #CatchTheRain and #SaveWaterSaveLife" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-roundtable.jpg", alt: "Participants around the table at the Data Centres and Water session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-speaker.jpg", alt: "A speaker addressing the Data Centres and Water session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-panel.jpg", alt: "Speakers at the Data Centres and Water session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-discussion.jpg", alt: "Panel discussion during the Data Centres and Water session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-conversation.jpg", alt: "Speakers in conversation at the Data Centres and Water session" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-data-centres-placards.jpg", alt: "Speakers of the Data Centres and Water session posing with placards" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-listening.jpg", alt: "Participants listening during the Water Citizens' Council founding meeting" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-meeting.jpg", alt: "Participants at the founding meeting of the Water Citizens' Council, Delhi NCR Chapter, at NIUA" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-discussion.jpg", alt: "Group discussion during the Water Citizens' Council founding meeting" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-council-speaker.jpg", alt: "A participant speaking during the Water Citizens' Council meeting" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-water-citizens-group.jpg", alt: "Group photo of the Water Citizens' Council founding meeting" },
+          { src: "/uploads/2026/10/urban-adda-26-gallery-group-placards.jpg", alt: "Participants with water-awareness placards at Urban Adda 2026" },
         ]}
       />
 
