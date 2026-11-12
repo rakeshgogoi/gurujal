@@ -1226,6 +1226,7 @@ export default function TriveniPondPage() {
       <WorkUndertakenSection />
       <VisualVignettes
         items={triveniVignettes}
+        playbackRate={0.5}
         heading={<>See the restoration in motion</>}
         intro={
           <>

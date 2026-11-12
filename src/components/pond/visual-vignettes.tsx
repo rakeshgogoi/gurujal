@@ -31,12 +31,15 @@ export function VisualVignettes({
   items,
   /** DOM id for the section — used by anchor navs. */
   sectionId = "vignettes",
+  /** Playback speed for every clip (1 = normal, 0.5 = half speed). */
+  playbackRate = 1,
 }: {
   eyebrow?: string;
   heading: React.ReactNode;
   intro: React.ReactNode;
   items: Vignette[];
   sectionId?: string;
+  playbackRate?: number;
 }) {
   return (
     <section id={sectionId} className="bg-white scroll-mt-20">
@@ -61,6 +64,7 @@ export function VisualVignettes({
               key={v.title}
               v={v}
               align={i % 2 === 0 ? "left" : "right"}
+              playbackRate={playbackRate}
             />
           ))}
         </ul>
@@ -72,9 +76,11 @@ export function VisualVignettes({
 function VignetteCard({
   v,
   align,
+  playbackRate,
 }: {
   v: Vignette;
   align: "left" | "right";
+  playbackRate: number;
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -82,9 +88,19 @@ function VignetteCard({
     const el = videoRef.current;
     if (!el) return;
 
+    // Slow-motion (or fast-forward) clips. Set it now and again once
+    // metadata loads, since some browsers reset it when the source loads.
+    const applyRate = () => {
+      el.playbackRate = playbackRate;
+    };
+    applyRate();
+    el.addEventListener("loadedmetadata", applyRate);
+
     // Honour user "Reduce motion" preference — keep the poster, never play.
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mq.matches) return;
+    if (mq.matches) {
+      return () => el.removeEventListener("loadedmetadata", applyRate);
+    }
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -101,8 +117,11 @@ function VignetteCard({
       { threshold: 0.25 }
     );
     io.observe(el);
-    return () => io.disconnect();
-  }, []);
+    return () => {
+      io.disconnect();
+      el.removeEventListener("loadedmetadata", applyRate);
+    };
+  }, [playbackRate]);
 
   return (
     <li className="relative isolate overflow-hidden rounded-3xl bg-brand-deep shadow-xl ring-1 ring-brand-soft/40">

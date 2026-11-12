@@ -759,6 +759,7 @@ export default function MaujabadPondPage() {
       <CommunitySection />
       <VisualVignettes
         items={mojabadVignettes}
+        playbackRate={0.5}
         heading={<>See the restoration in motion</>}
         intro={
           <>

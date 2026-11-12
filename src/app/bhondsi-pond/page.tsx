@@ -860,6 +860,7 @@ export default function BhondsiPondPage() {
       <ConstructionSection />
       <VisualVignettes
         items={bhondsiVignettes}
+        playbackRate={0.5}
         heading={<>See the restoration in motion</>}
         intro={
           <>
