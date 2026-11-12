@@ -20,6 +20,8 @@ export type SessionItem = {
   /** Optional promotional image (e.g. the session poster) shown beside
    *  the text on sm+ and above it on phones. */
   image?: { src: string; alt: string; width: number; height: number };
+  /** Optional photos from the session, shown as a strip under the text. */
+  photos?: { src: string; alt: string }[];
 };
 
 export function EventSessions({
@@ -93,6 +95,31 @@ export function EventSessions({
                   </figure>
                 )}
               </div>
+              {s.photos && s.photos.length > 0 && (
+                <ul
+                  className="mt-6 flex flex-wrap justify-center gap-3"
+                  aria-label={`Photos from ${s.title}`}
+                >
+                  {s.photos.map((ph) => (
+                    <li
+                      key={ph.src}
+                      className={`relative aspect-[4/3] overflow-hidden rounded-2xl bg-brand-soft/60 ring-1 ring-brand-soft/70 ${
+                        s.photos!.length === 1
+                          ? "basis-full sm:basis-2/3 md:basis-1/2"
+                          : "basis-[calc(50%-0.375rem)] md:basis-[calc(33.333%-0.5rem)]"
+                      }`}
+                    >
+                      <Image
+                        src={ph.src}
+                        alt={ph.alt}
+                        fill
+                        sizes="(min-width: 768px) 300px, 45vw"
+                        className="object-cover"
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ol>
