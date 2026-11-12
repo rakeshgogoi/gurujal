@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /**
  * Themes / sessions / programme list.
  *
@@ -15,6 +17,9 @@ export type SessionItem = {
   subtitle?: string;
   /** Body text */
   body: React.ReactNode;
+  /** Optional promotional image (e.g. the session poster) shown beside
+   *  the text on sm+ and above it on phones. */
+  image?: { src: string; alt: string; width: number; height: number };
 };
 
 export function EventSessions({
@@ -65,8 +70,28 @@ export function EventSessions({
                 </p>
               )}
               {/* div, not p: bodies may contain paragraphs and lists. */}
-              <div className="mt-3 text-sm leading-relaxed text-brand-muted sm:text-base">
-                {s.body}
+              <div
+                className={
+                  s.image
+                    ? "mt-3 grid gap-6 md:grid-cols-[minmax(0,1fr)_280px] md:items-start"
+                    : "mt-3"
+                }
+              >
+                <div className="text-sm leading-relaxed text-brand-muted sm:text-base md:order-1">
+                  {s.body}
+                </div>
+                {s.image && (
+                  <figure className="mx-auto w-full max-w-[280px] md:order-2 md:mx-0">
+                    <Image
+                      src={s.image.src}
+                      alt={s.image.alt}
+                      width={s.image.width}
+                      height={s.image.height}
+                      sizes="(min-width: 768px) 280px, 70vw"
+                      className="h-auto w-full rounded-2xl shadow-md ring-1 ring-brand-soft"
+                    />
+                  </figure>
+                )}
               </div>
             </li>
           ))}

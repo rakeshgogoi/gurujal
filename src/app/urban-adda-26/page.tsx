@@ -246,6 +246,12 @@ export default function UrbanAdda26Page() {
             badge: "Day 2 · 6 October 2026 · Willow Hall",
             title: "Data Centres and Water: People, Policy and Planning",
             subtitle: "In collaboration with the All Ivy+ Network",
+            image: {
+              src: "/uploads/2026/10/data-centers-water-poster.jpg",
+              alt: "Poster for the Data Centers & Water session — People, Policy and Planning, 6 October 2026, India Habitat Centre",
+              width: 960,
+              height: 1200,
+            },
             body: (
               <SessionBody
                 paragraphs={[
@@ -267,6 +273,12 @@ export default function UrbanAdda26Page() {
             badge: "Day 3 · 7 October 2026 · NIUA Conference Hall",
             title: "Water Citizens' Council – Delhi NCR Chapter",
             subtitle: "In collaboration with NIUA · Building a Citizen-Led Platform for Collaborative Water Governance",
+            image: {
+              src: "/uploads/2026/10/water-citizens-council-poster.jpg",
+              alt: "Poster for the Water Citizens' Council, Delhi-NCR Chapter — 7 October 2026, NIUA Office, India Habitat Centre",
+              width: 960,
+              height: 1200,
+            },
             body: (
               <SessionBody
                 paragraphs={[
