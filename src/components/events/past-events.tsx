@@ -56,32 +56,6 @@ const events: EventItem[] = [
     tone: "orange",
   },
   {
-    name: "Water Citizens' Council — Urban Adda 26",
-    month: "Oct",
-    year: "2026",
-    type: "Session",
-    blurb:
-      "Delhi-NCR Chapter, with NIUA: a call to active citizens, educators, researchers, media professionals and changemakers to contribute their knowledge, voice and time for water security and better water governance.",
-    href: "https://luma.com/0c8jn3c1",
-    external: true,
-    photo: "/uploads/2026/10/water-citizens-council-poster.jpg",
-    fit: "top",
-    tone: "teal",
-  },
-  {
-    name: "Data Centers & Water — Urban Adda 26",
-    month: "Oct",
-    year: "2026",
-    type: "Session",
-    blurb:
-      "People, Policy and Planning: with the Alliance for Responsible Data Centers, a conversation on siting and water risk, cooling trade-offs, and credible water-use disclosure as digital infrastructure grows.",
-    href: "https://luma.com/ir4jl3li",
-    external: true,
-    photo: "/uploads/2026/10/data-centers-water-poster.jpg",
-    fit: "top",
-    tone: "green",
-  },
-  {
     name: "ALT EFF Film Club × Climate Week India × GuruJal",
     month: "Oct",
     year: "2026",
