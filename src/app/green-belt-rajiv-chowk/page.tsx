@@ -563,9 +563,9 @@ function BeforeAfterSection() {
         <div className="mx-auto mt-12 max-w-5xl overflow-hidden rounded-3xl bg-brand-deep">
           <BeforeAfter
             className="aspect-[4/3] sm:aspect-[16/10]"
-            beforeSrc="/uploads/2026/09/greenbelt-before-aerial.jpg"
+            beforeSrc="/uploads/2026/10/greenbelt-before-aligned.jpg"
             beforeAlt="The Rajiv Chowk traffic island before restoration — an aerial view of the garbage-strewn, undulating plot"
-            afterSrc="/uploads/2026/10/greenbelt-after-aerial.jpg"
+            afterSrc="/uploads/2026/10/greenbelt-after-aligned.jpg"
             afterAlt="The Rajiv Chowk traffic island after restoration — an aerial view of the landscaped green belt with pathways"
           />
           <div className="px-6 py-5 text-center text-sm font-medium text-white/80 sm:text-base">
