@@ -3,6 +3,7 @@ import { DM_Sans, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { SiteChromeTop, SiteChromeBottom } from "@/components/site-chrome";
+import { GoogleAnalytics } from "@/components/google-analytics";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -42,6 +43,14 @@ export const metadata: Metadata = {
   },
 };
 
+/** GA4 measurement ID for gurujal.org (public by design — it is visible in
+ *  every page's source). Only sent from real production builds, so local
+ *  development and Vercel preview deployments never pollute the numbers. */
+const GA_MEASUREMENT_ID = "G-PQH8XBHZS1";
+const GA_ENABLED =
+  process.env.NODE_ENV === "production" &&
+  process.env.VERCEL_ENV !== "preview";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -60,6 +69,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <SiteChromeBottom />
         <Analytics />
+        {GA_ENABLED && <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />}
       </body>
     </html>
   );
