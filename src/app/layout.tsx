@@ -31,15 +31,20 @@ export const metadata: Metadata = {
   },
   description:
     "GuruJal is a water conservation initiative working on pond rejuvenation, eco-restoration, and water stewardship across India.",
-  metadataBase: new URL("https://gurujal.org"),
+  // The live site is served from www (the bare domain redirects there), so
+  // absolute URLs — including preview images — must point at www directly.
+  metadataBase: new URL("https://www.gurujal.org"),
+  // Link previews (WhatsApp, LinkedIn, Facebook, X). Deliberately no title,
+  // description or url here: each page supplies its own, so a shared link
+  // shows that page's name — not the homepage's. The preview image comes
+  // from the opengraph-image files (a site default plus per-page overrides).
   openGraph: {
-    title: "GuruJal — Water is life",
-    description:
-      "Water conservation, pond rejuvenation, and eco-restoration initiatives by GuruJal.",
-    url: "https://gurujal.org",
     siteName: "GuruJal",
     locale: "en_IN",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 

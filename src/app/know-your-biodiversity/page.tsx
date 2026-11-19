@@ -5,7 +5,7 @@ import { BirdExplorer } from "@/components/biodiversity/bird-explorer";
 import { birds } from "@/lib/birds";
 
 export const metadata: Metadata = {
-  title: "Know Your Biodiversity — Birds of the Aravallis",
+  title: "Know Your Biodiversity",
   description:
     "Discover the birds that make the Aravallis a living ecosystem. Tap any species to learn about its looks, behaviour and adaptivity, and listen to its call.",
 };
