@@ -142,12 +142,7 @@ const advisors: Person[] = [
     photo: "/uploads/2025/11/Ashita.jpg",
   },
   {
-    name: "Ms. Elisha Suri",
-    role: "Former Director of SD Apparels",
-    photo: "/uploads/2024/08/Elisha.png",
-  },
-  {
-    name: "Dr. Abhishek Kumar",
+    name: "Abhishek Kumar",
     role: "President and CEO, Nilambar",
     photo: "/uploads/2025/11/Abhishek.jpg",
   },
@@ -195,11 +190,6 @@ const executive: Person[] = [
     photo: "/uploads/2026/04/Khyati.png",
   },
   {
-    name: "Mr. Raj Pratap Singh",
-    role: "Associate — Partnerships",
-    photo: "/uploads/2026/08/RajPratap.png",
-  },
-  {
     name: "Mr. Daarwin G",
     role: "GIS and Hydrology Associate",
     photo: "/uploads/2026/08/DaarwinG.png",
@@ -228,11 +218,6 @@ const executive: Person[] = [
     name: "Mr. Imran Ali",
     role: "Community Associate",
     photo: "/uploads/2026/04/Imran.png",
-  },
-  {
-    name: "Mr. Abhijeet Pratap Sen",
-    role: "Associate",
-    photo: "/uploads/2026/04/Abhijeet.png",
   },
   {
     name: "Mr. Sachin Bhuker",
