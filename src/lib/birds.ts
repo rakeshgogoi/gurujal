@@ -25,6 +25,8 @@ export type Bird = {
     /** Photographer / licence line, shown under the photo when set. */
     credit?: string;
     creditUrl?: string;
+    /** CSS object-position for the card crop, e.g. "50% 15%". */
+    focus?: string;
   };
 };
 
@@ -38,6 +40,13 @@ export const birds: Bird[] = [
     adaptivity: "It thrives in gardens, parks and tree-lined colonies because it needs fruiting trees and crow nests, both common in towns. Its parasitic breeding spares it the effort of building a nest or feeding young.",
     soundNote: "A loud, rising \"ko-el, ko-el\" from the male, repeated with growing intensity, especially in the breeding season (spring and early summer). The female gives a sharp, repeated \"kik-kik-kik\".",
     audio: "/uploads/2026/11/bird-calls/asian-koel.mp3",
+    photo: {
+      src: "/uploads/2026/11/birds/asian-koel.jpg",
+      alt: "A male Asian koel with glossy blue-black plumage and a red eye, perched on a branch",
+      credit: "Challiyan · CC BY-SA 4.0 · Wikimedia Commons",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Asian_koel.jpg",
+      focus: "50% 12%",
+    },
   },
   {
     slug: "black-kite",
@@ -48,6 +57,13 @@ export const birds: Bird[] = [
     adaptivity: "One of the most successful raptors in towns. It uses garbage, abattoir waste and roadkill, and nests on tall trees and buildings. Its scavenging helps clean up organic waste.",
     soundNote: "A thin, high whistle followed by a quavering, trilling \"peee-ee-ee-ee-ee\". Several kites calling together can sound like a chorus of whinnies.",
     audio: "/uploads/2026/11/bird-calls/black-kite.mp3",
+    photo: {
+      src: "/uploads/2026/11/birds/black-kite.jpg",
+      alt: "A black kite perched on a wire against a blue sky, showing its brown plumage and long forked tail",
+      credit: "Andreas Trepte · CC BY-SA 4.0 · Wikimedia Commons",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Schwarzmilan.jpg",
+      focus: "50% 3%",
+    },
   },
   {
     slug: "common-myna",
@@ -58,6 +74,13 @@ export const birds: Bird[] = [
     adaptivity: "It thrives in cities, farmland and gardens. It nests in holes in buildings, walls and tree cavities, and eats almost anything. This adaptability has made it successful far beyond its native range.",
     soundNote: "A varied mix of harsh chattering, whistles, gurgles and chuckles. It mimics other sounds and often bobs its head while calling.",
     audio: "/uploads/2026/11/bird-calls/common-myna.mp3",
+    photo: {
+      src: "/uploads/2026/11/birds/common-myna.jpg",
+      alt: "Two common mynas on a dry branch, one in flight with its white wing patches spread",
+      credit: "Gerrie van Vuuren · CC BY-SA 4.0 · Wikimedia Commons",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Acridotheres_tristis00.jpg",
+      focus: "50% 12%",
+    },
   },
   {
     slug: "common-tailorbird",
@@ -68,6 +91,12 @@ export const birds: Bird[] = [
     adaptivity: "It does well in gardens, hedges and scrub because dense foliage gives it nest sites and insects. Its leaf-stitched nest hides well from predators.",
     soundNote: "A loud, repeated \"pit-pit-pit-pit\" or \"too-wit, too-wit\" from the male, often from a low perch. It calls frequently, so it is heard far more than seen.",
     audio: "/uploads/2026/11/bird-calls/common-tailorbird.mp3",
+    photo: {
+      src: "/uploads/2026/11/birds/common-tailorbird.jpg",
+      alt: "A common tailorbird perched on a cable, olive-green above with a rufous crown and a long thin tail",
+      credit: "Charles J. Sharp · CC BY-SA 4.0 · Wikimedia Commons",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Common_tailorbird_(Orthotomus_sutorius_guzuratus)_male_Kerala.jpg",
+    },
   },
   {
     slug: "house-crow",
@@ -78,6 +107,12 @@ export const birds: Bird[] = [
     adaptivity: "It lives closely with humans and thrives on food waste. It nests on trees, poles and buildings, and learns quickly to exploit new food sources. In many areas it is a useful scavenger, though it can compete with smaller birds.",
     soundNote: "A loud, harsh \"kaa-kaa-kaa\", with softer clucks and rattles when close to the nest. Alarm calls are sharper and louder.",
     audio: "/uploads/2026/11/bird-calls/house-crow.mp3",
+    photo: {
+      src: "/uploads/2026/11/birds/house-crow.jpg",
+      alt: "A house crow with a grey neck and black bill perched on a post",
+      credit: "Pkspks · CC BY 4.0 · Wikimedia Commons",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Corvus_splendens.jpg",
+    },
   },
   {
     slug: "house-sparrow",
@@ -88,6 +123,12 @@ export const birds: Bird[] = [
     adaptivity: "Closely tied to human settlements, where it nests in roofs, walls and gaps. Modern buildings with few nesting holes, pesticide use that reduces insects, and loss of green space have caused declines in many cities. Nest boxes and gardens can help.",
     soundNote: "A repeated, cheerful \"cheep-cheep, chirrup\", with chattering and trills when flocks gather.",
     audio: "/uploads/2026/11/bird-calls/house-sparrow.mp3",
+    photo: {
+      src: "/uploads/2026/11/birds/house-sparrow.jpg",
+      alt: "A male house sparrow with a grey crown and black bib perched on a stone ledge",
+      credit: "Rhododendrites · CC BY-SA 4.0 · Wikimedia Commons",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:House_sparrow_male_in_Prospect_Park_(53532).jpg",
+    },
   },
   {
     slug: "red-whiskered-bulbul",
@@ -98,6 +139,12 @@ export const birds: Bird[] = [
     adaptivity: "It thrives in gardens, scrub and wooded areas, where fruiting plants are plentiful. By eating and passing seeds, it helps spread many native plants.",
     soundNote: "A cheerful, bubbling \"pe-ter-pee\" or \"kick-pettigrew\", with sharper call notes, mostly given in the morning and evening.",
     audio: "/uploads/2026/11/bird-calls/red-whiskered-bulbul.mp3",
+    photo: {
+      src: "/uploads/2026/11/birds/red-whiskered-bulbul.jpg",
+      alt: "A red-whiskered bulbul with a tall black crest and a crimson cheek patch perched on a branch",
+      credit: "Davidvraju · CC BY 4.0 · Wikimedia Commons",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Red_whiskered_bulbul_-_1.jpg",
+    },
   },
   {
     slug: "rock-pigeon",
@@ -108,6 +155,12 @@ export const birds: Bird[] = [
     adaptivity: "Originally a cliff-dweller, it has adapted well to buildings, which resemble cliff faces. It reproduces quickly and survives on grain and scraps, so it is common in cities. Large flocks can cause droppings problems.",
     soundNote: "A soft, rolling \"coo-roo-coo\", with wing claps during take-off and courtship displays.",
     audio: "/uploads/2026/11/bird-calls/rock-pigeon.mp3",
+    photo: {
+      src: "/uploads/2026/11/birds/rock-pigeon.jpg",
+      alt: "A blue-grey rock pigeon with two black wing bars and green-purple neck feathers standing on rock",
+      credit: "william_stephens · CC BY 4.0 · Wikimedia Commons",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Columba_livia_(Rock_Dove,_wild),_Duncansby_Head,_Caithness,_Scotland_1.jpg",
+    },
   },
   {
     slug: "rose-ringed-parakeet",
@@ -118,6 +171,13 @@ export const birds: Bird[] = [
     adaptivity: "It does well near people, using cavities in trees and buildings, and feeding on fruiting trees and crops. Its adaptability has helped it spread even beyond its native range, where it can compete with local hole-nesting birds.",
     soundNote: "A loud, shrill, repeated \"kee-ak, kee-ak\" in flight and when perched. Large flocks are very noisy.",
     audio: "/uploads/2026/11/bird-calls/rose-ringed-parakeet.mp3",
+    photo: {
+      src: "/uploads/2026/11/birds/rose-ringed-parakeet.jpg",
+      alt: "A bright green rose-ringed parakeet with a red bill perched in a tree",
+      credit: "danielskatz · CC BY 4.0 · Wikimedia Commons",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:African_Rose-ringed_Parakeet,_Tendaba,_Gambia_1.jpg",
+      focus: "30% 22%",
+    },
   },
   {
     slug: "white-throated-kingfisher",
@@ -128,5 +188,11 @@ export const birds: Bird[] = [
     adaptivity: "Its varied diet lets it live in wetlands, farmland, gardens and dry scrub, wherever it can find perches and earth banks for nesting. It is often a sign of reasonably healthy habitat.",
     soundNote: "A loud, rattling, laughing \"ki-ki-ki-ki-ki\" in flight or from a perch, and a longer, whistling \"kililili\" in the breeding season.",
     audio: "/uploads/2026/11/bird-calls/white-throated-kingfisher.mp3",
+    photo: {
+      src: "/uploads/2026/11/birds/white-throated-kingfisher.jpg",
+      alt: "A white-throated kingfisher with a red bill, turquoise-blue wings and a brown head perched on a branch",
+      credit: "Charles J. Sharp · CC BY-SA 4.0 · Wikimedia Commons",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:White-throated_kingfisher_(Halcyon_smyrnensis)_Galle.jpg",
+    },
   },
 ];

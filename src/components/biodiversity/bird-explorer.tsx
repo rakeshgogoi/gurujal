@@ -420,6 +420,7 @@ function BirdPhoto({
           fill
           sizes={sizes}
           priority={priority}
+          style={bird.photo.focus ? { objectPosition: bird.photo.focus } : undefined}
           className="object-cover"
         />
         {bird.photo.credit && (
