@@ -282,7 +282,7 @@ function BirdDetail({
         className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl lg:flex-row [@media(max-height:520px)]:max-h-[96vh] [@media(max-height:520px)]:flex-row [@media(max-height:520px)]:rounded-2xl"
       >
         <div className="relative shrink-0 lg:w-[42%] [@media(max-height:520px)]:w-[40%]">
-          <BirdPhoto bird={bird} className="aspect-[4/3] max-h-[34vh] lg:aspect-auto lg:h-full lg:max-h-none lg:min-h-[420px] [@media(max-height:520px)]:aspect-auto [@media(max-height:520px)]:h-full [@media(max-height:520px)]:max-h-none [@media(max-height:520px)]:min-h-0" sizes="(min-width: 1024px) 420px, 100vw" priority />
+          <BirdPhoto bird={bird} className="aspect-[4/3] max-h-[34vh] w-full lg:aspect-auto lg:h-full lg:max-h-none lg:min-h-[420px] [@media(max-height:520px)]:aspect-auto [@media(max-height:520px)]:h-full [@media(max-height:520px)]:max-h-none [@media(max-height:520px)]:min-h-0" sizes="(min-width: 1024px) 420px, 100vw" priority />
         </div>
 
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-6 sm:p-8">
