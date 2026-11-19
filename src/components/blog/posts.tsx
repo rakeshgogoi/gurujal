@@ -8,6 +8,12 @@
  */
 const POSTS: { slug: string; title: string; excerpt: string }[] = [
   {
+    slug: "the-question-that-started-with-a",
+    title: "The Question That Started With a Glass of Water",
+    excerpt:
+      "Imagine a table with a policymaker, an urban planner, an environmentalist, an artist, and a young citizen sitting around it. No one has the full answer, but everyone has a piece of it. That was the idea behind Urban Adda 2026, held from 5 to 7 October at India Habitat Centre, New Delhi.",
+  },
+  {
     slug: "from-a-distressed-pond-pond-to-a",
     title: "From a Distressed Pond to a Living Aquifer: The Bhokarka Story",
     excerpt:
