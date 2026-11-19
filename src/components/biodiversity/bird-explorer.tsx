@@ -273,14 +273,16 @@ function BirdDetail({
       aria-modal="true"
       aria-label={bird.name}
       onClick={onClose}
-      className="fixed inset-0 z-[60] flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm animate-fade-up sm:items-center sm:p-6"
+      className="fixed inset-0 z-[60] flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm animate-fade-up sm:items-center sm:p-6 [@media(max-height:520px)]:items-center [@media(max-height:520px)]:p-2"
     >
+      {/* Short screens (a phone held sideways) lay the photo beside the text
+          instead of stacking it, so the details always stay on screen. */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl md:flex-row"
+        className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl lg:flex-row [@media(max-height:520px)]:max-h-[96vh] [@media(max-height:520px)]:flex-row [@media(max-height:520px)]:rounded-2xl"
       >
-        <div className="relative shrink-0 md:w-[42%]">
-          <BirdPhoto bird={bird} className="aspect-[4/3] md:aspect-auto md:h-full md:min-h-[420px]" sizes="(min-width: 768px) 420px, 100vw" priority />
+        <div className="relative shrink-0 lg:w-[42%] [@media(max-height:520px)]:w-[40%]">
+          <BirdPhoto bird={bird} className="aspect-[4/3] max-h-[34vh] lg:aspect-auto lg:h-full lg:max-h-none lg:min-h-[420px] [@media(max-height:520px)]:aspect-auto [@media(max-height:520px)]:h-full [@media(max-height:520px)]:max-h-none [@media(max-height:520px)]:min-h-0" sizes="(min-width: 1024px) 420px, 100vw" priority />
         </div>
 
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-6 sm:p-8">
