@@ -68,6 +68,7 @@ export const localRoutes = new Set<string>([
   "/triveni-pond",
   "/mankrola-pond",
   "/green-belt-rajiv-chowk",
+  "/know-your-biodiversity",
   "/privacy-policy",
   "/terms-and-conditions",
 ]);
@@ -142,7 +143,13 @@ export const primaryNav: NavItem[] = [
           { label: "Case Study", href: "/uploads/2026/10/GuruJal-Case-Study-Water-Neutral-Campus.pdf" },
         ],
       },
-      { label: "Tools", href: "/reports-and-publications#tools" },
+      {
+        label: "Tools",
+        href: "/reports-and-publications#tools",
+        children: [
+          { label: "Know Your Biodiversity", href: "/know-your-biodiversity" },
+        ],
+      },
       { label: "Blog", href: "/blog" },
     ],
   },
@@ -181,6 +188,7 @@ export const footerLinks = {
   ],
   resources: [
     { label: "Blog", href: "/blog" },
+    { label: "Know Your Biodiversity", href: "/know-your-biodiversity" },
     { label: "Reports & Publications", href: "/reports-and-publications" },
     { label: "Annual Report 2024–25", href: "/annual-report-2024-25" },
     { label: "Annual Report 2023–24", href: "/annual-report-2023-24" },
